@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" fill="none">
+  <!-- Decorative floor-plan study; no logo or project dimensions. -->
+  <g stroke="#d0b295" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Rectilinear walls and offsets. -->
+    <g stroke-width="1.05" opacity=".19">
+      
+      
+      
+      <path d="M273 245v84h74m46 0h109V241h-58M273 245v-42h120v38h51"/>
+      <path d="M281 250v71h66m46 0h101v-72h-46M281 250v-39h104v38h63"/>
+      <path d="M347 239v32m0 46v12m46-90v90"/>
+      <path d="M494 276h-57v45m65-80h96v88h-96"/>
+      <path d="M510 249h80v72h-80"/>
+      <path d="M273 286h-63V203h63m8 75h-63v-67h55"/>
+      <path d="M598 286h83v89H393v-46m213-35h67v73H401v-30"/>
+    </g>
+    <!-- Door sweeps and a short stair rhythm, without invented dimensions. -->
+    <g stroke-width=".85" opacity=".15">
+      <path d="M347 271h46a46 46 0 0 1-46 46"/>
+      <path d="M437 276v-34a34 34 0 0 1 34 34"/>
+      <path d="M612 306h45m-45 9h45m-45 9h45m-45 9h45m-45 9h45m-45 9h45"/>
+      <path d="M635 355v-54m-3 5 3-5 3 5"/>
+    </g>
+    <!-- Construction axes, extension lines and dimension ticks. -->
+    <g stroke-width=".75" opacity=".12">
+      <path d="M361 176v210M179 203h472M184 329h519" stroke-dasharray="5 7"/>
+      <path d="M252 236v114m157-22v22M252 345h157"/>
+      <path d="m248 349 8-8m149 8 8-8"/>
+      <path d="M516 215h82m-82-8v17m82-17v17M511 220l10-10m72 10 10-10"/>
+      <path d="M190 192v148m-8-137h16m-16 126h16m-13-122 10-8m-10 134 10-8"/>
+      <circle cx="361" cy="178" r="5"/><circle cx="361" cy="383" r="5"/>
+      <path d="M204 197v12m-6-6h12m465 120v12m-6-6h12"/>
+    </g>
+  </g>
+</svg>
