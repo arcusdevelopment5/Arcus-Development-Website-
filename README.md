@@ -1,56 +1,55 @@
 # Arcus Development
 
-Ο ιστότοπος της Arcus Development για κατασκευές, ανακαινίσεις και σχεδιασμό. Ελληνική αρχική σελίδα και έξι εταιρικές υποσελίδες, με κοινή πλοήγηση και footer.
+Ελληνικός ιστότοπος για δύο υπηρεσίες: ολική ανακαίνιση διαμερίσματος για κατοικία και επενδυτική ανακαίνιση. Περιλαμβάνει 18 σελίδες, πραγματικά έργα με πριν/μετά, εταιρικές υποσελίδες, διαδικασία, εγγύηση και λειτουργική φόρμα αιτήματος.
 
-## Run locally
+Η έκδοση παραμένει ιδιωτική για έλεγχο. Η κατάσταση κάθε απαίτησης καταγράφεται στο [BLUEPRINT_STATUS.md](BLUEPRINT_STATUS.md).
 
-No installation or build step is required. Serve the `dist` directory with any static web server:
+## Ανάπτυξη
+
+Απαιτούνται Node 22.13+ και Python 3. Χρησιμοποιούνται Vinext/Cloudflare Worker, D1 και R2. Το `dist/` είναι παραγόμενο build, όχι πηγή επεξεργασίας.
 
 ```bash
-python3 -m http.server 8000 --directory dist
+npm run install:ci
+npm run content
+npm test
+npm run build
+npm start
 ```
 
-Open http://localhost:8000. The deployable website consists of the contents of `dist/`.
+Το managed preview Sites προετοιμάζει τις τοπικές υπηρεσίες. Εφαρμόστε τις migrations του `drizzle/` στην τοπική D1 πριν δοκιμάσετε τη φόρμα. Οι hosted migrations εφαρμόζονται από το deployment pipeline.
 
-## Editing
+Το δημόσιο repository εξαιρεί το ιδιωτικό `.openai/hosting.json`. Το `.openai/hosting.example.json` δηλώνει μόνο D1/R2. Συνδέστε νέο checkout με το κατάλληλο Sites project μέσω των εργαλείων Sites, χωρίς δημοσίευση εσωτερικών αναγνωριστικών.
 
-- `dist/index.html`: homepage content and semantic structure.
-- `dist/styles.css`: original shared styles and the retained Arcus footer.
-- `dist/design.css`: current Lovable-inspired presentation, transparent home header, arch imagery, and company-page theme. Overrides intentionally exclude the footer.
-- `dist/design.js`: header scroll state, keyboard-accessible interactive floor plan, and service-card disclosures.
-- `dist/app.js`: desktop/mobile navigation, service accordions and accent-insensitive glossary search/filtering.
-- `dist/assets/`: self-hosted brand assets, fonts and imagery.
-- `DESIGN.md`: visual direction, sources and future content decisions.
-- `components/header.html` and `components/footer.html`: canonical shared static navigation and footer.
-- `scripts/sync-layout.py`: renders both shared components into root-level HTML pages. Run `python3 scripts/sync-layout.py` after changing them. New pages include one `shared-header` and one `shared-footer` start/end marker pair. The legacy `sync-footer.py` entry point delegates to this script.
+## Πηγές επεξεργασίας
 
-The existing official Arcus contact page and verified Development telephone provide real contact routes. There is no local contact form, email submission service, analytics, cookie storage or CRM integration. The external contact page opens in a new tab. The first private review version includes `noindex, nofollow`; review this when connecting a public production domain.
+- `scripts/author-site.py`: περιεχόμενο νέων σελίδων, κοινό header, συνδέσεις footer.
+- `site/legacy/`: εγκεκριμένες εταιρικές σελίδες από την προηγούμενη έκδοση.
+- `site/data/projects.json`: επαληθευμένα στοιχεία έργων.
+- `site/data/project-provenance.json`: πηγές, video timestamps και όρια των διαθέσιμων στοιχείων.
+- `components/footer.html`: διατηρημένο footer με πέντε λογότυπα και κάτοψη.
+- `public/site.css`, `public/site.js`: νέο design και αλληλεπιδράσεις.
+- `scripts/build-pages.py`: compiler, sitemap/robots. Τα `site/pages/` και `site/pages.json` παράγονται με `npm run content`.
+- `app/[[...path]]/route.ts`: σελίδες και 301 redirects παλιών διευθύνσεων.
+- `lib/inquiries-server.ts`, `app/api/`, `db/`, `drizzle/`: αποθήκευση και προστατευμένη διαχείριση.
 
-Target repository: https://github.com/arcusdevelopment5/Arcus-Development-Website-
+Το `python3 scripts/sync-layout.py` παραμένει συμβατό entry point αναγέννησης.
 
-## Next pages
+## Αιτήματα και διαχείριση
 
-Develop service detail pages, an approved real-project portfolio and a dedicated contact flow as separate tasks. Do not use inspirational imagery as evidence of completed projects.
+Η `/el/epikoinonia` δέχεται κατοικία/επένδυση και `?kind=support` για υποστήριξη. Αιτήματα στη D1, αρχεία στη R2. Επιτρέπονται έως τρία JPG/PNG/WebP/PDF των 8 MB, με server validation, file signatures, όριο αιτημάτων, same-origin, idempotency και πραγματικό κωδικό καταχώρισης.
 
-## Company section
+Η `/el/admin` εμφανίζει αιτήματα, συνημμένα, κατάσταση, υπεύθυνο και σημειώσεις. Απαιτεί αυθεντικοποιημένη ταυτότητα Sites και email επιτρεπόμενο από το secret `ADMIN_EMAILS`. Δεν υπάρχει παρακαμπτήρια τοπική πρόσβαση.
 
-- `dist/company.html`: Ποιοι είμαστε.
-- `dist/philosophy.html`: Φιλοσοφία και αξίες.
-- `dist/faq.html`: Συχνές ερωτήσεις, ten native disclosure answers in three groups.
-- `dist/glossary.html`: Τεχνικό λεξικό, sixteen entries with Greek search, category filtering, clear/reset and an empty state. All definitions remain readable without JavaScript.
-- `dist/careers.html`: Καριέρα, fields of collaboration and an explicit expression-of-interest route; no invented vacancies.
-- `dist/office.html`: Το γραφείο μας, verified Development address/phone, map search and official Arcus contact page.
+Runtime secrets, ποτέ στο frontend/repository:
 
-The footer artwork is now only an abstract floor plan. The decorative A was removed; official brand logos are preserved.
+- `ADMIN_EMAILS`: εγκεκριμένοι διαχειριστές, χωρισμένοι με κόμμα.
+- `CRM_WEBHOOK_URL`: προαιρετικός εγκεκριμένος HTTPS προορισμός.
+- `CRM_WEBHOOK_TOKEN`: προαιρετικό bearer token.
 
-## Current visual direction
+Χωρίς προορισμό CRM δεν αποστέλλονται εξωτερικές ειδοποιήσεις. Τα αιτήματα παραμένουν στο ιδιωτικό inbox. Το webhook καταγράφει pending/delivered/failed· δεν υπάρχει αυτόματη επαναποστολή στην παρούσα έκδοση.
 
-The user-selected reference is https://arch-line-bright.lovable.app/. The homepage now follows its dark architectural hero, lightweight Manrope typography, interactive floor plan, pill links, warm neutral surfaces, arch-shaped service photography, numbered process and inset green contact section. All six company pages share the new theme. The existing footer component, floor-plan background and footer CSS are unchanged.
+## Δημόσια κυκλοφορία
 
-The reference imagery is self-hosted as optimized WebP assets (`reference-*.webp`), sourced from the user-provided Lovable site. It is presented as architectural inspiration, not verified completed projects. The previously verified Arcus archive image retains its source link. Reference placeholder metrics, reviews and contact data are not used.
+Noindex και robots παραμένουν ενεργά για το ιδιωτικό review. Πριν το public launch απαιτούνται πραγματικό domain/canonicals, τελικά στοιχεία υπευθύνου επεξεργασίας και διατήρησης δεδομένων, εγκεκριμένοι όροι εγγύησης, προορισμός CRM και analytics/consent configuration. Τα `arcus:analytics` events/dataLayer hooks δεν αποτελούν ενεργή σύνδεση GA4. Δεν φορτώνονται εξωτερικά analytics.
 
-The conceptual floor plan supports three independent changes, keyboard activation, accessible state announcements and a reset. It represents a design exploration, not a structural proposal. Service cards open matching native details and work on direct fragment links.
-
-## Company mega menu
-
-The shared desktop header uses a full-width company panel inspired by the user's Arcus BnB screenshot: introduction, two photographic links and four secondary links. Fine-pointer hover opens with a short intent delay and closes with an exit grace period. Native disclosure activation remains available for click, touch and keyboard. Escape, outside click, focus departure and viewport changes close the panel. The six-link mobile disclosure remains available below the 961px desktop breakpoint. Short viewports scroll the panel independently.
+Δεν παρουσιάζονται reference φωτογραφίες ως έργα, ενδεικτική κάτοψη ως μελέτη, ανύπαρκτες μαρτυρίες, υποσχέσεις απόδοσης επένδυσης ή ανεπιβεβαίωτα εμβαδά.

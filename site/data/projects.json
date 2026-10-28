@@ -1,0 +1,103 @@
+[
+  {
+    "slug": "nea-paralia",
+    "title": "Νέα ζωή στη Νέα Παραλία.",
+    "area": "Νέα Παραλία, Θεσσαλονίκη",
+    "sqm": 85,
+    "summary": "Ριζική ανακαίνιση 85 m² με σύγχρονο σχεδιασμό, νέους φωτισμούς, κουζίνα και μπάνιο.",
+    "scope": [
+      "Ριζική ανακαίνιση",
+      "Σύγχρονος σχεδιασμός",
+      "Φωτισμός",
+      "Κουζίνα και μπάνιο"
+    ],
+    "categories": [
+      "residential"
+    ],
+    "source": "https://www.linkedin.com/posts/arcus-development-gr_arcusrealestate-arcustransformations-renovation-activity-7466088803422732288-CpEB",
+    "cover": "/assets/projects/nea-paralia-kitchen-after.webp",
+    "before": "/assets/projects/nea-paralia-living-before.webp",
+    "after": "/assets/projects/nea-paralia-living-after.webp",
+    "gallery": [
+      {
+        "src": "/assets/projects/nea-paralia-kitchen-after.webp",
+        "alt": "Κουζίνα μετά την ανακαίνιση"
+      },
+      {
+        "src": "/assets/projects/nea-paralia-bathroom-after.webp",
+        "alt": "Μπάνιο μετά την ανακαίνιση"
+      },
+      {
+        "src": "/assets/projects/nea-paralia-living-after.webp",
+        "alt": "Καθιστικό μετά την ανακαίνιση"
+      }
+    ]
+  },
+  {
+    "slug": "stavroupoli",
+    "title": "Μια νέα αρχή στη Σταυρούπολη.",
+    "area": "Σταυρούπολη, Θεσσαλονίκη",
+    "sqm": null,
+    "summary": "Ολική ανακαίνιση διαμερίσματος, από τα κουφώματα και τα υλικά μέχρι την επίπλωση.",
+    "scope": [
+      "Ολική ανακαίνιση",
+      "Κατασκευές και κουφώματα",
+      "Επιλογή υλικών",
+      "Τελική επίπλωση"
+    ],
+    "categories": [
+      "residential"
+    ],
+    "source": "https://www.linkedin.com/posts/arcus-development-gr_arcusrealestate-arcustransformations-renovation-activity-7466092189979398144-L0NS",
+    "cover": "/assets/projects/stavroupoli-kitchen-after.webp",
+    "before": "/assets/projects/stavroupoli-bedroom-before.webp",
+    "after": "/assets/projects/stavroupoli-bedroom-after.webp",
+    "gallery": [
+      {
+        "src": "/assets/projects/stavroupoli-kitchen-after.webp",
+        "alt": "Κουζίνα μετά την ανακαίνιση"
+      },
+      {
+        "src": "/assets/projects/stavroupoli-bathroom-after.webp",
+        "alt": "Μπάνιο μετά την ανακαίνιση"
+      },
+      {
+        "src": "/assets/projects/stavroupoli-bedroom-after.webp",
+        "alt": "Υπνοδωμάτιο μετά την ανακαίνιση"
+      }
+    ]
+  },
+  {
+    "slug": "city-studio",
+    "title": "Μικρός χώρος. Νέα καθημερινότητα.",
+    "area": "Κέντρο Θεσσαλονίκης",
+    "sqm": null,
+    "summary": "Αισθητική και λειτουργική αναβάθμιση γκαρσονιέρας στο κέντρο της Θεσσαλονίκης.",
+    "scope": [
+      "Ανακαίνιση γκαρσονιέρας",
+      "Αισθητική αναβάθμιση",
+      "Βελτίωση λειτουργικότητας"
+    ],
+    "categories": [
+      "residential"
+    ],
+    "source": "https://www.linkedin.com/posts/arcus-development-gr_arcusrealestate-arcustransformations-renovation-activity-7439689194446409729-CjQl",
+    "cover": "/assets/projects/city-studio-kitchen-after.webp",
+    "before": "/assets/projects/city-studio-living-before.webp",
+    "after": "/assets/projects/city-studio-living-after.webp",
+    "gallery": [
+      {
+        "src": "/assets/projects/city-studio-kitchen-after.webp",
+        "alt": "Κουζίνα μετά την ανακαίνιση"
+      },
+      {
+        "src": "/assets/projects/city-studio-bathroom-after.webp",
+        "alt": "Μπάνιο μετά την ανακαίνιση"
+      },
+      {
+        "src": "/assets/projects/city-studio-living-after.webp",
+        "alt": "Καθιστικό μετά την ανακαίνιση"
+      }
+    ]
+  }
+]

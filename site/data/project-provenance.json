@@ -1,0 +1,166 @@
+[
+  {
+    "slug": "stavroupoli",
+    "source": "https://www.linkedin.com/posts/arcus-development-gr_arcusrealestate-arcustransformations-renovation-activity-7466092189979398144-L0NS",
+    "verified_facts": {
+      "name": "Ολική ανακαίνιση στη Σταυρούπολη",
+      "location": "Σταυρούπολη, Θεσσαλονίκη",
+      "area_sqm": null,
+      "published": "2026-05-29",
+      "scope": [
+        "Ολική ανακαίνιση",
+        "Κατασκευές και κουφώματα",
+        "Επιλογή υλικών",
+        "Τελική επίπλωση"
+      ]
+    },
+    "frames": [
+      {
+        "filename": "stavroupoli-kitchen-after.jpg",
+        "timestamp_seconds": 6.5,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "stavroupoli-bathroom-after.jpg",
+        "timestamp_seconds": 16.5,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "stavroupoli-bedroom-after.jpg",
+        "timestamp_seconds": 25.5,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "stavroupoli-bathroom-before.jpg",
+        "timestamp_seconds": 10.5,
+        "state": "before",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "stavroupoli-bedroom-before.jpg",
+        "timestamp_seconds": 21.5,
+        "state": "before",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      }
+    ],
+    "limits": [
+      "Publication date is not verified completion date.",
+      "No verified drawings or renders.",
+      "No verified construction duration or financial results.",
+      "Client ownership/use intent not verified; do not assume owner-occupation or investment split.",
+      "Before/after framing is not geometrically aligned."
+    ]
+  },
+  {
+    "slug": "nea-paralia",
+    "source": "https://www.linkedin.com/posts/arcus-development-gr_arcusrealestate-arcustransformations-renovation-activity-7466088803422732288-CpEB",
+    "verified_facts": {
+      "name": "Ανακαίνιση διαμερίσματος 85 τ.μ. δίπλα στη Νέα Παραλία",
+      "location": "Νέα Παραλία, Θεσσαλονίκη",
+      "area_sqm": 85,
+      "published": "2026-05-29",
+      "scope": [
+        "Ριζική ανακαίνιση",
+        "Σύγχρονος σχεδιασμός",
+        "Φωτισμός",
+        "Κουζίνα και μπάνιο"
+      ]
+    },
+    "frames": [
+      {
+        "filename": "nea-paralia-kitchen-after.jpg",
+        "timestamp_seconds": 4.2,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "nea-paralia-bathroom-after.jpg",
+        "timestamp_seconds": 10.2,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "nea-paralia-living-after.jpg",
+        "timestamp_seconds": 24.2,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "nea-paralia-bathroom-before.jpg",
+        "timestamp_seconds": 7.2,
+        "state": "before",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "nea-paralia-living-before.jpg",
+        "timestamp_seconds": 21.2,
+        "state": "before",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      }
+    ],
+    "limits": [
+      "Publication date is not verified completion date.",
+      "No verified drawings or renders.",
+      "No verified construction duration or financial results.",
+      "Client ownership/use intent not verified; do not assume owner-occupation or investment split.",
+      "Before/after framing is not geometrically aligned."
+    ]
+  },
+  {
+    "slug": "city-studio",
+    "source": "https://www.linkedin.com/posts/arcus-development-gr_arcusrealestate-arcustransformations-renovation-activity-7439689194446409729-CjQl",
+    "verified_facts": {
+      "name": "Ανακαίνιση γκαρσονιέρας στο κέντρο",
+      "location": "Κέντρο Θεσσαλονίκης",
+      "area_sqm": null,
+      "published": "2026-03-17",
+      "scope": [
+        "Ανακαίνιση γκαρσονιέρας",
+        "Αισθητική αναβάθμιση",
+        "Βελτίωση λειτουργικότητας"
+      ]
+    },
+    "frames": [
+      {
+        "filename": "city-studio-kitchen-after.jpg",
+        "timestamp_seconds": 2.2,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "city-studio-bathroom-after.jpg",
+        "timestamp_seconds": 5.0,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "city-studio-living-after.jpg",
+        "timestamp_seconds": 10.5,
+        "state": "after",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "city-studio-bathroom-before.jpg",
+        "timestamp_seconds": 4.0,
+        "state": "before",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      },
+      {
+        "filename": "city-studio-living-before.jpg",
+        "timestamp_seconds": 7.0,
+        "state": "before",
+        "visual_verification": "Original Arcus video labels this state; no content edited."
+      }
+    ],
+    "limits": [
+      "Publication date is not verified completion date.",
+      "No verified drawings or renders.",
+      "No verified construction duration or financial results.",
+      "Client ownership/use intent not verified; do not assume owner-occupation or investment split.",
+      "Before/after framing is not geometrically aligned."
+    ]
+  }
+]
