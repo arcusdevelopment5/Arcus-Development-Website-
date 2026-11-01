@@ -11,5 +11,5 @@ for p in (ROOT/'site/pages').glob('*.html'):
 origin='https://arcus-development-home.adreaslougas.chatgpt.site'
 urls=''.join(f'<url><loc>{origin}{route}</loc></url>' for route in pages if '/admin' not in route)
 (ROOT/'public/sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls+'</urlset>')
-(ROOT/'public/robots.txt').write_text('User-agent: *\nDisallow: /\n# Private review site. Enable indexing only with the approved public launch.\n')
+(ROOT/'public/robots.txt').write_text('User-agent: *\nAllow: /\nDisallow: /api/\n# Review pages retain noindex. Crawling allows search engines to read that directive.\n')
 print(f'Compiled {len(pages)} pages')

@@ -1,5 +1,5 @@
 import pages from '../../site/pages.json';
-const aliases: Record<string,string> = {'/':'/el','/index.html':'/el','/company.html':'/el/etaireia','/philosophy.html':'/el/filosofia','/faq.html':'/el/sychnes-erotiseis','/glossary.html':'/el/techniko-lexiko','/careers.html':'/el/kariera','/office.html':'/el/grafeio'};
+const aliases: Record<string,string> = {'/':'/el','/index.html':'/el','/company.html':'/el/etaireia','/philosophy.html':'/el/filosofia','/faq.html':'/el/sychnes-erotiseis','/glossary.html':'/el/techniko-lexiko','/careers.html':'/el/etaireia','/el/kariera':'/el/etaireia','/el/erga/nea-paralia':'/el/erga','/el/erga/stavroupoli':'/el/erga','/el/erga/city-studio':'/el/erga','/el/erga/perraivou-9':'/el/erga','/office.html':'/el/epikoinonia','/el/grafeio':'/el/epikoinonia'};
 export function GET(request: Request) {
  const url = new URL(request.url); const path = url.pathname.replace(/\/$/,'') || '/';
  if (aliases[path]) return Response.redirect(new URL(aliases[path]+url.search,url),301);
