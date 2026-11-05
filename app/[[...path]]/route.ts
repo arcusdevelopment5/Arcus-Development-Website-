@@ -1,9 +1,24 @@
-import pages from '../../site/pages.json';
-const aliases: Record<string,string> = {'/':'/el','/index.html':'/el','/company.html':'/el/etaireia','/philosophy.html':'/el/filosofia','/faq.html':'/el/sychnes-erotiseis','/glossary.html':'/el/techniko-lexiko','/careers.html':'/el/kariera','/office.html':'/el/grafeio'};
-export function GET(request: Request) {
- const url = new URL(request.url); const path = url.pathname.replace(/\/$/,'') || '/';
- if (aliases[path]) return Response.redirect(new URL(aliases[path]+url.search,url),301);
- const html=(pages as Record<string,string>)[path];
- if (!html) return new Response('<!doctype html><html lang="el"><meta charset="utf-8"><title>Η σελίδα δεν βρέθηκε</title><h1>Η σελίδα δεν βρέθηκε.</h1><a href="/el">Επιστροφή στην Arcus Development</a></html>',{status:404,headers:{'Content-Type':'text/html; charset=utf-8'}});
- return new Response(html,{headers:{'Content-Type':'text/html; charset=utf-8','X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','X-Robots-Tag':'noindex, nofollow'}});
+// Serves the pre-built HTML pages from site/pages.json (made by `npm run content`).
+// Every page is generated at build time and served from the CDN.
+import { PAGES, INDEXING, renderPage } from '../../lib/site';
+
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return Object.keys(PAGES).map((route) => ({ path: route.split('/').filter(Boolean) }));
+}
+
+export async function GET(_request: Request, ctx: { params: Promise<{ path?: string[] }> }) {
+  const { path = [] } = await ctx.params;
+  const html = renderPage('/' + path.join('/'));
+  if (!html) return new Response('Not found', { status: 404 });
+  return new Response(html, {
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      ...(INDEXING ? {} : { 'X-Robots-Tag': 'noindex, nofollow' }),
+    },
+  });
 }

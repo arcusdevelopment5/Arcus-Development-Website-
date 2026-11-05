@@ -1,3 +1,0 @@
-User-agent: *
-Disallow: /
-# Private review site. Enable indexing only with the approved public launch.
