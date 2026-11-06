@@ -13,8 +13,51 @@
     if (!allowedEvents.has(name)) return;
     const safe = { event: name, page: location.pathname, ...params };
     window.dispatchEvent(new CustomEvent('arcus:analytics', { detail: safe }));
-    if (Array.isArray(window.dataLayer)) window.dataLayer.push(safe);
+    if (gaActive()) window.gtag('event', name, { page_path: location.pathname, ...params });
   }
+
+  // ---- consent + Google Analytics 4 (basic consent mode: gtag.js is not even requested before "Αποδοχή")
+  const GA_ID = $('meta[name="ga-measurement-id"]')?.content || '';
+  const LIVE_HOSTS = ['arcusdevelopment.gr', 'www.arcusdevelopment.gr']; // previews and localhost never send data
+  const CONSENT_KEY = 'arcus-consent', CONSENT_DAYS = 365;
+  const readConsent = () => {
+    try { const v = JSON.parse(localStorage.getItem(CONSENT_KEY)); if (v && Date.now() - v.ts < CONSENT_DAYS * 864e5) return v; } catch { /* storage blocked */ }
+    return null;
+  };
+  const writeConsent = analytics => { try { localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: 1, analytics, ts: Date.now() })); } catch { /* storage blocked */ } };
+  let gaLoaded = false;
+  function gaActive() { return gaLoaded && typeof window.gtag === 'function' && !window['ga-disable-' + GA_ID]; }
+  function startAnalytics() {
+    if (!GA_ID || !LIVE_HOSTS.includes(location.hostname)) return;
+    window['ga-disable-' + GA_ID] = false;
+    if (gaLoaded) { window.gtag('consent', 'update', { analytics_storage: 'granted' }); return; }
+    gaLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted' });
+    window.gtag('js', new Date());
+    window.gtag('config', GA_ID, { allow_google_signals: false, allow_ad_personalization_signals: false });
+    const tag = document.createElement('script'); tag.async = true; tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID);
+    document.head.append(tag);
+  }
+  function stopAnalytics() {
+    if (GA_ID) window['ga-disable-' + GA_ID] = true;
+    if (typeof window.gtag === 'function') window.gtag('consent', 'update', { analytics_storage: 'denied' });
+    const base = location.hostname.replace(/^www\./, '');
+    document.cookie.split(';').map(c => c.split('=')[0].trim()).filter(n => n === '_ga' || n.startsWith('_ga_')).forEach(n => {
+      ['', location.hostname, '.' + base].forEach(d => { document.cookie = `${n}=; Max-Age=0; path=/${d ? '; domain=' + d : ''}`; });
+    });
+  }
+  const banner = $('#consent');
+  const showBanner = show => { if (!banner) return; banner.hidden = !show; document.body.classList.toggle('consent-open', show); };
+  $$('[data-consent]', banner || document.createElement('div')).forEach(b => b.addEventListener('click', () => {
+    const yes = b.dataset.consent === 'accept';
+    writeConsent(yes); showBanner(false);
+    if (yes) startAnalytics(); else stopAnalytics();
+  }));
+  $$('[data-consent-open]').forEach(b => b.addEventListener('click', () => { showBanner(true); $('[data-consent="accept"]', banner)?.focus(); }));
+  const stored = readConsent();
+  if (!stored) showBanner(true); else if (stored.analytics) startAnalytics();
   $$('[data-event]').forEach(a => a.addEventListener('click', () => event(a.dataset.event)));
   $$('a[href^="tel:"]').forEach(a => { if (!a.dataset.event) a.addEventListener('click', () => event('click_phone')); });
 
