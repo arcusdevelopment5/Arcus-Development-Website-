@@ -2,23 +2,20 @@
 
 Ελληνικός ιστότοπος για δύο υπηρεσίες: ολική ανακαίνιση διαμερίσματος για κατοικία και επενδυτική ανακαίνιση. Περιλαμβάνει 18 σελίδες, πραγματικά έργα με πριν/μετά, εταιρικές υποσελίδες, διαδικασία, εγγύηση και λειτουργική φόρμα αιτήματος.
 
-Η έκδοση παραμένει ιδιωτική για έλεγχο. Η κατάσταση κάθε απαίτησης καταγράφεται στο [BLUEPRINT_STATUS.md](BLUEPRINT_STATUS.md).
+Η έκδοση παραμένει ιδιωτική για έλεγχο (noindex) μέχρι το launch. Η κατάσταση κάθε απαίτησης καταγράφεται στο [BLUEPRINT_STATUS.md](BLUEPRINT_STATUS.md).
 
 ## Ανάπτυξη
 
-Απαιτούνται Node 22.13+ και Python 3. Χρησιμοποιούνται Vinext/Cloudflare Worker, D1 και R2. Το `dist/` είναι παραγόμενο build, όχι πηγή επεξεργασίας.
+Next.js στο Vercel. Απαιτούνται Node 22.13+ (`.nvmrc`), Python 3 και [uv](https://docs.astral.sh/uv/) για το `npm run content`.
 
 ```bash
-npm run install:ci
-npm run content
+npm install
+npm run content   # μόνο όταν αλλάζει το περιεχόμενο (scripts/author-site.py)
 npm test
-npm run build
-npm start
+npm run dev       # http://localhost:3000
 ```
 
-Το managed preview Sites προετοιμάζει τις τοπικές υπηρεσίες. Εφαρμόστε τις migrations του `drizzle/` στην τοπική D1 πριν δοκιμάσετε τη φόρμα. Οι hosted migrations εφαρμόζονται από το deployment pipeline.
-
-Το δημόσιο repository εξαιρεί το ιδιωτικό `.openai/hosting.json`. Το `.openai/hosting.example.json` δηλώνει μόνο D1/R2. Συνδέστε νέο checkout με το κατάλληλο Sites project μέσω των εργαλείων Sites, χωρίς δημοσίευση εσωτερικών αναγνωριστικών.
+Οι σελίδες είναι έτοιμο HTML στο `site/pages.json` και παράγονται στατικά στο build. Χωρίς `RESEND_API_KEY` η φόρμα δουλεύει τοπικά και απλώς τυπώνει το email στο terminal. Οι μεταβλητές περιβάλλοντος περιγράφονται στο `.env.example`.
 
 ## Πηγές επεξεργασίας
 
@@ -34,22 +31,16 @@ npm start
 
 Το `python3 scripts/sync-layout.py` παραμένει συμβατό entry point αναγέννησης.
 
-## Αιτήματα και διαχείριση
+## Φόρμα επικοινωνίας
 
-Η `/el/epikoinonia` δέχεται κατοικία/επένδυση και `?kind=support` για υποστήριξη. Αιτήματα στη D1, αρχεία στη R2. Επιτρέπονται έως τρία JPG/PNG/WebP/PDF των 8 MB, με server validation, file signatures, όριο αιτημάτων, same-origin, idempotency και πραγματικό κωδικό καταχώρισης.
+Η `/el/epikoinonia` δέχεται κατοικία/επένδυση και `?kind=support` για υποστήριξη. Το `app/api/inquiries` ελέγχει τα στοιχεία και στέλνει email μέσω **Resend** στο `CONTACT_TO_EMAIL`, με Reply-To τον πελάτη. Τίποτα δεν αποθηκεύεται σε βάση.
 
-Η `/el/admin` εμφανίζει αιτήματα, συνημμένα, κατάσταση, υπεύθυνο και σημειώσεις. Απαιτεί αυθεντικοποιημένη ταυτότητα Sites και email επιτρεπόμενο από το secret `ADMIN_EMAILS`. Δεν υπάρχει παρακαμπτήρια τοπική πρόσβαση.
+Τα συνημμένα (έως 3 JPG/PNG/WebP/PDF των 8 MB) ανεβαίνουν από τον browser σε **ιδιωτικό Vercel Blob** (`app/api/uploads`, `client/blob-upload.ts`), ελέγχονται στον server (file signatures), επισυνάπτονται στο email και διαγράφονται αμέσως μετά.
 
-Runtime secrets, ποτέ στο frontend/repository:
-
-- `ADMIN_EMAILS`: εγκεκριμένοι διαχειριστές, χωρισμένοι με κόμμα.
-- `CRM_WEBHOOK_URL`: προαιρετικός εγκεκριμένος HTTPS προορισμός.
-- `CRM_WEBHOOK_TOKEN`: προαιρετικό bearer token.
-
-Χωρίς προορισμό CRM δεν αποστέλλονται εξωτερικές ειδοποιήσεις. Τα αιτήματα παραμένουν στο ιδιωτικό inbox. Το webhook καταγράφει pending/delivered/failed· δεν υπάρχει αυτόματη επαναποστολή στην παρούσα έκδοση.
+Προστασία: same-origin, honeypot, προαιρετικό Cloudflare Turnstile (`TURNSTILE_SITE_KEY`/`TURNSTILE_SECRET_KEY`), idempotency key στο Resend ώστε μια επανάληψη να μη στέλνει δεύτερο email. Με `CONTACT_CONFIRMATION=on` ο πελάτης λαμβάνει και επιβεβαίωση.
 
 ## Δημόσια κυκλοφορία
 
-Noindex και robots παραμένουν ενεργά για το ιδιωτικό review. Πριν το public launch απαιτούνται πραγματικό domain/canonicals, τελικά στοιχεία υπευθύνου επεξεργασίας και διατήρησης δεδομένων, εγκεκριμένοι όροι εγγύησης, προορισμός CRM και analytics/consent configuration. Τα `arcus:analytics` events/dataLayer hooks δεν αποτελούν ενεργή σύνδεση GA4. Δεν φορτώνονται εξωτερικά analytics.
+Noindex και robots παραμένουν ενεργά για το ιδιωτικό review. Το launch γίνεται με `SITE_INDEXING=on` στο production του Vercel και νέο deploy. Πριν το public launch απαιτούνται πραγματικό domain/canonicals, τελικά στοιχεία υπευθύνου επεξεργασίας και διατήρησης δεδομένων, εγκεκριμένοι όροι εγγύησης και analytics/consent configuration. Τα `arcus:analytics` events/dataLayer hooks δεν αποτελούν ενεργή σύνδεση GA4. Δεν φορτώνονται εξωτερικά analytics.
 
 Δεν παρουσιάζονται reference φωτογραφίες ως έργα, ενδεικτική κάτοψη ως μελέτη, ανύπαρκτες μαρτυρίες, υποσχέσεις απόδοσης επένδυσης ή ανεπιβεβαίωτα εμβαδά.

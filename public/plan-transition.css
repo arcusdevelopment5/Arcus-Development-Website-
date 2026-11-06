@@ -1,0 +1,44 @@
+.plan-transition{position:relative;width:100%;color:#786a54;padding:22px;background:#e8e3da}.plan-transition-top{display:flex;justify-content:space-between;gap:15px;font-size:9px;letter-spacing:.12em}.plan-transition-stage{position:relative;margin:20px 0 8px;background-image:linear-gradient(#786a5405 1px,transparent 1px),linear-gradient(90deg,#786a5405 1px,transparent 1px);background-size:24px 24px}.plan-transition-stage svg{width:100%;height:auto;display:block;overflow:visible;fill:none;stroke:currentColor;stroke-linejoin:miter}.plan-shell{stroke-width:4}.plan-wall{stroke-width:3.8}.plan-furnishing{stroke-width:1.25}.plan-dimensions{stroke-width:.7;opacity:.35}.plan-wall path,.plan-furnishing path{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 1.8s ease,opacity .8s}.plan-new path{stroke-dashoffset:1;opacity:0}.plan-transition[data-state="after"] .plan-old path{stroke-dashoffset:1;opacity:0}.plan-transition[data-state="after"] .plan-new path{stroke-dashoffset:0;opacity:1;transition-delay:calc(.9s + var(--i)*.065s)}.plan-transition[data-state="before"] .plan-old path{transition-delay:calc(.8s + var(--i)*.05s)}.plan-room-labels{stroke:none;fill:currentColor;font-size:10px;letter-spacing:1.4px;text-anchor:middle;transition:opacity .8s}.plan-new.plan-room-labels{opacity:0}.plan-transition[data-state="after"] .plan-new.plan-room-labels{opacity:1;transition-delay:2s}.plan-transition[data-state="after"] .plan-old.plan-room-labels{opacity:0}.plan-transition-stage button{display:none;position:absolute;left:53%;top:51%;border:0;background:#51483b;color:#fff;border-radius:50%;width:42px;height:42px;box-shadow:0 0 0 7px #786a5424,0 0 0 14px #786a5410;cursor:pointer}.plan-transition.is-ready .plan-transition-stage button{display:grid;place-items:center}.plan-transition-stage button span{font-size:29px;line-height:1;transition:transform .7s}.plan-transition[data-state="after"] .plan-transition-stage button span{transform:rotate(45deg)}.plan-transition-controls{display:flex;align-items:center;justify-content:space-between;gap:16px}.plan-transition-controls p{font-size:12px;margin:8px 0}.plan-transition-controls button{display:none;background:transparent;border:1px solid #786a5455;color:inherit;padding:7px 10px;cursor:pointer;font-size:10px}.plan-transition.is-ready .plan-transition-controls button{display:block}.plan-transition button:focus-visible{outline:3px solid #51483b;outline-offset:5px}.plan-source-note{font-size:9px;line-height:1.7;margin:12px 0 4px;opacity:.8}.plan-source-links{display:flex;gap:20px;font-size:9px;text-decoration:underline;text-underline-offset:3px}.hero-plan:has(.plan-transition){margin:0 0 0 12px;min-width:0;width:100%}.hero-plan:has(.plan-transition) figcaption{font-size:8px;gap:16px;line-height:1.7}.story-stage .plan-transition{margin-bottom:50px;padding:35px}.investor-visual:has(.plan-transition){padding:0;background:transparent}.motion-paused .plan-transition path{transition-duration:0s;transition-delay:0s}@media(max-width:800px){.hero-plan:has(.plan-transition){margin:20px 0 0}.plan-transition,.story-stage .plan-transition{padding:16px}.plan-transition-top{font-size:8px;letter-spacing:.05em}.plan-transition-stage button{width:36px;height:36px}.plan-source-links{gap:12px;font-size:8px}}@media(prefers-reduced-motion:reduce){.plan-transition *{transition:none!important;animation:none!important}}
+
+/* True CAD double-line walls; shared geometry stays in place throughout. */
+.plan-transition-stage svg{stroke-linecap:round;stroke-linejoin:round}
+.plan-wall{stroke-width:1.9}.plan-opening{stroke-width:1.05}.plan-furnishing{stroke-width:.85}
+.plan-opening path{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 1.8s ease,opacity .8s}
+.plan-new.plan-opening path{stroke-dashoffset:1;opacity:0}
+.plan-transition[data-state="after"] .plan-old path{transition-delay:0s}
+.plan-transition[data-state="after"] .plan-new path{transition-delay:calc(1.1s + var(--delay))}
+.plan-transition[data-state="before"] .plan-old path{transition-delay:calc(1.1s + var(--delay))}
+.plan-transition[data-state="before"] .plan-new path{transition-delay:0s}
+.plan-transition[data-state="after"] .plan-new.plan-furnishing path{transition-delay:calc(2s + var(--delay))}
+.plan-transition-stage button{left:54%;top:74%}
+.plan-fixed path{stroke-dasharray:none;transition:none}
+
+/* Night studio: the real CAD drawing remains the centre of the opening. */
+.blueprint-hero{position:relative;isolation:isolate;overflow:hidden;background:#202122;color:#f3f1eb;background-image:radial-gradient(ellipse at 77% 43%,#66605666 0%,transparent 57%)}
+.blueprint-hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.23;background-image:linear-gradient(#c8b58d13 1px,transparent 1px),linear-gradient(90deg,#c8b58d13 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(90deg,transparent,#000)}
+.blueprint-hero .hero-copy h1{color:#f3f1eb;font-size:clamp(50px,5.4vw,88px);line-height:1.09;letter-spacing:-.055em}
+.blueprint-hero .hero-copy h1 em{color:#c8b58d}
+.blueprint-hero .hero-copy>p:not(.arc-kicker){color:#cfc9bf;max-width:430px;font-size:17px;line-height:1.8}
+.blueprint-hero .arc-kicker{color:#c8b58d}
+.blueprint-hero .arc-button{background:#c8b58d;color:#202122;border-color:#c8b58d}
+.blueprint-hero .arc-button:hover{background:#e1d1b1;border-color:#e1d1b1}
+.blueprint-hero .arc-link{color:#f3f1eb;border-color:#c8b58d60}
+.blueprint-hero .hero-plan{position:relative}
+.blueprint-hero .plan-transition{background:transparent;color:#e9e3d6;padding:22px 10px}
+.blueprint-hero .plan-transition-stage{background-image:linear-gradient(#c8b58d09 1px,transparent 1px),linear-gradient(90deg,#c8b58d09 1px,transparent 1px)}
+.blueprint-hero .plan-transition-stage::before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(ellipse,#c8b58d16,transparent 70%);filter:blur(22px);pointer-events:none;transition:opacity 2s;opacity:.35}
+.blueprint-hero .plan-transition[data-state="after"] .plan-transition-stage::before{opacity:1}
+.blueprint-hero .plan-old{color:#b8b1a5}
+.blueprint-hero .plan-new{color:#f5ebd8}
+.blueprint-hero .plan-new.plan-opening{color:#c8b58d}
+.blueprint-hero .plan-fixed{color:#d8d2c7}
+.blueprint-hero .plan-transition-top{color:#c8b58d}
+.blueprint-hero .plan-transition-stage button{background:#c8b58d;color:#202122;box-shadow:0 0 0 7px #c8b58d17,0 0 0 14px #c8b58d09}
+.blueprint-hero .plan-transition-controls button{border-color:#c8b58d66;color:#e9e3d6}
+.blueprint-hero .plan-transition button:focus-visible,.blueprint-hero a:focus-visible{outline:2px solid #ead8ae;outline-offset:5px}
+.blueprint-hero .plan-source-note,.blueprint-hero .plan-source-links,.blueprint-hero .hero-plan figcaption{color:#c6bfb2}
+.blueprint-hero .hero-bottom-line{border-color:#c8b58d30;color:#c6bfb2}
+@media(max-width:800px){.blueprint-hero .hero-copy h1{font-size:clamp(44px,8.4vw,68px)}.blueprint-hero .hero-copy>p:not(.arc-kicker){font-size:15px}.blueprint-hero .plan-transition{padding:16px 0}.blueprint-hero{background-image:radial-gradient(ellipse at 55% 75%,#66605666,transparent 60%)}}
+@media(prefers-reduced-motion:reduce){.blueprint-hero .plan-transition-stage::before{transition:none}}
+
+.blueprint-hero .plan-transition-controls p{color:#d9d2c6}.blueprint-hero .motion-control{color:#d9d2c6;border-color:#c8b58d66}

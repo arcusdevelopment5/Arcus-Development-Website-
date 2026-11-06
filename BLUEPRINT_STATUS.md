@@ -13,8 +13,8 @@
 | Διαδικασία | Έτοιμο | Έξι βήματα αρχικής, επτά dedicated σελίδας. |
 | Διετής εγγύηση/after-sales | Σελίδα και ροή έτοιμες | Βασίζεται στην οδηγία Arcus και στους όρους κάθε έργου. Αναμένεται τελικό έγγραφο κάλυψης/εξαιρέσεων· δεν επινοήθηκε PDF/SLA. |
 | Πραγματικές μαρτυρίες | Αναμένεται υλικό | Καμία μη εγκεκριμένη μαρτυρία ή βαθμολογία. |
-| Φόρμα / πραγματική αποθήκευση | Έτοιμο | D1/R2, intent, optional αρχεία, validation, idempotency, rate limit, κωδικός καταχώρισης. |
-| CRM / ειδοποιήσεις | Μερικώς | Ιδιωτικό inbox, status, ανάθεση, σημειώσεις, webhook. Αναμένονται destination, credentials, παραλήπτες και δοκιμή παράδοσης. Καμία ενεργή αποστολή email. |
+| Φόρμα / αποστολή | Έτοιμο | Email μέσω Resend, συνημμένα μέσω ιδιωτικού Vercel Blob (διαγράφονται μετά την αποστολή), validation, idempotency, honeypot/Turnstile, κωδικός αιτήματος. |
+| Ειδοποιήσεις | Αναμένεται ρύθμιση | Τα αιτήματα έρχονται με email (χωρίς CRM, χωρίς admin). Αναμένονται: διεύθυνση παραλήπτη, επιβεβαίωση Resend domain, απόφαση για email επιβεβαίωσης στον πελάτη. |
 | Πλοήγηση και footer | Έτοιμο | Mega menus, mobile accordion, πέντε λογότυπα, κάτοψη χωρίς Α. |
 | Εταιρικές υποσελίδες | Έτοιμο | Εταιρεία, φιλοσοφία, FAQ, λεξικό, καριέρα, γραφείο. |
 | SEO υποδομή | Έτοιμο για review | H1/title/description, canonical, Organization/Breadcrumb schema, sitemap, 301 redirects. Noindex/robots διατηρούνται. |
@@ -28,10 +28,10 @@
 - 18 σελίδες: H1, IDs, alt text, εσωτερικοί σύνδεσμοι.
 - Responsive browser στα 375/430/768/1024/1440 px: αρχική, δύο υπηρεσίες, portfolio, project detail, διαδικασία, εγγύηση, φόρμα και εταιρικές σελίδες.
 - Mega menu, mobile navigation, Escape, κάτοψη, portfolio filters/empty states, glossary search, keyboard slider.
-- Πραγματική δοκιμαστική υποβολή στο τοπικό preview και επιβεβαίωση D1. Τα δεδομένα QA δεν μεταφέρονται στην παραγωγική βάση.
+- Δοκιμαστική υποβολή στο τοπικό Next.js (5 Νοεμβρίου 2026): email περιεχόμενο, same-origin, honeypot, έλεγχος συνημμένων, redirects, robots/noindex.
 
 ## Υλικό για να κλείσουν οι υπόλοιπες απαιτήσεις
 
 1. Project pack: πραγματικές κατόψεις/renders/φωτογραφίες ίδιου έργου, επενδυτικό case διαχωρισμού με τεκμηριωμένα στοιχεία.
 2. Εγκεκριμένες μαρτυρίες, πλήρεις όροι εγγύησης, τελικά εταιρικά/νομικά στοιχεία απορρήτου και διατήρησης.
-3. CRM/ειδοποιήσεις, υπεύθυνος παραλαβής, domain, analytics/Search Console configuration.
+3. Παραλήπτης email, domain, analytics/Search Console configuration.

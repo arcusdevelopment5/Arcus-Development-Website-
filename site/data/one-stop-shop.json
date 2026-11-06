@@ -1,0 +1,56 @@
+{
+  "source": "https://arcusrealestate.gr/el/services",
+  "verified_at": "2026-10-30",
+  "services": [
+    {
+      "title": "Αγοραπωλησίες και Μισθώσεις Ακινήτων",
+      "description": "Ολοκληρωμένες λύσεις για κάθε είδος συναλλαγής, από την εκτίμηση έως την ολοκλήρωση.",
+      "url": "https://arcusrealestate.gr/el/services/sales-rentals"
+    },
+    {
+      "title": "Διαχείριση Ακινήτων",
+      "description": "Υποστήριξη στη βραχυχρόνια και τη μακροχρόνια μίσθωση, με οργανωμένη διαχείριση του ακινήτου.",
+      "url": "https://arcusrealestate.gr/el/services/property-management"
+    },
+    {
+      "title": "Εκτίμηση Ακινήτων",
+      "description": "Εκτίμηση της αξίας του ακινήτου με τη βοήθεια τεχνολογίας τεχνητής νοημοσύνης.",
+      "url": "https://arcusrealestate.gr/el/services/property-valuation"
+    },
+    {
+      "title": "Ακίνητα Πλειστηριασμών",
+      "description": "Πλήρης υποστήριξη σε κάθε στάδιο της διαδικασίας πλειστηριασμού μέσω eAuction.",
+      "url": "https://arcusrealestate.gr/el/services/auctions"
+    },
+    {
+      "title": "Τραπεζικά Δάνεια",
+      "description": "Καθοδήγηση για τις διαθέσιμες λύσεις χρηματοδότησης, σύμφωνα με τα κριτήρια των συνεργαζόμενων φορέων.",
+      "url": "https://arcusrealestate.gr/el/services/bank-loans"
+    },
+    {
+      "title": "Ανακαινίσεις Ακινήτων",
+      "description": "Μελέτη, σχεδιασμός και ολική ανακαίνιση διαμερισμάτων από την Arcus Development.",
+      "url": "/el#services"
+    },
+    {
+      "title": "Νομικές Υπηρεσίες",
+      "description": "Ολοκληρωμένη νομική υποστήριξη σε κάθε στάδιο των ακινήτων σας.",
+      "url": "https://arcusrealestate.gr/el/services/legal"
+    },
+    {
+      "title": "Υπηρεσίες Ενέργειας",
+      "description": "Ολοκληρωμένες λύσεις για τις συνδέσεις ενέργειας και υποδομών των ακινήτων σας.",
+      "url": "https://arcusrealestate.gr/el/services/energy"
+    },
+    {
+      "title": "Πιστοποίηση Συμβούλου",
+      "description": "Εκπαίδευση και πιστοποίηση συμβούλων ακινήτων κατά ISO/IEC 17024 από τον φορέα TÜV Austria.",
+      "url": "https://arcusrealestate.gr/el/services/certification"
+    },
+    {
+      "title": "Ενημέρωση",
+      "description": "Ενημέρωση για την αγορά ακινήτων μέσα από το Podcast και το Estate Magazine της Arcus.",
+      "url": "https://arcusrealestate.gr/el/services/media"
+    }
+  ]
+}

@@ -1,0 +1,1362 @@
+[
+  {
+    "slug": "kolokotroni-14",
+    "title": "Κολοκοτρώνη 14",
+    "subtitle": "Δυάρι & γκαρσονιέρα",
+    "summary": "Δύο κατοικίες με κοινή σχεδιαστική γλώσσα: ζεστές ξύλινες λεπτομέρειες, καθαρές γραμμές και χώρο για την καθημερινότητα.",
+    "story_title": "Δύο κατοικίες. Δύο τρόποι να ζεις.",
+    "story": [
+      "Στην Κολοκοτρώνη 14 διαμορφώσαμε ένα δυάρι και μία γκαρσονιέρα. Η κουζίνα, το καθιστικό και οι χώροι ύπνου μελετήθηκαν ως ενιαίο σύνολο για κάθε κατοικία.",
+      "Ξύλινες επιφάνειες, απαλές αποχρώσεις και φωτισμός συνδέουν τις διαφορετικές χρήσεις. Η παρουσίαση ακολουθεί κάθε κατοικία ξεχωριστά, από τη μελέτη μέχρι το ολοκληρωμένο αποτέλεσμα."
+    ],
+    "status": "completed",
+    "categories": [
+      "residential"
+    ],
+    "cover": "/assets/portfolio/kolokotroni-14/after-11.webp",
+    "cover_alt": "Ολοκληρωμένο καθιστικό και κουζίνα",
+    "cover_label": "Φωτογραφία ολοκληρωμένου έργου",
+    "groups": [
+      {
+        "kind": "plans",
+        "unit": "Συνολική διάταξη",
+        "images": [
+          {
+            "src": "/assets/portfolio/kolokotroni-14/plans-01.webp",
+            "alt": "Τρισδιάστατη κάτοψη της μελέτης για την Κολοκοτρώνη 14",
+            "width": 1920,
+            "height": 1080
+          }
+        ]
+      },
+      {
+        "kind": "plans",
+        "unit": "Γκαρσονιέρα",
+        "images": [
+          {
+            "src": "/assets/portfolio/kolokotroni-14/plans-02.webp",
+            "alt": "Τρισδιάστατη κάτοψη της γκαρσονιέρας — Κολοκοτρώνη 14",
+            "width": 1920,
+            "height": 1080
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "Δυάρι",
+        "images": [
+          {
+            "src": "/assets/portfolio/kolokotroni-14/renders-03.webp",
+            "alt": "Render σαλονιού και κουζίνας",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/renders-04.webp",
+            "alt": "Render υπνοδωματίου με καμπύλο φωτισμό",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/renders-05.webp",
+            "alt": "Render καθιστικού με τραπεζαρία",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/renders-06.webp",
+            "alt": "Render δεύτερου χώρου ύπνου",
+            "width": 1443,
+            "height": 1080
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "Γκαρσονιέρα",
+        "images": [
+          {
+            "src": "/assets/portfolio/kolokotroni-14/renders-07.webp",
+            "alt": "Render κουζίνας και καθιστικού",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/renders-08.webp",
+            "alt": "Render καθιστικού με θέα προς την κουζίνα",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/renders-09.webp",
+            "alt": "Render υπνοδωματίου",
+            "width": 1620,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/renders-10.webp",
+            "alt": "Render επίπλου τηλεόρασης και καθιστικού",
+            "width": 1789,
+            "height": 1023
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "Δυάρι",
+        "images": [
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-11.webp",
+            "alt": "Ολοκληρωμένο καθιστικό και κουζίνα",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-12.webp",
+            "alt": "Καθιστικό με ξύλινες λεπτομέρειες και ενιαία κουζίνα",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-13.webp",
+            "alt": "Υπνοδωμάτιο με πράσινες ντουλάπες και κρυφό φωτισμό",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-14.webp",
+            "alt": "Ολοκληρωμένο μπάνιο με ντουζιέρα",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-15.webp",
+            "alt": "Υπνοδωμάτιο με φωτιζόμενη σύνθεση τοίχου",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-16.webp",
+            "alt": "Υπνοδωμάτιο και γωνιά εργασίας",
+            "width": 1448,
+            "height": 1086
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "Γκαρσονιέρα",
+        "images": [
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-17.webp",
+            "alt": "Φωτεινό καθιστικό με θέα προς την κουζίνα",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-18.webp",
+            "alt": "Ενιαία κουζίνα και καθιστικό με τραπεζαρία",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-19.webp",
+            "alt": "Μπάνιο με γυάλινη ντουζιέρα",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-20.webp",
+            "alt": "Υπνοδωμάτιο με κρυφό φωτισμό",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-21.webp",
+            "alt": "Καθιστικό με διακοσμητικό φωτισμό και μπλε κουζίνα",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/kolokotroni-14/after-22.webp",
+            "alt": "Κουζίνα με ξύλινο πάγκο και τραπεζαρία",
+            "width": 1920,
+            "height": 1440
+          }
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "label": "Κατοικίες",
+        "value": "Δυάρι και γκαρσονιέρα"
+      }
+    ],
+    "public_note": "Οι κατόψεις της παρουσίασης είναι τρισδιάστατες απεικονίσεις της μελέτης. Το διαθέσιμο αρχείο δεν περιλαμβάνει φωτογραφίες πριν την ανακαίνιση."
+  },
+  {
+    "slug": "athanasiou-diakou-16",
+    "title": "Αθανασίου Διάκου 16",
+    "subtitle": "Τρεις κατοικίες",
+    "summary": "Από την αρχική διάταξη σε τρεις κατοικίες με ξεχωριστή ταυτότητα, πλήρη επίπλωση και ατμοσφαιρικό φωτισμό.",
+    "story_title": "Τρεις κατοικίες με ολοκληρωμένο χαρακτήρα.",
+    "story": [
+      "Στην Αθανασίου Διάκου 16 η νέα διαρρύθμιση οργανώνει τρεις κατοικίες. Κουζίνα, καθιστικό και χώροι ύπνου συνδυάζονται στη συνολική κάτοψη, με διαφορετικές λύσεις για κάθε μονάδα.",
+      "Το έργο ολοκληρώθηκε με πλήρη επίπλωση, ατμοσφαιρικό φωτισμό, θέρμανση αερίου και κλιματισμό. Οι ξύλινες λεπτομέρειες και οι χρωματικές επιφάνειες δίνουν σε κάθε κατοικία τη δική της ταυτότητα."
+    ],
+    "status": "completed",
+    "categories": [
+      "residential"
+    ],
+    "cover": "/assets/portfolio/athanasiou-diakou-16/after-24.webp",
+    "cover_alt": "Κουζίνα και καθιστικό με πορτοκαλί σύνθεση — Διαμέρισμα Α",
+    "cover_label": "Φωτογραφία ολοκληρωμένου έργου",
+    "groups": [
+      {
+        "kind": "before",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/before-01.webp",
+            "alt": "Αρχική κατάσταση του ενιαίου χώρου με ξύλινα δάπεδα",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/before-02.webp",
+            "alt": "Δωμάτιο πριν την ανακαίνιση",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/before-03.webp",
+            "alt": "Παλαιό μπάνιο πριν την ανακαίνιση · διορθωμένος φωτισμός",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/before-04.webp",
+            "alt": "Αρχικό υπνοδωμάτιο με μπαλκονόπορτα",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/before-05.webp",
+            "alt": "Αρχική διάταξη και περάσματα μεταξύ δωματίων",
+            "width": 1440,
+            "height": 1920
+          }
+        ]
+      },
+      {
+        "kind": "plans",
+        "unit": "Συνολική διάταξη",
+        "images": [
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/plans-06.webp",
+            "alt": "Έγχρωμη κάτοψη της μελέτης με τις τρεις κατοικίες",
+            "width": 1167,
+            "height": 666
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "Δ1",
+        "images": [
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-10.webp",
+            "alt": "Render υπνοδωματίου Δ1",
+            "width": 1920,
+            "height": 1334
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-11.webp",
+            "alt": "Render καθιστικού Δ1",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-12.webp",
+            "alt": "Render κουζίνας και καθιστικού Δ1",
+            "width": 1920,
+            "height": 1190
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "Δ2",
+        "images": [
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-13.webp",
+            "alt": "Τρισδιάστατη συνολική διάταξη μελέτης",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-14.webp",
+            "alt": "Render κουζίνας Δ2",
+            "width": 1920,
+            "height": 1153
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-15.webp",
+            "alt": "Render καθιστικού Δ2",
+            "width": 1920,
+            "height": 1161
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "Δ3",
+        "images": [
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-16.webp",
+            "alt": "Render υπνοδωματίου Δ3",
+            "width": 1920,
+            "height": 1150
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-17.webp",
+            "alt": "Render καθιστικού Δ3",
+            "width": 1920,
+            "height": 1151
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/renders-18.webp",
+            "alt": "Render κουζίνας και καθιστικού Δ3",
+            "width": 1920,
+            "height": 1080
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "Διαμέρισμα Α",
+        "images": [
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-19.webp",
+            "alt": "Μπάνιο με γυάλινη ντουζιέρα — Διαμέρισμα Α",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-20.webp",
+            "alt": "Υπνοδωμάτιο με φυτικό μοτίβο — Διαμέρισμα Α",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-21.webp",
+            "alt": "Κουζίνα με ξύλινο πάγκο — Διαμέρισμα Α",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-22.webp",
+            "alt": "Τραπεζαρία και καθιστικό — Διαμέρισμα Α",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-23.webp",
+            "alt": "Χώρος ύπνου με φυσικό φωτισμό — Διαμέρισμα Α",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-24.webp",
+            "alt": "Κουζίνα και καθιστικό με πορτοκαλί σύνθεση — Διαμέρισμα Α",
+            "width": 1920,
+            "height": 1280
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "Διαμέρισμα Β",
+        "images": [
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-25.webp",
+            "alt": "Κουζίνα και τραπεζαρία — Διαμέρισμα Β",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-26.webp",
+            "alt": "Φωτισμός και σύνθεση τηλεόρασης — Διαμέρισμα Β",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-27.webp",
+            "alt": "Ενιαίος χώρος κουζίνας και καθιστικού — Διαμέρισμα Β",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-28.webp",
+            "alt": "Καθιστικό με πράσινη κουζίνα — Διαμέρισμα Β",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-29.webp",
+            "alt": "Υπνοδωμάτιο με ταπετσαρία — Διαμέρισμα Β",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-30.webp",
+            "alt": "Ολοκληρωμένο μπάνιο — Διαμέρισμα Β",
+            "width": 1280,
+            "height": 1920
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "Διαμέρισμα Γ",
+        "images": [
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-31.webp",
+            "alt": "Καθιστικό και γωνιά εργασίας — Διαμέρισμα Γ",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-32.webp",
+            "alt": "Καθιστικό με φυσικό φως — Διαμέρισμα Γ",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-33.webp",
+            "alt": "Μπάνιο με ενσωματωμένο πλυντήριο — Διαμέρισμα Γ",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-34.webp",
+            "alt": "Κουζίνα με ξύλινη πλάτη — Διαμέρισμα Γ",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-35.webp",
+            "alt": "Ενιαίος χώρος κουζίνας και καθιστικού — Διαμέρισμα Γ",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/athanasiou-diakou-16/after-36.webp",
+            "alt": "Ανάπτυξη κρεβατιού στον χώρο — Διαμέρισμα Γ",
+            "width": 1920,
+            "height": 1280
+          }
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "label": "Κατοικίες",
+        "value": "3"
+      },
+      {
+        "label": "Επίπλωση",
+        "value": "Πλήρης επίπλωση"
+      },
+      {
+        "label": "Φωτισμός",
+        "value": "Πλήρης και ατμοσφαιρικός φωτισμός"
+      },
+      {
+        "label": "Θέρμανση / ψύξη",
+        "value": "Λέβητας αερίου και A/C"
+      }
+    ],
+    "public_note": "Σε μία φωτογραφία της αρχικής κατάστασης έχει διορθωθεί ο φωτισμός για καλύτερη αναγνωσιμότητα."
+  },
+  {
+    "slug": "artemidos-37",
+    "title": "Αρτέμιδος 37",
+    "subtitle": "Δύο κατοικίες",
+    "summary": "Νέα διαρρύθμιση δύο κατοικιών, με σύγχρονη επίπλωση και προσοχή στη σχέση ανάμεσα στη λειτουργία και την ατμόσφαιρα.",
+    "story_title": "Δύο κατοικίες, μελετημένες ως σύνολο.",
+    "story": [
+      "Στην Αρτέμιδος 37 διαμορφώσαμε δύο κατοικίες στον πρώτο όροφο. Η μελέτη συνδέει την κουζίνα με το καθιστικό μέσα από τα υλικά, τις επιφάνειες και τον φωτισμό.",
+      "Οι κατοικίες Δ1 και Δ2 ολοκληρώθηκαν με πλήρη επίπλωση, θέρμανση αερίου και κλιματισμό. Δες ξεχωριστά τη μελέτη και την τελική εικόνα καθεμίας."
+    ],
+    "status": "completed",
+    "categories": [
+      "residential"
+    ],
+    "cover": "/assets/portfolio/artemidos-37/after-17.webp",
+    "cover_alt": "Κουζίνα με πράσινα ντουλάπια — Δ1",
+    "cover_label": "Φωτογραφία ολοκληρωμένου έργου",
+    "groups": [
+      {
+        "kind": "before",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/artemidos-37/before-01.webp",
+            "alt": "Δωμάτιο πριν την ανακαίνιση",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/before-02.webp",
+            "alt": "Παλαιά κουζίνα πριν την ανακαίνιση",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/before-03.webp",
+            "alt": "Αρχικό υπνοδωμάτιο με ξύλινο δάπεδο",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/before-04.webp",
+            "alt": "Παλαιό μπάνιο πριν την ανακαίνιση · διορθωμένος φωτισμός",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/before-05.webp",
+            "alt": "Αρχική κατάσταση υπνοδωματίου",
+            "width": 1920,
+            "height": 1440
+          }
+        ]
+      },
+      {
+        "kind": "plans",
+        "unit": "Συνολική διάταξη",
+        "images": [
+          {
+            "src": "/assets/portfolio/artemidos-37/plans-06.webp",
+            "alt": "Τεχνική κάτοψη προτεινόμενης κατάστασης με δύο κατοικίες — Αρτέμιδος 37",
+            "width": 1065,
+            "height": 841
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/artemidos-37/renders-07.webp",
+            "alt": "Τρισδιάστατη κάτοψη της μελέτης",
+            "width": 1920,
+            "height": 1067
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/renders-08.webp",
+            "alt": "Render καθιστικού πρώτης κατοικίας",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/renders-09.webp",
+            "alt": "Render κουζίνας και καθιστικού πρώτης κατοικίας",
+            "width": 1920,
+            "height": 1067
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/renders-10.webp",
+            "alt": "Render υπνοδωματίου πρώτης κατοικίας",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/renders-11.webp",
+            "alt": "Render καθιστικού δεύτερης κατοικίας",
+            "width": 1920,
+            "height": 1067
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/renders-12.webp",
+            "alt": "Render κουζίνας δεύτερης κατοικίας",
+            "width": 1920,
+            "height": 1067
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/renders-13.webp",
+            "alt": "Render υπνοδωματίου δεύτερης κατοικίας",
+            "width": 1920,
+            "height": 1067
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "Δ1",
+        "images": [
+          {
+            "src": "/assets/portfolio/artemidos-37/after-14.webp",
+            "alt": "Κουζίνα και καθιστικό — Δ1",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-15.webp",
+            "alt": "Μπάνιο με νιπτήρα και γυάλινη ντουζιέρα — Δ1",
+            "width": 1280,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-16.webp",
+            "alt": "Τραπεζαρία με θέα στο καθιστικό — Δ1",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-17.webp",
+            "alt": "Κουζίνα με πράσινα ντουλάπια — Δ1",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-18.webp",
+            "alt": "Υπνοδωμάτιο και γωνιά εργασίας — Δ1",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-19.webp",
+            "alt": "Ολοκληρωμένο υπνοδωμάτιο — Δ1",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-20.webp",
+            "alt": "Καθιστικό με φυσικό φως — Δ1",
+            "width": 1920,
+            "height": 1280
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "Δ2",
+        "images": [
+          {
+            "src": "/assets/portfolio/artemidos-37/after-21.webp",
+            "alt": "Φωτεινό καθιστικό και τραπεζαρία — Δ2",
+            "width": 1280,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-22.webp",
+            "alt": "Καθιστικό με διακοσμητικές καμπύλες — Δ2",
+            "width": 1280,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-23.webp",
+            "alt": "Ολοκληρωμένο υπνοδωμάτιο — Δ2",
+            "width": 1280,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-24.webp",
+            "alt": "Υπνοδωμάτιο με ντουλάπα και γραφείο — Δ2",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-25.webp",
+            "alt": "Κουζίνα και τραπεζαρία — Δ2",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-26.webp",
+            "alt": "Ενιαίος χώρος καθιστικού και κουζίνας — Δ2",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/artemidos-37/after-27.webp",
+            "alt": "Μπάνιο με ντουζιέρα — Δ2",
+            "width": 1280,
+            "height": 1920
+          }
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "label": "Κατοικίες",
+        "value": "2"
+      },
+      {
+        "label": "Όροφος",
+        "value": "1ος"
+      },
+      {
+        "label": "Επίπλωση",
+        "value": "Πλήρης επίπλωση"
+      },
+      {
+        "label": "Φωτισμός",
+        "value": "Πλήρης και ατμοσφαιρικός φωτισμός"
+      },
+      {
+        "label": "Θέρμανση / ψύξη",
+        "value": "Λέβητας αερίου και A/C"
+      }
+    ],
+    "public_note": "Σε μία φωτογραφία της αρχικής κατάστασης έχει διορθωθεί ο φωτισμός για καλύτερη αναγνωσιμότητα."
+  },
+  {
+    "slug": "grigoriou-palama-7",
+    "title": "Γρηγορίου Παλαμά 7",
+    "subtitle": "Ολική ανακαίνιση",
+    "summary": "Η παλιά εικόνα του διαμερίσματος δίνει τη θέση της σε μια νέα σύνθεση υλικών, χρωμάτων και καθημερινών λειτουργιών.",
+    "story_title": "Η κουζίνα στο επίκεντρο της αλλαγής.",
+    "story": [
+      "Η ανακαίνιση στη Γρηγορίου Παλαμά 7 μεταμόρφωσε την παλιά κουζίνα και τους χώρους του διαμερίσματος. Η τρισδιάστατη μελέτη έδωσε εικόνα της νέας διαμόρφωσης πριν από την κατασκευή.",
+      "Η νέα κουζίνα αναδεικνύει τη διαφορά ανάμεσα στην αρχική κατάσταση και το τελικό αποτέλεσμα. Οι φωτογραφίες ολοκλήρωσης παρουσιάζουν τις επιλογές που τελικά υλοποιήθηκαν."
+    ],
+    "status": "completed",
+    "categories": [
+      "residential"
+    ],
+    "cover": "/assets/portfolio/grigoriou-palama-7/after-09.webp",
+    "cover_alt": "Παλαμά 7 — ολοκληρωμένο καθιστικό και τραπεζαρία",
+    "cover_label": "Φωτογραφία ολοκληρωμένου έργου",
+    "groups": [
+      {
+        "kind": "before",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/before-01.webp",
+            "alt": "Παλαμά 7 — αρχική κουζίνα",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/before-02.webp",
+            "alt": "Παλαμά 7 — αρχική διάταξη κουζίνας και εισόδου",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/before-03.webp",
+            "alt": "Παλαμά 7 — λουτρό πριν την ανακαίνιση",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/before-04.webp",
+            "alt": "Παλαμά 7 — ενιαίος χώρος πριν την παρέμβαση",
+            "width": 1440,
+            "height": 1920
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/renders-05.webp",
+            "alt": "Παλαμά 7 — 3D πρόταση χώρου τηλεόρασης",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/renders-06.webp",
+            "alt": "Παλαμά 7 — 3D πρόταση καθιστικού και κουζίνας",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/renders-07.webp",
+            "alt": "Παλαμά 7 — 3D πρόταση υπνοδωματίου",
+            "width": 1920,
+            "height": 1080
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/after-08.webp",
+            "alt": "Παλαμά 7 — ολοκληρωμένη κουζίνα σε πράσινες αποχρώσεις",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/after-09.webp",
+            "alt": "Παλαμά 7 — ολοκληρωμένο καθιστικό και τραπεζαρία",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/after-10.webp",
+            "alt": "Παλαμά 7 — υπνοδωμάτιο με διακοσμητικό τοίχο",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/after-11.webp",
+            "alt": "Παλαμά 7 — σύνδεση υπνοδωματίου και καθιστικού",
+            "width": 1920,
+            "height": 1280
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/after-12.webp",
+            "alt": "Παλαμά 7 — ολοκληρωμένο λουτρό",
+            "width": 1280,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/after-13.webp",
+            "alt": "Παλαμά 7 — καθιστικό με άνοιγμα προς τον εξώστη",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/grigoriou-palama-7/after-14.webp",
+            "alt": "Παλαμά 7 — λεπτομέρεια φωτισμού",
+            "width": 1920,
+            "height": 1280
+          }
+        ]
+      }
+    ],
+    "facts": []
+  },
+  {
+    "slug": "soulioti-17",
+    "title": "Σουλιώτη 17",
+    "subtitle": "Ολική ανακαίνιση",
+    "summary": "Από την αρχική κατάσταση και τις εργασίες κατασκευής σε καθαρούς, ανανεωμένους χώρους, έτοιμους για το επόμενο κεφάλαιο.",
+    "story_title": "Ξύλο, φως και καθαρές γραμμές.",
+    "story": [
+      "Στη Σουλιώτη 17 η ολική ανακαίνιση συνδέει τη νέα κουζίνα, τα δάπεδα και τις επιφάνειες του διαμερίσματος. Η πορεία περιλαμβάνει αποτύπωση της αρχικής κατάστασης, σχεδιαστική πρόταση και κατασκευή.",
+      "Στην κουζίνα, το ξύλο και οι ανθρακί επιφάνειες συνδυάζονται με γραμμικό φωτισμό. Το διαμέρισμα παρουσιάζεται ολοκληρωμένο, πριν από την επίπλωση, ώστε να φαίνεται καθαρά η αρχιτεκτονική του χώρου."
+    ],
+    "status": "completed",
+    "categories": [
+      "residential"
+    ],
+    "cover": "/assets/portfolio/soulioti-17/after-17.webp",
+    "cover_alt": "Σουλιώτη 17 — κουζίνα με πάγκο και κρυφό φωτισμό",
+    "cover_label": "Φωτογραφία ολοκληρωμένου έργου",
+    "groups": [
+      {
+        "kind": "before",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/soulioti-17/before-01.webp",
+            "alt": "Σουλιώτη 17 — λουτρό πριν την ανακαίνιση",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/before-02.webp",
+            "alt": "Σουλιώτη 17 — αρχικός διάδρομος και δωμάτια",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/before-03.webp",
+            "alt": "Σουλιώτη 17 — δωμάτιο πριν την ανακαίνιση",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/before-04.webp",
+            "alt": "Σουλιώτη 17 — παλαιά κουζίνα",
+            "width": 1440,
+            "height": 1920
+          }
+        ]
+      },
+      {
+        "kind": "construction",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/soulioti-17/construction-05.webp",
+            "alt": "Σουλιώτη 17 — εργασίες δαπέδου και εγκαταστάσεων",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/construction-06.webp",
+            "alt": "Σουλιώτη 17 — κατασκευή νέου δαπέδου",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/construction-07.webp",
+            "alt": "Σουλιώτη 17 — νέες σωληνώσεις και υπόστρωμα",
+            "width": 1920,
+            "height": 1440
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/soulioti-17/renders-08.webp",
+            "alt": "Σουλιώτη 17 — 3D πρόταση υπνοδωματίου",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/renders-09.webp",
+            "alt": "Σουλιώτη 17 — 3D πρόταση κουζίνας",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/renders-10.webp",
+            "alt": "Σουλιώτη 17 — 3D πρόταση λουτρού",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/renders-11.webp",
+            "alt": "Σουλιώτη 17 — 3D πρόταση καθιστικού",
+            "width": 1600,
+            "height": 900
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/soulioti-17/after-12.webp",
+            "alt": "Σουλιώτη 17 — ανακαινισμένος ενιαίος χώρος με ξύλινο δάπεδο",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/after-13.webp",
+            "alt": "Σουλιώτη 17 — υπνοδωμάτιο με εντοιχισμένη ντουλάπα",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/after-14.webp",
+            "alt": "Σουλιώτη 17 — φωτεινό δωμάτιο μετά την ανακαίνιση",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/after-15.webp",
+            "alt": "Σουλιώτη 17 — ολοκληρωμένος χώρος κουζίνας",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/after-16.webp",
+            "alt": "Σουλιώτη 17 — ολοκληρωμένο λουτρό με φωτιζόμενο καθρέφτη",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "/assets/portfolio/soulioti-17/after-17.webp",
+            "alt": "Σουλιώτη 17 — κουζίνα με πάγκο και κρυφό φωτισμό",
+            "width": 1600,
+            "height": 1200
+          }
+        ]
+      }
+    ],
+    "facts": []
+  },
+  {
+    "slug": "vyronos-37",
+    "title": "Βύρωνος 37",
+    "subtitle": "Σταυρούπολη",
+    "summary": "Η διαδρομή μιας ανακαίνισης στη Σταυρούπολη, από τους αρχικούς χώρους και την κατασκευή έως την επιπλωμένη κατοικία.",
+    "story_title": "Η κουζίνα ενώνει την καθημερινότητα.",
+    "story": [
+      "Στη Βύρωνος 37 η κουζίνα, η τραπεζαρία και το καθιστικό συνδέονται σε έναν ενιαίο χώρο. Η ανθρακί κουζίνα, οι ξύλινες επιφάνειες και ο φωτισμός κάτω από τα ντουλάπια δίνουν συνοχή στη νέα διαμόρφωση.",
+      "Τα υπνοδωμάτια ενσωματώνουν αποθήκευση και θέσεις εργασίας. Από την αρχική κατάσταση και την κατασκευή μέχρι το επιπλωμένο αποτέλεσμα, η παρουσίαση δείχνει τις αλλαγές στους επιμέρους χώρους."
+    ],
+    "status": "completed",
+    "categories": [
+      "residential"
+    ],
+    "cover": "/assets/portfolio/vyronos-37/edited-kitchen.webp",
+    "cover_alt": "Βύρωνος 37 — Η κουζίνα με ανθρακί ντουλάπια και φωτισμό πάγκου",
+    "cover_label": "Φωτογραφία ολοκληρωμένου έργου",
+    "groups": [
+      {
+        "kind": "before",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/vyronos-37/before-01.webp",
+            "alt": "Βύρωνος 37 — εξωτερική όψη από την αρχική καταγραφή",
+            "width": 1920,
+            "height": 1440
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/before-02.webp",
+            "alt": "Βύρωνος 37 — αρχική κατάσταση του εξωτερικού διαδρόμου",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/before-03.webp",
+            "alt": "Βύρωνος 37 — στεγασμένος εξωτερικός χώρος πριν την ανακαίνιση",
+            "width": 1440,
+            "height": 1920
+          }
+        ]
+      },
+      {
+        "kind": "construction",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/vyronos-37/construction-04.webp",
+            "alt": "Βύρωνος 37 — νέες σωληνώσεις στο λουτρό",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/construction-05.webp",
+            "alt": "Βύρωνος 37 — νέα δίκτυα στο δάπεδο",
+            "width": 1440,
+            "height": 1920
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/construction-06.webp",
+            "alt": "Βύρωνος 37 — κατασκευή και οργάνωση εγκαταστάσεων",
+            "width": 1440,
+            "height": 1920
+          }
+        ]
+      },
+      {
+        "kind": "after",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-kitchen.webp",
+            "alt": "Βύρωνος 37 — Η κουζίνα με ανθρακί ντουλάπια και φωτισμό πάγκου",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-kitchen-living.webp",
+            "alt": "Βύρωνος 37 — Κουζίνα, τραπεζαρία και καθιστικό",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-kitchen-detail.webp",
+            "alt": "Βύρωνος 37 — Η γωνιακή κουζίνα και οι επιφάνειες εργασίας",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-living-wide.webp",
+            "alt": "Βύρωνος 37 — Ενιαίος χώρος καθιστικού και κουζίνας",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-living.webp",
+            "alt": "Βύρωνος 37 — Καθιστικό και τραπεζαρία",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-bedroom.webp",
+            "alt": "Βύρωνος 37 — Υπνοδωμάτιο με αποθηκευτικούς χώρους",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-bedroom-tv.webp",
+            "alt": "Βύρωνος 37 — Υπνοδωμάτιο και σύνθεση τηλεόρασης",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-study-bedroom.webp",
+            "alt": "Βύρωνος 37 — Χώρος ύπνου και εργασίας",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-study.webp",
+            "alt": "Βύρωνος 37 — Γραφείο και βιβλιοθήκη",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-window-desk.webp",
+            "alt": "Βύρωνος 37 — Χώρος εργασίας δίπλα στο παράθυρο",
+            "width": 1448,
+            "height": 1086
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-bathroom.webp",
+            "alt": "Βύρωνος 37 — Μπάνιο με φωτιζόμενο καθρέφτη",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-shower.webp",
+            "alt": "Βύρωνος 37 — Ντουζιέρα με εντοιχισμένες εσοχές",
+            "width": 1086,
+            "height": 1448
+          },
+          {
+            "src": "/assets/portfolio/vyronos-37/edited-shower-detail.webp",
+            "alt": "Βύρωνος 37 — Λεπτομέρεια ντουζιέρας",
+            "width": 1086,
+            "height": 1448
+          }
+        ]
+      }
+    ],
+    "facts": [],
+    "public_note": "Οι φωτογραφίες του ολοκληρωμένου έργου έχουν υποστεί επεξεργασία φωτισμού και αφαίρεση προσωρινών αντικειμένων για καθαρότερη παρουσίαση των χώρων."
+  },
+  {
+    "slug": "kanari-16",
+    "title": "Κανάρη 16",
+    "subtitle": "Δύο κατοικίες / σε εξέλιξη",
+    "summary": "Δύο νέες κατοικίες στον τέταρτο όροφο. Η κάτοψη και τα renders δίνουν μορφή στη διαρρύθμιση που βρίσκεται σε υλοποίηση.",
+    "story_title": "Δύο διαδρομές σχεδιασμού.",
+    "story": [
+      "Η μελέτη αφορά τις κατοικίες Δ1 και Δ2. Κάθε μονάδα οργανώνεται με ένα υπνοδωμάτιο και χώρους καθημερινής διαβίωσης, με βάση τις δυνατότητες του ακινήτου.",
+      "Η αρχική φωτογραφική καταγραφή δείχνει τη φάση των αποξηλώσεων. Η χρωματική κάτοψη και οι τρισδιάστατες απεικονίσεις παρουσιάζουν την προτεινόμενη διαμόρφωση· δεν αποτελούν τελικές φωτογραφίες."
+    ],
+    "status": "ongoing",
+    "categories": [
+      "residential"
+    ],
+    "cover": "/assets/portfolio/kanari-16/renders-06.webp",
+    "cover_alt": "Δ1 — 3D πρόταση καθιστικού",
+    "cover_label": "Render μελέτης",
+    "groups": [
+      {
+        "kind": "before",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/kanari-16/before-01.webp",
+            "alt": "Κανάρη 16 — ο ενιαίος χώρος στη φάση αποξηλώσεων",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "/assets/portfolio/kanari-16/before-02.webp",
+            "alt": "Κανάρη 16 — αρχική καταγραφή της κουζίνας μετά τις αποξηλώσεις",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "/assets/portfolio/kanari-16/before-03.webp",
+            "alt": "Κανάρη 16 — φωτεινός χώρος κατά τις εργασίες",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "/assets/portfolio/kanari-16/before-04.webp",
+            "alt": "Κανάρη 16 — λουτρό πριν την ολοκλήρωση των εργασιών",
+            "width": 1200,
+            "height": 1600
+          }
+        ]
+      },
+      {
+        "kind": "plans",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/kanari-16/plans-05.webp",
+            "alt": "Χρωματική κάτοψη της νέας διαρρύθμισης — Κανάρη 16",
+            "width": 2600,
+            "height": 1838
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "Δ1",
+        "images": [
+          {
+            "src": "/assets/portfolio/kanari-16/renders-06.webp",
+            "alt": "Δ1 — 3D πρόταση καθιστικού",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kanari-16/renders-07.webp",
+            "alt": "Δ1 — 3D πρόταση κουζίνας",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kanari-16/renders-08.webp",
+            "alt": "Δ1 — καθιστικό και τραπεζαρία σε 3D",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kanari-16/renders-09.webp",
+            "alt": "Δ1 — 3D πρόταση υπνοδωματίου",
+            "width": 1730,
+            "height": 1080
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "Δ2",
+        "images": [
+          {
+            "src": "/assets/portfolio/kanari-16/renders-10.webp",
+            "alt": "Δ2 — 3D πρόταση τραπεζαρίας και καθιστικού",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kanari-16/renders-11.webp",
+            "alt": "Δ2 — 3D πρόταση υπνοδωματίου",
+            "width": 1920,
+            "height": 1080
+          },
+          {
+            "src": "/assets/portfolio/kanari-16/renders-12.webp",
+            "alt": "Δ2 — 3D πρόταση ενιαίας κουζίνας και καθιστικού",
+            "width": 1920,
+            "height": 1080
+          }
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "label": "Όροφος",
+        "value": "4ος"
+      },
+      {
+        "label": "Κατοικία Δ1",
+        "value": "45 m² μικτά / 37 m² καθαρά"
+      },
+      {
+        "label": "Κατοικία Δ2",
+        "value": "55 m² μικτά / 46 m² καθαρά"
+      },
+      {
+        "label": "Διαρρύθμιση",
+        "value": "1 υπνοδωμάτιο ανά κατοικία"
+      }
+    ]
+  },
+  {
+    "slug": "agiou-dimitriou-113",
+    "title": "Αγίου Δημητρίου 113",
+    "subtitle": "Ανακαίνιση / σε εξέλιξη",
+    "summary": "Μια κατοικία με δύο υπνοδωμάτια στο στάδιο της υλοποίησης. Η τρισδιάστατη μελέτη αποτυπώνει την επόμενη εικόνα του χώρου.",
+    "story_title": "Το επόμενο σπίτι, ήδη ορατό.",
+    "story": [
+      "Η προτεινόμενη διαρρύθμιση αφορά διαμέρισμα πρώτου ορόφου. Η τρισδιάστατη κάτοψη επιτρέπει μια συνολική ανάγνωση του χώρου, ενώ τα επιμέρους renders εστιάζουν στην καθημερινή εμπειρία της κατοικίας.",
+      "Το έργο παραμένει σε εξέλιξη. Η παρουσίαση αυτή αφορά τη σχεδιαστική πρόταση και θα συμπληρωθεί με πραγματικές φωτογραφίες της ολοκλήρωσης."
+    ],
+    "status": "ongoing",
+    "categories": [
+      "residential"
+    ],
+    "cover": "/assets/portfolio/agiou-dimitriou-113/renders-02.webp",
+    "cover_alt": "3D πρόταση τραπεζαρίας και ενιαίου χώρου",
+    "cover_label": "Render μελέτης",
+    "groups": [
+      {
+        "kind": "plans",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/agiou-dimitriou-113/plans-01.webp",
+            "alt": "Τρισδιάστατη κάτοψη της προτεινόμενης διαρρύθμισης — Αγίου Δημητρίου 113",
+            "width": 1600,
+            "height": 900
+          }
+        ]
+      },
+      {
+        "kind": "renders",
+        "unit": "",
+        "images": [
+          {
+            "src": "/assets/portfolio/agiou-dimitriou-113/renders-02.webp",
+            "alt": "3D πρόταση τραπεζαρίας και ενιαίου χώρου",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "/assets/portfolio/agiou-dimitriou-113/renders-03.webp",
+            "alt": "3D πρόταση κουζίνας και καθιστικού",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "/assets/portfolio/agiou-dimitriou-113/renders-04.webp",
+            "alt": "3D πρόταση καθιστικού με έπιπλο τηλεόρασης",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "/assets/portfolio/agiou-dimitriou-113/renders-05.webp",
+            "alt": "3D πρόταση υπνοδωματίου",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "/assets/portfolio/agiou-dimitriou-113/renders-06.webp",
+            "alt": "3D πρόταση δεύτερου υπνοδωματίου",
+            "width": 1448,
+            "height": 1086
+          }
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "label": "Όροφος",
+        "value": "1ος"
+      },
+      {
+        "label": "Επιφάνεια",
+        "value": "65 m² μικτά / 61 m² καθαρά"
+      },
+      {
+        "label": "Υπνοδωμάτια",
+        "value": "2"
+      },
+      {
+        "label": "Λουτρά",
+        "value": "1"
+      }
+    ],
+    "public_note": "Η κάτοψη παρουσιάζεται ως τρισδιάστατη απεικόνιση της μελέτης."
+  }
+]
