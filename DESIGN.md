@@ -28,7 +28,7 @@ on Greek (capitals would get a τόνος).
 
 ## Page rhythm
 
-Home: hero (headline + the real CAD plan of Αθ. Διάκου 16, auto-switching Πριν/Μετά until touched) → proof line → two paths (zig-zag) → Παλαμά 7
+Home: hero on a dark green-charcoal gradient (headline + the real CAD plan of Αθ. Διάκου 16, auto-switching Πριν/Μετά until touched) → proof line → two paths (zig-zag) → Παλαμά 7
 before/after → four selected projects → four steps → investment block (photo) → 2-year warranty
 → FAQ → One Stop Shop → green closing block that runs into the green footer.
 
