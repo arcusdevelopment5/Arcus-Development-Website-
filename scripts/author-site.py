@@ -41,6 +41,7 @@ for a,b in replacements.items():footer=footer.replace(a,b)
 footer=footer.replace('<h3>Γρήγοροι σύνδεσμοι</h3>','<h3>Γρήγοροι σύνδεσμοι</h3><a href="/el/erga">Έργα</a><a href="/el/eggyisi-ypostirixi">Εγγύηση & φροντίδα</a>')
 footer=footer.replace('© <span id="year">2026</span> Arcus Development. Όλα τα δικαιώματα διατηρούνται.','© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε. · ΑΦΜ 802211949 · Αρ. ΓΕΜΗ 172215306000')
 footer=footer.replace('<span>+30 2310 445 935</span></a>','<span>+30 2310 445 935</span></a><a href="mailto:info@arcusdevelopment.gr"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 6 9 7 9-7"/></svg><span>info@arcusdevelopment.gr</span></a>',1)
+footer=footer.replace('<a href="https://arcusrealestate.gr/el/communication" target="_blank" rel="noopener">','<a href="/el/epikoinonia">')
 footer=footer.replace('<a href="#top">Στην αρχή','<a href="/el/aporrito">Απόρρητο</a><a href="#top">Στην αρχή')
 footer=footer.replace('Σχεδιασμός <span aria-hidden="true">/</span> Κατασκευή <span aria-hidden="true">/</span> Ανακαίνιση','Μελέτη <span aria-hidden="true">/</span> Ανακαίνιση <span aria-hidden="true">/</span> Φροντίδα')
 # One Stop Shop is the wider Arcus network, distinct from the two renovation paths.
