@@ -5,7 +5,7 @@ from pathlib import Path
 CAD = json.loads((Path(__file__).resolve().parents[1] / 'site/data/diakou-cad-paths.json').read_text())
 
 
-def plan_transition():
+def plan_transition(auto=False):
     svg = '<svg viewBox="0 0 1000 630" role="img" aria-label="Αθανασίου Διάκου 16 — πραγματική κάτοψη πριν και μετά τον διαχωρισμό, από το αρχείο CAD">'
     for group, items in CAD.items():
         phase, kind = group.split('-')
@@ -14,7 +14,7 @@ def plan_transition():
         svg += f'<g class="{cls} {weight}">' + ''.join(f'<path d="{d}" pathLength="1"/>' for d in items) + '</g>'
     svg += '</svg>'
     return (
-        '<figure class="plan" data-plan-transition data-state="before">'
+        '<figure class="plan" data-plan-transition data-state="before"' + (' data-plan-auto' if auto else '') + '>'
         '<div class="plan-bar"><span>Αθανασίου Διάκου 16 · Κάτοψη</span>'
         '<div class="segmented" role="group" aria-label="Κάτοψη πριν ή μετά τον διαχωρισμό">'
         '<button type="button" data-plan-show="before" aria-pressed="true">Πριν</button>'

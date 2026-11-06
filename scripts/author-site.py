@@ -91,15 +91,27 @@ def legal(name):
 
 # ---------------------------------------------------------------- header and footer
 def nav_desktop():
-    company = ''.join(f'<a href="{u}"><span>{i + 1:02d}</span>{l}</a>' for i, (u, l) in enumerate(companylinks))
+    blurbs = {'/el/etaireia': 'Δημιουργούμε χώρους. Ανοίγουμε δυνατότητες.', '/el/filosofia': 'Όσα πιστεύουμε, σε όσα δημιουργούμε.',
+              PROCESS: 'Από την πρώτη συζήτηση μέχρι μετά την παράδοση.', '/el/sychnes-erotiseis': 'Μια καθαρή εικόνα πριν από την πρώτη απόφαση.',
+              '/el/techniko-lexiko': 'Μια κοινή γλώσσα για τη δημιουργία.'}
+    company = ''.join(f'<a href="{u}"><span>{i + 1:02d}</span><strong>{l}</strong><small>{blurbs[u]}</small><b aria-hidden="true">↗</b></a>' for i, (u, l) in enumerate(companylinks))
+    company_mega = (
+        '<div class="mega" id="company-menu"><div class="mega-inner"><div class="mega-intro"><div>' + eyebrow('Ο κόσμος της Arcus')
+        + '<p class="mega-lead">Γιατί δημιουργούμε.<br>Πώς δουλεύουμε.<br><em>Τι κάνουμε.</em></p></div>'
+        + f'<a class="mega-photo" href="{WORK}">{pic("/assets/portfolio/soulioti-17/home-kitchen-light.webp", "Ανακαινισμένη κουζίνα της Arcus Development με ξύλο, ανθρακί επιφάνειες και φυσικό φως", sizes="30vw")}<span>Τα έργα μας ↗</span></a></div>'
+        + f'<div class="mega-links">{company}</div></div></div>')
+    paths_mega = (
+        '<div class="mega" id="service-menu"><div class="mega-inner"><div class="mega-intro"><div>' + eyebrow('Δύο διαδρομές. Μία ολοκληρωμένη εμπειρία.')
+        + '<p class="mega-lead">Τι θέλεις<br>να <em>δημιουργήσεις;</em></p></div>'
+        + f'{more(OSS, "Όλο το δίκτυο: One Stop Shop")}</div><div class="mega-paths">'
+        + f'<a href="{RES}" data-event="select_service_home">{pic("/assets/portfolio/soulioti-17/home-kitchen-light.webp", "Ανακαινισμένη κουζίνα με ανθρακί ντουλάπια, ξύλινη επένδυση και φυσικό φως", sizes="35vw")}<div><span>01</span><strong>Για το σπίτι μου.</strong><small>Ολική ανακαίνιση, με αφετηρία τη δική σου καθημερινότητα.</small></div><b aria-hidden="true">↗</b></a>'
+        + f'<a href="{INV}" data-event="select_service_investment">{pic("/assets/portfolio/kolokotroni-14/investment-studio.webp", "Κουζίνα και καθιστικό ανακαινισμένης γκαρσονιέρας στην Κολοκοτρώνη 14", sizes="35vw")}<div><span>02</span><strong>Για επένδυση.</strong><small>Λειτουργική αξιοποίηση, με τεχνικό έλεγχο πριν από κάθε απόφαση.</small></div><b aria-hidden="true">↗</b></a>'
+        + '</div></div></div>')
     return (
         '<nav class="nav" aria-label="Κύρια πλοήγηση">'
-        f'<details class="drop"><summary>Η εταιρεία μας<i aria-hidden="true"></i></summary><div class="drop-panel drop-list">{company}</div></details>'
+        f'<details class="drop"><summary aria-controls="company-menu">Η εταιρεία μας<i aria-hidden="true"></i></summary>{company_mega}</details>'
         f'<a href="{WORK}">Τα έργα μας</a>'
-        '<details class="drop"><summary>Οι υπηρεσίες μας<i aria-hidden="true"></i></summary><div class="drop-panel drop-paths">'
-        f'<a href="{RES}" data-event="select_service_home"><span>01</span><strong>Για το σπίτι μου</strong><small>Ολική ανακαίνιση, με αφετηρία τη δική σου καθημερινότητα.</small></a>'
-        f'<a href="{INV}" data-event="select_service_investment"><span>02</span><strong>Για επένδυση</strong><small>Λειτουργική αξιοποίηση, με τεχνικό έλεγχο πριν από κάθε απόφαση.</small></a>'
-        '</div></details>'
+        f'<details class="drop"><summary aria-controls="service-menu">Οι υπηρεσίες μας<i aria-hidden="true"></i></summary>{paths_mega}</details>'
         f'<a href="{OSS}">One Stop Shop</a><a href="{BLOG}">Blog</a><a href="{CONTACT}">Επικοινωνία</a></nav>')
 
 
@@ -194,7 +206,6 @@ def page(slug, title, description, body):
         f'<meta property="og:image" content="{social}"><meta property="og:image:alt" content="{esc(title)}"><meta name="twitter:card" content="summary_large_image">'
         f'<meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{social}">'
         '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/favicon.svg">'
-        '<link rel="preload" href="/assets/fonts/noto-serif-display-greek.woff2" as="font" type="font/woff2" crossorigin>'
         '<link rel="preload" href="/assets/manrope-greek.woff2" as="font" type="font/woff2" crossorigin>'
         '<link rel="stylesheet" href="/styles.css">' + ld +
         '<script>document.documentElement.classList.add("js")</script><script src="/app.js" defer></script></head>'
@@ -249,13 +260,11 @@ def paths():
 
 # ---------------------------------------------------------------- home
 hero = (
-    '<section class="hero"><div class="wrap hero-head">'
-    f'<div class="hero-title">{eyebrow("Arcus Development · Θεσσαλονίκη")}<h1 class="display">Κάθε χώρος κρύβει<br><em>μια νέα αρχή.</em></h1></div>'
-    '<div class="hero-side"><p class="lede">Τη σχεδιάζουμε μαζί. Την κάνουμε πραγματικότητα. Ολικές ανακαινίσεις διαμερισμάτων, από την πρώτη κάτοψη έως την τελευταία λεπτομέρεια.</p>'
-    f'<div class="actions">{btn(CONTACT, "Συζήτησε το έργο σου", "btn", "data-event=\"click_primary_cta\"")}{more(WORK, "Δες τις μεταμορφώσεις μας")}</div></div></div>'
-    '<div class="wrap hero-media">'
-    f'<a class="hero-main" href="/el/erga/soulioti-17"><figure>{pic("/assets/portfolio/soulioti-17/after-17.webp", "Σουλιώτη 17 — κουζίνα με πάγκο και κρυφό φωτισμό", "eager", sizes="(max-width: 900px) 100vw, 66vw")}<figcaption><span>Σουλιώτη 17</span>Ολική ανακαίνιση{ARROW}</figcaption></figure></a>'
-    f'<a class="hero-aside" href="/el/erga/athanasiou-diakou-16"><figure>{pic("/assets/portfolio/athanasiou-diakou-16/after-22.webp", "Κουζίνα με πορτοκαλί τοίχο και ξύλινο πάγκο — Αθανασίου Διάκου 16", "eager", sizes="(max-width: 900px) 100vw, 30vw")}<figcaption><span>Αθανασίου Διάκου 16</span>Τρεις κατοικίες{ARROW}</figcaption></figure></a>'
+    '<section class="hero"><div class="wrap hero-grid">'
+    f'<div class="hero-copy">{eyebrow("Arcus Development · Θεσσαλονίκη")}<h1 class="display">Κάθε χώρος κρύβει<br><em>μια νέα αρχή.</em></h1>'
+    '<p class="lede">Τη σχεδιάζουμε μαζί. Την κάνουμε πραγματικότητα. Ολικές ανακαινίσεις διαμερισμάτων, από την πρώτη κάτοψη έως την τελευταία λεπτομέρεια.</p>'
+    f'<div class="actions">{btn(CONTACT, "Συζήτησε το έργο σου", "btn", "data-event=\"click_primary_cta\"")}{more(WORK, "Δες τις μεταμορφώσεις μας")}</div></div>'
+    f'<div class="hero-plan">{plan_transition(auto=True)}<p class="hero-plan-link">{more("/el/erga/athanasiou-diakou-16", "Πραγματικό έργο · Η ιστορία του έργου")}</p></div>'
     '</div>'
     '<ul class="wrap proof"><li><b>Arcus Group</b>Μέλος του ομίλου</li><li><b>Μελέτη</b>πριν από την κατασκευή</li><li><b>2 χρόνια</b>γραπτή εγγύηση</li></ul></section>')
 
@@ -278,12 +287,12 @@ process_sec = (
     + steps(home_steps, 'steps steps-4') + '</div></section>')
 
 investor_sec = (
-    '<section class="sec wrap split split-plan">'
+    '<section class="sec wrap split">'
     f'<div class="split-copy">{eyebrow("05 — Πρώτα η εφικτότητα")}<h2>Η αξία ξεκινά<br>από τη σωστή <em>κάτοψη.</em></h2>'
     '<p>Πριν από οποιαδήποτε κατασκευή, εξετάζουμε τις δυνατότητες του διαμερίσματος. Συγκρίνουμε εναλλακτικές διαρρυθμίσεις και μελετάμε περισσότερες αυτόνομες κατοικίες, εφόσον είναι τεχνικά και νομικά εφικτό.</p>'
     f'{more(INV, "Εξερεύνησε την επενδυτική αξιοποίηση")}'
     '<p class="fine">Η τεχνική δυνατότητα και οι νόμιμες εγκρίσεις εξετάζονται ανά ακίνητο. Δεν προεξοφλούνται αριθμός ιδιοκτησιών, μίσθωμα ή απόδοση.</p></div>'
-    f'<div class="split-visual">{plan_transition()}</div></section>')
+    f'<a class="split-visual split-photo" href="/el/erga/athanasiou-diakou-16">{pic("/assets/portfolio/athanasiou-diakou-16/after-22.webp", "Αθανασίου Διάκου 16 — κουζίνα με πορτοκαλί τοίχο, μία από τις τρεις νέες κατοικίες", sizes="(max-width: 900px) 100vw, 55vw")}</a></section>')
 
 faq_sec = (
     '<section class="sec wrap faq-wrap">'

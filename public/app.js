@@ -74,12 +74,20 @@
   // ---- the CAD plan: before / after
   $$('[data-plan-transition]').forEach(root => {
     const buttons = $$('[data-plan-show]', root), text = $('[data-plan-description]', root);
-    buttons.forEach(b => b.addEventListener('click', () => {
-      const after = b.dataset.planShow === 'after';
+    const show = after => {
       root.dataset.state = after ? 'after' : 'before';
-      buttons.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      buttons.forEach(x => x.setAttribute('aria-pressed', String((x.dataset.planShow === 'after') === after)));
       text.textContent = after ? 'Τρεις κατοικίες. Μια νέα αρχή.' : 'Η αρχική διαρρύθμιση.';
-    }));
+    };
+    let timer = null, visible = false, touched = false;
+    const schedule = () => {
+      clearTimeout(timer);
+      if (!root.hasAttribute('data-plan-auto') || touched || reduced.matches || !visible || document.hidden) return;
+      timer = setTimeout(() => { show(root.dataset.state !== 'after'); schedule(); }, 4200);
+    };
+    buttons.forEach(b => b.addEventListener('click', () => { touched = true; clearTimeout(timer); show(b.dataset.planShow === 'after'); }));
+    if ('IntersectionObserver' in window) new IntersectionObserver(e => { visible = e[0].isIntersecting; schedule(); }, { threshold: .3 }).observe(root);
+    document.addEventListener('visibilitychange', schedule);
   });
 
   // ---- portfolio filter
