@@ -21,6 +21,7 @@ projects = json.loads((ROOT / 'site/data/drive-projects.json').read_text())
 
 HOME = '/el'; RES = '/el/oliki-anakainisi-diamerismatos'; INV = '/el/ependytiki-anakainisi-diamerismatos'
 CONTACT = '/el/epikoinonia'; WORK = '/el/erga'; PROCESS = '/el/diadikasia'; WARRANTY = '/el/eggyisi-ypostirixi'
+GA_MEASUREMENT_ID = 'G-FDV6SM0E0J'  # GA4 property p562926659; loads only after consent (public/app.js)
 OSS = '/el/one-stop-shop'; BLOG = 'https://arcusrealestate.gr/el/blog'; PRIVACY = '/el/aporrito'
 companylinks = [('/el/etaireia', 'Ποιοι είμαστε'), ('/el/filosofia', 'Φιλοσοφία & αξίες'), (PROCESS, 'Η διαδικασία'),
                 ('/el/sychnes-erotiseis', 'Συχνές ερωτήσεις'), ('/el/techniko-lexiko', 'Τεχνικό λεξικό')]
@@ -183,13 +184,16 @@ footer = (
     '</div>'
     '<div class="footer-bottom"><div class="wrap footer-bottom-inner"><p>Μελέτη <span aria-hidden="true">/</span> Ανακαίνιση <span aria-hidden="true">/</span> Φροντίδα</p>'
     '<p>© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε.</p>'
-    f'<a href="{PRIVACY}">Απόρρητο</a><a href="#top">Στην αρχή <span aria-hidden="true">↑</span></a></div></div>'
+    f'<span class="footer-legal"><a href="{PRIVACY}">Απόρρητο</a><button type="button" data-consent-open>Ρυθμίσεις cookies</button></span><a href="#top">Στην αρχή <span aria-hidden="true">↑</span></a></div></div>'
     '</footer>')
 (ROOT / 'components/header.html').write_text(header)
 (ROOT / 'components/footer-current.html').write_text(footer)
 
 
 # ---------------------------------------------------------------- the page shell
+CONSENT_BANNER = '<div class="consent" id="consent" role="region" aria-labelledby="consent-title" hidden><div class="consent-inner"><div class="consent-copy"><p class="consent-title" id="consent-title">Cookies στατιστικών</p><p>Με τη συγκατάθεσή σου χρησιμοποιούμε το Google Analytics για να μετράμε ανώνυμα ποιες σελίδες διαβάζονται και πόσα αιτήματα στέλνονται. Χωρίς αυτή, δεν φορτώνεται κανένα εργαλείο μέτρησης. Δεν χρησιμοποιούμε διαφημιστικά cookies. <a href="/el/aporrito#cookies">Μάθε περισσότερα</a></p></div><div class="consent-actions"><button type="button" class="btn btn-consent" data-consent="reject">Απόρριψη</button><button type="button" class="btn btn-consent" data-consent="accept">Αποδοχή</button></div></div></div>'
+
+
 def page(slug, title, description, body):
     route = '/el' if slug == 'home' else '/el/' + slug.replace('--', '/')
     schema = {'@context': 'https://schema.org', '@type': 'Organization', 'name': 'Arcus Development', 'url': 'https://arcusdevelopment.gr/el',
@@ -209,6 +213,7 @@ def page(slug, title, description, body):
     html = (
         '<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
         '<meta name="theme-color" content="#f5f2eb"><meta name="robots" content="noindex,nofollow">'
+        f'<meta name="ga-measurement-id" content="{GA_MEASUREMENT_ID}">'
         f'<title>{esc(title)}</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="https://arcusdevelopment.gr{route}">'
         f'<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website">'
         f'<meta property="og:locale" content="el_GR"><meta property="og:url" content="https://arcusdevelopment.gr{route}"><meta property="og:site_name" content="Arcus Development">'
@@ -218,7 +223,7 @@ def page(slug, title, description, body):
         '<link rel="preload" href="/assets/manrope-greek.woff2" as="font" type="font/woff2" crossorigin>'
         '<link rel="stylesheet" href="/styles.css">' + ld +
         '<script>document.documentElement.classList.add("js")</script><script src="/app.js" defer></script></head>'
-        f'<body id="top"><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>{header}{body}{footer}{cta}</body></html>')
+        f'<body id="top"><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>{header}{body}{footer}{cta}{CONSENT_BANNER}</body></html>')
     (P / (slug + '.html')).write_text(html)
 
 
@@ -434,7 +439,7 @@ page('epikoinonia', 'Συζήτησε το Έργο σου | Arcus Development',
 
 # ---------------------------------------------------------------- privacy (approved legal text, verbatim)
 privacy = ('<main id="main">' + intro('Ενημέρωση απορρήτου', 'Τα στοιχεία σου.<br>Με <em>συγκεκριμένο σκοπό.</em>', 'Πώς χρησιμοποιούμε τα στοιχεία που μας στέλνεις μέσω της ιστοσελίδας και ποια δικαιώματα έχεις.')
-           + f'<section class="wrap legal prose">{legal("aporrito.html")}</section></main>')
+           + f'<section class="wrap legal prose">{legal("aporrito.html").replace("<h2>Cookies και μετρήσεις</h2>", "<h2 id=\"cookies\">Cookies και μετρήσεις</h2>")}</section></main>')
 page('aporrito', 'Ενημέρωση Απορρήτου | Arcus Development', 'Πώς η ARCUS DEVELOPMENT Ε.Ε. χρησιμοποιεί τα στοιχεία της φόρμας επικοινωνίας, πόσο τα διατηρεί και ποια δικαιώματα έχεις.', privacy)
 
 # ---------------------------------------------------------------- company section, portfolio, one stop shop

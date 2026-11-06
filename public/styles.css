@@ -382,6 +382,9 @@ button{cursor:pointer}
 .footer-bottom-inner{display:grid;grid-template-columns:1fr auto 1fr auto;gap:14px 40px;align-items:center;padding-block:24px 30px;font-size:13.5px}
 .footer-bottom-inner p:nth-child(2){text-align:center}
 .footer-bottom-inner a{color:var(--green-ink);justify-self:end}
+.footer-legal{display:flex;gap:22px;justify-self:end;align-items:center}
+.footer-legal button{border:0;background:none;padding:0;font:inherit;font-size:13.5px;color:var(--green-ink);cursor:pointer}
+.footer-legal button:hover{opacity:.7}
 .footer-bottom-inner a:hover{opacity:.7}
 
 /* ------------------------------------------------------------ service pages */
@@ -582,6 +585,19 @@ button{cursor:pointer}
 .lightbox-stage button{width:52px;height:52px;padding:0;font-size:20px}
 #lightbox-caption{text-align:center;padding:14px var(--gutter) 22px;color:#ffffffcc;font-size:14px}
 
+/* ------------------------------------------------------------ cookie consent (no dark patterns: both choices equal) */
+.consent{position:fixed;z-index:var(--z-skip);left:16px;right:16px;bottom:16px;display:flex;justify-content:center;pointer-events:none}
+.consent-inner{pointer-events:auto;width:min(980px,100%);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 32px;align-items:center;padding:22px 26px;background:var(--paper);border:1px solid var(--line-2);border-radius:14px;box-shadow:0 30px 60px -20px #1d1c1a59;animation:consent .4s var(--ease)}
+@keyframes consent{from{transform:translateY(24px)}}
+.consent-title{font-weight:700;color:var(--ink);margin-bottom:4px}
+.consent-copy p:last-child{font-size:14.5px;line-height:1.55}
+.consent-copy a{text-decoration:underline;text-underline-offset:3px;color:var(--ink)}
+.consent-actions{display:flex;gap:10px}
+.btn-consent{min-width:132px;min-height:48px;padding:12px 22px;background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.btn-consent:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+body.consent-open .sticky-cta{display:none}
+@media (max-width:640px){.consent{left:10px;right:10px;bottom:10px}.consent-inner{grid-template-columns:minmax(0,1fr);padding:18px}.consent-actions .btn-consent{flex:1;min-width:0}}
+
 /* ------------------------------------------------------------ sticky mobile CTA */
 .sticky-cta{display:none}
 
@@ -656,6 +672,7 @@ button{cursor:pointer}
   .footer-id,.footer-contact,.footer-project{grid-column:1/-1}
   .footer-signature{grid-column:auto;grid-row:2;grid-column:2;font-size:28px;padding-left:20px}
   .footer-bottom-inner{grid-template-columns:1fr auto}
+  .footer-legal{justify-self:start;grid-column:1/-1}
   .footer-bottom-inner p:first-child{grid-column:1/-1}
   .site-footer::before{width:420px;height:233px;right:-140px}
   .faq details>div{padding-right:0}
