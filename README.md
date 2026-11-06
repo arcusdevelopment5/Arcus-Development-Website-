@@ -24,7 +24,7 @@ npm run dev       # http://localhost:3000
 - `site/data/projects.json`: επαληθευμένα στοιχεία έργων.
 - `site/data/project-provenance.json`: πηγές, video timestamps και όρια των διαθέσιμων στοιχείων.
 - `components/footer.html`: διατηρημένο footer με πέντε λογότυπα και κάτοψη.
-- `public/site.css`, `public/site.js`: νέο design και αλληλεπιδράσεις.
+- `public/styles.css`, `public/app.js`: design (ARCUSCRM-533) και αλληλεπιδράσεις. Βλ. `DESIGN.md`.
 - `scripts/build-pages.py`: compiler, sitemap/robots. Τα `site/pages/` και `site/pages.json` παράγονται με `npm run content`.
 - `app/[[...path]]/route.ts`: σελίδες και 301 redirects παλιών διευθύνσεων.
 - `lib/inquiries-server.ts`, `app/api/`, `db/`, `drizzle/`: αποθήκευση και προστατευμένη διαχείριση.

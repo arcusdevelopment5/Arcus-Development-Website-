@@ -1,4 +1,10 @@
 from html import escape as e
+from pathlib import Path
+from PIL import Image
+ASSETS=Path(__file__).resolve().parents[1]/'public/assets'
+def size(src):
+ w,h=Image.open(ASSETS/src).size
+ return f'width="{w}" height="{h}"'
 BASE='https://arcusrealestate.gr/el/services/'
 STOPS=[
 ('Αναζήτηση','ARCUS REAL ESTATE','Ένα σπίτι.\nΧίλιες αγγελίες.','Ανοίγεις καρτέλες, συγκρίνεις περιοχές, κλείνεις επισκέψεις. Κι όμως, το σπίτι που σου ταιριάζει μοιάζει ακόμη μακριά.','Ξεκινάμε από εσένα.','Ακούμε πώς θέλεις να ζεις, τι χρειάζεσαι και ποιο είναι το budget σου. Φιλτράρουμε τις επιλογές και οργανώνουμε την αναζήτηση μαζί σου.','Από το «πού να ψάξω;» στο «αυτό μου ταιριάζει».',BASE+'sales-rentals','brand/real-estate.png'),
@@ -12,14 +18,20 @@ STOPS=[
 ('Διαχείριση','ARCUS BNB','Ένα ακίνητο για αξιοποίηση.\nΠοιος θα το φροντίζει;','Μισθώσεις, επικοινωνία, συντήρηση και καθημερινές ανάγκες. Η ιδιοκτησία δεν τελειώνει με την αγορά και την ανακαίνιση.','Η φροντίδα συνεχίζεται μαζί μας.','Η Arcus BnB αναλαμβάνει βραχυχρόνια ή μακροχρόνια διαχείριση, με υπηρεσίες προσαρμοσμένες στις ανάγκες του ακινήτου σου και συμφωνημένο πλαίσιο συνεργασίας.','Ο χώρος σου έχει μια ομάδα δίπλα του.',BASE+'property-management','brand/bnb.png'),
 ('Οι άνθρωποι','ARCUS LAB / TÜV AUSTRIA','Πίσω από κάθε βήμα,\nένας άνθρωπος που γνωρίζει.','Για να συνδεθούν όλες αυτές οι υπηρεσίες, χρειάζονται σύμβουλοι με γνώση, εκπαίδευση και κοινό τρόπο συνεργασίας.','Επενδύουμε στους ανθρώπους μας.','Το Arcus Lab υποστηρίζει την εκπαίδευση των συμβούλων. Η πιστοποίηση συμβούλων ακινήτων από την TÜV Austria συμπληρώνει αυτή τη διαδρομή επαγγελματικής ανάπτυξης.','Η γνώση στηρίζει τη δική σου διαδρομή.',BASE+'certification','brand/lab.png'),
 ('Ενημέρωση','BEYOND REAL ESTATE / ESTATE MAGAZINE','Το ταξίδι συνεχίζεται.\nΚαι η γνώση μοιράζεται.','Η αγορά αλλάζει. Οι απορίες δεν σταματούν όταν ολοκληρωθεί μια συναλλαγή. Θέλεις να καταλαβαίνεις όσα επηρεάζουν το ακίνητό σου.','Κρατάμε τη συζήτηση ανοιχτή.','Μέσα από το Beyond Real Estate, το Estate Magazine και το Blog, μοιραζόμαστε συζητήσεις, εμπειρίες και εξελίξεις από τον κόσμο των ακινήτων.','Η επόμενη καλή απόφαση ξεκινά από τη σωστή ενημέρωση.',BASE+'media','brand/estate.png')]
-def render():
- h='''<section class="arc-journey" id="oss-journey" aria-label="Το ταξίδι του ακινήτου σου"><div class="travel-top"><div><p class="arc-kicker">ARCUS GROUP / ONE STOP SHOP</p><h2>Κάθε ανάγκη.<br><em>Ένα βήμα πιο κοντά.</em></h2></div><p>Μια ιστορία που προχωρά μαζί σου.<br>Κάνε scroll. Η ιστορία προχωρά. <span aria-hidden="true">→</span></p></div><div class="travel-starts" role="group" aria-label="Διάλεξε αφετηρία"><button data-travel-start="0" type="button">Ψάχνω ακίνητο ↗</button><button data-travel-start="6" type="button">Έχω ήδη ακίνητο ↗</button><button data-travel-start="2" type="button">Θέλω να επενδύσω ↗</button></div><nav class="travel-stations" aria-label="Στάσεις της διαδρομής">'''
- for i,s in enumerate(STOPS):h+=f'<button type="button" data-travel-to="{i}" aria-controls="travel-scene-{i}"'+(' aria-current="step"' if i==0 else '')+f'><span>{i+1:02d}</span>{e(s[0])}</button>'
- h+='</nav><div class="travel-track" tabindex="0" role="region" aria-label="Ιστορίες υπηρεσιών — χρησιμοποίησε τα βέλη ή σύρε οριζόντια">'
+def render(eyebrow):
+ """The eleven stops as a calm, readable chapter list (no scroll hijacking)."""
+ starts=[(0,'Ψάχνω ακίνητο'),(6,'Έχω ήδη ακίνητο'),(2,'Θέλω να επενδύσω')]
+ h=('<section class="sec wrap journey" id="oss-journey" aria-label="Το ταξίδι του ακινήτου σου"><div class="sec-head"><div>'+eyebrow('Arcus Group · One Stop Shop')+
+    '<h2>Κάθε ανάγκη.<br><em>Ένα βήμα πιο κοντά.</em></h2></div><div class="sec-side"><p>Μια ιστορία που προχωρά μαζί σου. Ξεκίνα από όπου χρειάζεσαι.</p>'
+    '<div class="journey-starts" role="group" aria-label="Διάλεξε αφετηρία">'+''.join(f'<a class="chip" href="#stop-{i+1}">{e(t)} ↓</a>' for i,t in starts)+'</div></div></div><ol class="stops">')
  for i,(label,brand,title,pain,solution,copy,outcome,url,logo) in enumerate(STOPS):
-  mark=f'<img src="/assets/{logo}" alt="{e(brand)}" loading="lazy">' if logo else '<span class="travel-brand">'+e(brand)+'</span>'
-  if i==10: mark='<div class="travel-media-marks"><img src="/assets/brand/beyond.png" alt="Beyond Real Estate by Arcus Group" loading="lazy">'+mark+'</div>'
-  extra='<a href="https://arcusrealestate.gr/el/blog">Estate Magazine & Blog ↗</a>' if i==10 else ''
-  h+=f'''<article class="travel-scene" id="travel-scene-{i}" aria-label="{i+1} από {len(STOPS)} — {e(label)}"><div class="travel-question"><span class="travel-chapter">ΚΕΦΑΛΑΙΟ {i+1:02d} / {e(label.upper())}</span><h3>{e(title).replace(chr(10),'<br>')}</h3><p>{e(pain)}</p><span class="travel-ghost" aria-hidden="true">{i+1:02d}</span></div><div class="travel-answer">{mark}<h4>{e(solution)}</h4><p>{e(copy)}</p><div class="travel-outcome"><span aria-hidden="true">↗</span>{e(outcome)}</div><div class="travel-links"><a href="{url}">Γνώρισε την υπηρεσία ↗</a>{extra}</div></div></article>'''
- h+='''</div><div class="travel-controls"><span class="travel-counter" aria-live="polite" aria-atomic="true">01 / 11 — Αναζήτηση</span><span class="travel-hint">Scroll για συνέχεια · βέλη για κάθε στάση</span><div><button type="button" data-travel-prev aria-label="Προηγούμενο βήμα" disabled>←</button><button type="button" data-travel-next>Επόμενο βήμα →</button></div></div><p class="travel-note">Ξεκινάς από όπου χρειάζεσαι. Κάθε υπηρεσία έχει το δικό της αντικείμενο και τους δικούς της όρους συνεργασίας.</p></section>'''
- return '<div class="travel-scroll-runway">'+h+'</div>'
+  mark=f'<img src="/assets/{logo}" alt="{e(brand)}" {size(logo)} loading="lazy">' if logo else ''
+  if i==10: mark=f'<img src="/assets/brand/beyond.png" alt="Beyond Real Estate by Arcus Group" {size("brand/beyond.png")} loading="lazy">'+mark
+  extra='<a class="more" href="https://arcusrealestate.gr/el/blog">Estate Magazine & Blog<span class="arw" aria-hidden="true">↗</span></a>' if i==10 else ''
+  own=' stop-own' if brand=='ARCUS DEVELOPMENT' else ''
+  h+=(f'<li class="stop{own}" id="stop-{i+1}"><div class="stop-index"><span class="num">{i+1:02d}</span><p>{e(label)}</p><p class="stop-brand">{e(brand)}</p>'
+      +(f'<div class="stop-marks">{mark}</div>' if mark else '')+'</div>'
+      f'<div class="stop-question"><h3>{e(title).replace(chr(10),"<br>")}</h3><p>{e(pain)}</p></div>'
+      f'<div class="stop-answer"><h4>{e(solution)}</h4><p>{e(copy)}</p><p class="stop-outcome">{e(outcome)}</p><div class="row-links"><a class="more" href="{url}">Γνώρισε την υπηρεσία<span class="arw" aria-hidden="true">↗</span></a>{extra}</div></div></li>')
+ h+='</ol><p class="fine">Ξεκινάς από όπου χρειάζεσαι. Κάθε υπηρεσία έχει το δικό της αντικείμενο και τους δικούς της όρους συνεργασίας.</p></section>'
+ return h

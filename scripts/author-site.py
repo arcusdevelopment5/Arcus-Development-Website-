@@ -1,182 +1,434 @@
+"""Authors every page of arcusdevelopment.gr into site/pages/*.html.
+
+Design: the ARCUSCRM-533 "monograph" redesign. One stylesheet (public/styles.css), one script
+(public/app.js). Text and facts are the approved copy of the previous version; legal text lives
+verbatim in site/data/legal/. Run with `npm run content`.
+"""
 from pathlib import Path
 from html import escape as esc
-import json,re
-import project_portfolio as portfolio_design
-from plan_transition import plan_transition
+import json, re
 from PIL import Image
-ROOT=Path(__file__).resolve().parents[1]
-P=ROOT/'site/pages'; P.mkdir(parents=True,exist_ok=True)
-projects=[] # Legacy unnamed portfolio entries retired; use curated address-based projects.
-archive_path=ROOT/'site/data/drive-projects.json'
-archive_projects=json.loads(archive_path.read_text()) if archive_path.exists() else []
-HOME='/el'; RES='/el/oliki-anakainisi-diamerismatos'; INV='/el/ependytiki-anakainisi-diamerismatos'; CONTACT='/el/epikoinonia'; WORK='/el/erga'; PROCESS='/el/diadikasia'; WARRANTY='/el/eggyisi-ypostirixi'
-companylinks=[('/el/etaireia','Ποιοι είμαστε'),('/el/filosofia','Φιλοσοφία & αξίες'),('/el/sychnes-erotiseis','Συχνές ερωτήσεις'),('/el/techniko-lexiko','Τεχνικό λεξικό'),('/el/diadikasia','Η διαδικασία')]
-def link(url,label,cls='arc-button',extra=''):
- return f'<a class="{cls}" href="{url}" {extra}>{label}<span aria-hidden="true">↗</span></a>'
-def kicker(t):return f'<p class="arc-kicker">{t}</p>'
-def pic(src,alt,loading='lazy',cls=''):
- size=Image.open(ROOT/'public'/src.lstrip('/')).size if (ROOT/'public'/src.lstrip('/')).exists() else (1440,960)
- responsive=''
- if src.startswith('/assets/portfolio/'):
-  thumb=src.replace('.webp','-640.webp')
-  tw=Image.open(ROOT/'public'/thumb.lstrip('/')).width
-  responsive=f' srcset="{thumb} {tw}w, {src} {size[0]}w" sizes="(max-width: 600px) 92vw, 90vw"'
- return f'<img class="{cls}" src="{src}"{responsive} alt="{esc(alt)}" width="{size[0]}" height="{size[1]}" loading="{loading}" decoding="async">'
-def plan(uid='hero',new=False):
- return f'''<div class="plan-drawing {'is-proposed' if new else ''}" data-plan>
-<svg viewBox="0 0 700 610" role="img" aria-labelledby="{uid}-title {uid}-desc"><title id="{uid}-title">Ενδεικτική αρχιτεκτονική κάτοψη διαμερίσματος</title><desc id="{uid}-desc">Σχηματική διάταξη κατοικίας με καθιστικό, κουζίνα και δύο χώρους ύπνου. Δεν αποτελεί μελέτη υπαρκτού ακινήτου.</desc>
-<defs><pattern id="{uid}-grid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="currentColor" stroke-width=".3" opacity=".13"/></pattern></defs><rect width="700" height="610" fill="url(#{uid}-grid)"/>
-<g class="plan-guides" fill="none" stroke="currentColor" opacity=".35" stroke-width="1"><path d="M67 62H625M67 48V77M625 48V77M650 87V520M636 87H664M636 520H664M67 545H625M67 533V559M625 533V559"/><path stroke-dasharray="4 6" d="M65 303H628M350 82V520"/></g>
-<g fill="none" stroke="currentColor" stroke-width="5" class="plan-walls"><path d="M80 90H600V510H80Z"/><path d="M80 278H180M232 278H350V90M350 333V510M350 278H450M500 278H600M350 400H600M80 400H210"/><path class="plan-partition" d="M350 278V333M210 278V400"/></g>
-<g fill="none" stroke="currentColor" stroke-width="1.2" opacity=".65"><path d="M180 278v52a52 52 0 0 0 52-52M450 278v50a50 50 0 0 0 50-50M350 333h-55a55 55 0 0 0 55-55"/><rect x="109" y="115" width="100" height="123" rx="3"/><rect x="117" y="124" width="38" height="23" rx="3"/><rect x="163" y="124" width="38" height="23" rx="3"/><path d="M109 153H209M114 230H204"/><rect x="382" y="115" width="188" height="32"/><rect x="537" y="115" width="33" height="127"/><circle cx="552" cy="184" r="9"/><circle cx="552" cy="214" r="9"/><rect x="416" y="183" width="77" height="42" rx="3"/><path d="M426 177v-10h55v10M426 231v10h55v-10"/><rect x="379" y="429" width="91" height="54" rx="5"/><path d="M387 433v40h75M387 453h75"/><rect x="505" y="444" width="45" height="24" rx="12"/><rect x="111" y="426" width="103" height="46" rx="4"/><path d="M123 426v46M161 426v46M200 426v46"/><circle cx="270" cy="445" r="26"/><rect x="105" y="302" width="53" height="70"/><ellipse cx="178" cy="324" rx="15" ry="20"/><circle cx="565" cy="352" r="21"/><path d="M550 352h30M565 337v30"/>
-<path stroke-width="7" stroke="#f3f1eb" d="M113 90H285M411 90H559M600 309V369M109 510H285M407 510H569"/><path d="M113 86H285v8H113ZM411 86H559v8H411ZM596 309H604v60H596ZM109 506H285v8H109ZM407 506H569v8H407Z"/></g>
-<g class="plan-labels" fill="currentColor" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.5"><text x="245" y="194">ΥΠΝΟΣ</text><text x="392" y="255">ΚΟΥΖΙΝΑ</text><text x="104" y="393">ΛΟΥΤΡΟ</text><text x="391" y="495">ΚΑΘΙΣΤΙΚΟ</text><text x="250" y="489">ΖΩΗ</text><text x="80" y="581">ARCUS / CONCEPT PLAN — NOT TO SCALE</text></g></svg>
-<button class="plan-hotspot hotspot-one" data-plan-toggle aria-pressed="{'true' if new else 'false'}" aria-label="Δοκίμασε μια πιο ανοιχτή ενδεικτική διαρρύθμιση">+</button><span class="plan-note" aria-live="polite">{'Μια πιο ανοιχτή ιδέα' if new else 'Κάθε χώρος, μια δυνατότητα'}</span></div>'''
-service_cards=''.join(f'''<a href="{url}" class="service-card" data-event="{event}"><span class="card-top">{num} / {en}<span aria-hidden="true">↗</span></span><div class="service-card-image">{pic('/assets/portfolio/kolokotroni-14/investment-studio.webp' if en=='INVESTMENT' else '/assets/portfolio/soulioti-17/home-kitchen-light.webp','Κουζίνα και καθιστικό ανακαινισμένης γκαρσονιέρας στην Κολοκοτρώνη 14' if en=='INVESTMENT' else 'Ανακαινισμένη κουζίνα με ανθρακί ντουλάπια, ξύλινη επένδυση και φυσικό φως')}</div><div class="service-card-copy"><h3>{title}</h3><p>{copy}</p><span class="text-cta">Εξερεύνησε την υπηρεσία <span aria-hidden="true">→</span></span></div></a>''' for i,(num,en,title,copy,url,event) in enumerate([
-('01','HOME','Ολική ανακαίνιση διαμερίσματος','Το σπίτι σου, ξανασχεδιασμένο γύρω από τη ζωή σου. Από την πρώτη ιδέα μέχρι την ολοκληρωμένη παράδοση.',RES,'select_service_home'),('02','INVESTMENT','Επενδυτική αξιοποίηση διαμερίσματος','Κάθε τετραγωνικό με σκοπό. Νέες διαρρυθμίσεις και, όπου είναι τεχνικά και νομικά εφικτό, περισσότερες αυτόνομες κατοικίες.',INV,'select_service_investment')]))
-header=f'''<header class="arc-header"><a class="arc-brand" href="/el" aria-label="Arcus Development — Αρχική"><img src="/assets/arcus-development.png" alt="Arcus Development" width="202" height="138"></a><nav class="arc-desktop" aria-label="Κύρια πλοήγηση"><a href="/el">Αρχική</a><details class="arc-dropdown"><summary aria-controls="service-menu">Υπηρεσίες <span aria-hidden="true">⌄</span></summary><div class="arc-mega" id="service-menu"><div class="arc-container"><div class="mega-heading">{kicker('ΔΥΟ ΔΙΑΔΡΟΜΕΣ. ΜΙΑ ΟΛΟΚΛΗΡΩΜΕΝΗ ΕΜΠΕΙΡΙΑ.')}<p>Τι θέλεις να δημιουργήσεις;</p></div><div class="mega-services"><a href="{RES}" data-event="select_service_home"><span>01 / HOME</span><strong>Για το σπίτι μου.</strong><p>Ολική ανακαίνιση, με αφετηρία τη δική σου καθημερινότητα.</p><b aria-hidden="true">↗</b></a><a href="{INV}" data-event="select_service_investment"><span>02 / INVESTMENT</span><strong>Για επένδυση.</strong><p>Λειτουργική αξιοποίηση, με τεχνικό έλεγχο πριν από κάθε απόφαση.</p><b aria-hidden="true">↗</b></a></div></div></div></details><a href="{WORK}">Έργα</a><a href="https://arcusrealestate.gr/el/blog">Blog</a><details class="arc-dropdown"><summary aria-controls="company-menu">Η εταιρεία <span aria-hidden="true">⌄</span></summary><div class="arc-mega" id="company-menu"><div class="arc-container"><div class="mega-heading">{kicker('Ο ΚΟΣΜΟΣ ΤΗΣ ARCUS')}<p>Γιατί δημιουργούμε. Πώς δουλεύουμε. Τι κάνουμε.</p></div><div class="company-menu-grid">{''.join(f'<a href="{u}"><span>{i+1:02d}</span><strong>{l}</strong><b aria-hidden="true">↗</b></a>' for i,(u,l) in enumerate(companylinks))}</div></div></div></details><a href="{CONTACT}">Επικοινωνία</a></nav>{link(CONTACT,'Συζήτησε το έργο σου','arc-header-cta','data-event="click_primary_cta"')}<button class="arc-menu-toggle" type="button" aria-expanded="false" aria-controls="arc-mobile" aria-label="Άνοιγμα μενού"><span></span><span></span></button><nav class="arc-mobile" id="arc-mobile" aria-label="Πλοήγηση κινητού" hidden><a href="/el">Αρχική</a><details><summary>Υπηρεσίες</summary><div><a href="{RES}">Για το σπίτι μου</a><a href="{INV}">Για επένδυση</a></div></details><a href="{WORK}">Έργα</a><a href="https://arcusrealestate.gr/el/blog">Blog</a><details><summary>Η εταιρεία</summary><div>{''.join(f'<a href="{u}">{l}</a>' for u,l in companylinks)}</div></details><a href="{WARRANTY}">Εγγύηση & φροντίδα</a><a href="{CONTACT}">Συζήτησε το έργο σου ↗</a></nav></header>'''
-footer=(ROOT/'components/footer.html').read_text()
-replacements={'index.html#top':'/el','index.html#services':'/el#services','index.html#contact':CONTACT,'company.html':'/el/etaireia','philosophy.html':'/el/filosofia','faq.html':'/el/sychnes-erotiseis','glossary.html':'/el/techniko-lexiko','careers.html':'/el/kariera','office.html':'/el/grafeio','src="assets/':'src="/assets/'}
-for a,b in replacements.items():footer=footer.replace(a,b)
-footer=footer.replace('<h3>Γρήγοροι σύνδεσμοι</h3>','<h3>Γρήγοροι σύνδεσμοι</h3><a href="/el/erga">Έργα</a><a href="/el/eggyisi-ypostirixi">Εγγύηση & φροντίδα</a>')
-footer=footer.replace('© <span id="year">2026</span> Arcus Development. Όλα τα δικαιώματα διατηρούνται.','© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε. · ΑΦΜ 802211949 · Αρ. ΓΕΜΗ 172215306000')
-footer=footer.replace('<span>+30 2310 445 935</span></a>','<span>+30 2310 445 935</span></a><a href="mailto:info@arcusdevelopment.gr"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 6 9 7 9-7"/></svg><span>info@arcusdevelopment.gr</span></a>',1)
-footer=footer.replace('<a href="https://arcusrealestate.gr/el/communication" target="_blank" rel="noopener">','<a href="/el/epikoinonia">')
-footer=footer.replace('<a href="#top">Στην αρχή','<a href="/el/aporrito">Απόρρητο</a><a href="#top">Στην αρχή')
-footer=footer.replace('Σχεδιασμός <span aria-hidden="true">/</span> Κατασκευή <span aria-hidden="true">/</span> Ανακαίνιση','Μελέτη <span aria-hidden="true">/</span> Ανακαίνιση <span aria-hidden="true">/</span> Φροντίδα')
-# One Stop Shop is the wider Arcus network, distinct from the two renovation paths.
-# Keep the same navigation order on desktop and mobile.
-def ordered_nav(match):
- opening,content=match.group(1),match.group(2)
- items=re.findall(r'<details\b.*?</details>|<a\b.*?</a>',content,re.S)
- company=next(x for x in items if '<summary' in x and 'Η εταιρεία' in x).replace('Η εταιρεία <','Η εταιρεία μας <').replace('>Η εταιρεία</summary>','>Η εταιρεία μας</summary>')
- services=next(x for x in items if '<summary' in x and 'Υπηρεσίες' in x).replace('>Υπηρεσίες','>Οι υπηρεσίες μας')
- work=next(x for x in items if 'href="/el/erga"' in x)
- blog=next(x for x in items if 'arcusrealestate.gr/el/blog' in x)
- return opening+company+work+services+'<a href="/el/one-stop-shop">One Stop Shop</a>'+blog+'<a href="/el/epikoinonia">Επικοινωνία</a></nav>'
-header=re.sub(r'(<nav[^>]+>)(.*?)</nav>',ordered_nav,header,flags=re.S)
-footer=footer.replace('<h3>Γρήγοροι σύνδεσμοι</h3>','<h3>Γρήγοροι σύνδεσμοι</h3><a href="/el/one-stop-shop">One Stop Shop</a>')
-header=header.replace('>Έργα</a>','>Τα έργα μας</a>')
-footer=footer.replace('>Έργα</a>','>Τα έργα μας</a>')
-footer=footer.replace('<a href="/el/kariera">Καριέρα</a>','<a href="https://arcusrealestate.gr/el/blog">Blog</a>')
-(ROOT/'components/header.html').write_text(header);(ROOT/'components/footer-current.html').write_text(footer)
-def page(slug,title,description,body,legacy=False):
- route='/el' if slug=='home' else '/el/'+slug.replace('--','/')
- if slug=='home':
-  teaser='<section class="arc-section oss-teaser" id="one-stop-shop"><div class="arc-container oss-teaser-inner"><div>'+kicker('ARCUS GROUP / ONE STOP SHOP')+'<h2>Ένας χώρος.<br><em>Όλες οι δυνατότητες.</em></h2></div><div><p>Η ανακαίνιση είναι ένα κεφάλαιο στην ιστορία του ακινήτου σου. Μέσα από το δίκτυο της Arcus, συνδέουμε τη δημιουργία του χώρου με την αγορά, τη διαχείριση, την εκτίμηση και τις υπηρεσίες που χρειάζεσαι πριν και μετά.</p>'+link('/el/one-stop-shop','Γνώρισε το One Stop Shop','arc-link')+'</div></div></section>'
-  body=body.replace('<section class="final-cta arc-container">',teaser+'<section class="final-cta arc-container">',1)
-  ribbon_words='<span>Φαντάσου.</span><i aria-hidden="true">✳</i><em>Σχεδίασε.</em><i aria-hidden="true">✳</i><span>Δημιούργησε.</span><i aria-hidden="true">✳</i><em>Ζήσε.</em><i aria-hidden="true">✳</i>'
-  ribbon='<div class="motion-ribbon"><div class="motion-ribbon-track"><div class="motion-ribbon-set">'+ribbon_words+'</div><div class="motion-ribbon-set" aria-hidden="true">'+ribbon_words+'</div></div></div>'
-  body=body.replace('<section class="arc-section arc-container" id="services">',ribbon+'<section class="arc-section arc-container" id="services">',1)
 
-
- schema={'@context':'https://schema.org','@type':'Organization','name':'Arcus Development','url':'https://arcusdevelopment.gr/el','telephone':'+302310445935','address':{'@type':'PostalAddress','streetAddress':'Τσαλουχίδη 54, 2ος όροφος','addressLocality':'Θεσσαλονίκη','addressCountry':'GR'}}
- crumbs={'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'Αρχική','item':'https://arcusdevelopment.gr/el'},{'@type':'ListItem','position':2,'name':title.split(' | ')[0],'item':'https://arcusdevelopment.gr'+route}]}
- social_match=re.search(r'<img[^>]+src="(/assets/portfolio/[^"]+)"',body)
- social_image='https://arcusdevelopment.gr'+(social_match.group(1) if social_match else '/assets/portfolio/soulioti-17/home-kitchen-light.webp')
- social_tags=f'<meta property="og:site_name" content="Arcus Development"><meta property="og:image" content="{social_image}"><meta property="og:image:alt" content="{esc(title)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{social_image}">'
- if slug.startswith('erga--'):
-  crumbs['itemListElement'].insert(1,{'@type':'ListItem','position':2,'name':'Τα έργα μας','item':'https://arcusdevelopment.gr/el/erga'})
-  crumbs['itemListElement'][-1]['position']=3
- extra_assets='<link rel="stylesheet" href="/journey.css"><script src="/journey.js" defer></script>' if slug=='one-stop-shop' else ''
- legacycss='<link rel="stylesheet" href="/legacy.css"><link rel="stylesheet" href="/legacy-design.css">' if legacy else ''
- html=f'''<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f3f1eb"><meta name="robots" content="noindex,nofollow"><title>{esc(title)}</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="https://arcusdevelopment.gr{route}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website"><meta property="og:locale" content="el_GR"><meta property="og:url" content="https://arcusdevelopment.gr{route}"><link rel="icon" href="/assets/arcus-development.png"><link rel="preload" href="/assets/manrope-greek.woff2" as="font" type="font/woff2" crossorigin>{social_tags}{legacycss}{extra_assets}<link rel="stylesheet" href="/site.css"><link rel="stylesheet" href="/footer.css"><script type="application/ld+json">{json.dumps(schema,ensure_ascii=False)}</script>{'' if slug=='home' else '<script type="application/ld+json">'+json.dumps(crumbs,ensure_ascii=False)+'</script>'}<link rel="stylesheet" href="/motion.css"><link rel="stylesheet" href="/portfolio.css"><link rel="stylesheet" href="/plan-transition.css"><script src="/plan-transition.js" defer></script><script src="/portfolio.js" defer></script><script src="/site.js" defer></script><script src="/motion.js" defer></script></head><body id="top" class="{'legacy-page company-page' if legacy else ''}"><a class="arc-skip" href="#main">Μετάβαση στο περιεχόμενο</a>{header}{body}{footer}<div class="mobile-project-cta">{link(CONTACT,'Συζήτησε το έργο σου','arc-button','data-event="click_primary_cta"')}</div></body></html>'''
- (P/(slug+'.html')).write_text(html)
-def intro(k,title,description,cta=None):return f'<section class="page-intro arc-container">{kicker(k)}<h1>{title}</h1><div class="intro-bottom"><p>{description}</p>{cta or ""}</div></section>'
-def finalcta(intent=''):
- return f'''<section class="final-cta arc-container">{kicker('ΤΟ ΕΠΟΜΕΝΟ ΚΕΦΑΛΑΙΟ')}<div><h2>Έχεις ένα διαμέρισμα.<br>Ας δούμε τι μπορεί να γίνει.</h2>{link(CONTACT+intent,'Περιέγραψέ μας το ακίνητό σου','arc-button light','data-event="click_primary_cta"')}</div></section>'''
-def projectcard(p,i=0):
- return f'''<article class="project-card {'flagship' if i==0 else ''}" data-project-category="{' '.join(p.get('categories',['residential']))}"><a href="/el/erga/{p['slug']}" data-event="view_project"><div class="project-image">{pic(p['cover'],p['title'])}<span class="image-arrow" aria-hidden="true">↗</span></div><div class="project-meta"><span>{p['area']}</span><span>{str(p['sqm'])+' m²' if p.get('sqm') else 'Ανακαίνιση κατοικίας'}</span></div><h3>{p['title']}</h3><p>{p['summary']}</p></a></article>'''
-def workgrid():
- if archive_projects:return portfolio_design.grid(archive_projects[:3],pic)
- return '<div class="project-grid">'+''.join(projectcard(p,i) for i,p in enumerate(projects))+'</div>'
-steps=[('Ακούμε τον στόχο','Ο τρόπος ζωής σου ή το επενδυτικό πλάνο δίνουν κατεύθυνση στη συζήτηση.'),('Αποτυπώνουμε & ελέγχουμε','Μετρήσεις, υφιστάμενη κατάσταση και πραγματικοί περιορισμοί του ακινήτου.'),('Μελετάμε & σχεδιάζουμε','Εναλλακτικές κατόψεις, υλικά και 3D απεικόνιση πριν από την υλοποίηση.'),('Προϋπολογίζουμε & οργανώνουμε','Σαφές αντικείμενο, συμφωνημένο κόστος και προγραμματισμός εργασιών.'),('Κατασκευάζουμε & ελέγχουμε','Συντονισμός συνεργείων, ποιοτικοί έλεγχοι και ενημέρωση για την πρόοδο.'),('Παραδίδουμε & υποστηρίζουμε','Τελικός έλεγχος, φάκελος έργου και 2ετής γραπτή εγγύηση.')]
-def faq(items):return '<div class="arc-faq">'+''.join(f'<details><summary>{q}<span aria-hidden="true">+</span></summary><div><p>{a}</p></div></details>' for q,a in items)+'</div>'
-basefaq=[('Πόσο διαρκεί μια ολική ανακαίνιση;','Η διάρκεια προκύπτει από την αποτύπωση, το αντικείμενο εργασιών, τις απαιτούμενες εγκρίσεις και τη διαθεσιμότητα υλικών. Το πρόγραμμα συμφωνείται πριν ξεκινήσει η κατασκευή.'),('Πότε γνωρίζω το κόστος;','Μετά τον έλεγχο του ακινήτου και τον καθορισμό των εργασιών και προδιαγραφών. Η πρόταση περιγράφει συγκεκριμένο αντικείμενο, επιλογές και προϋπολογισμό. Τυχόν αλλαγές συζητούνται πριν εκτελεστούν.'),('Θα δω τον χώρο σε 3D;','Η τρισδιάστατη παρουσίαση εντάσσεται στη μελέτη που συμφωνούμε, ώστε να κατανοήσεις τη διαρρύθμιση, τα υλικά και την ατμόσφαιρα πριν από την κατασκευή. Η έκταση και η αμοιβή της μελέτης ορίζονται στην πρόταση.'),('Μπορεί κάθε διαμέρισμα να διαχωριστεί;','Όχι. Εξετάζουμε πρώτα την τεχνική και νομική δυνατότητα, τις υποδομές, τον φωτισμό, την πρόσβαση και τις απαιτούμενες εγκρίσεις με τον αρμόδιο μηχανικό.'),('Τι καλύπτει η γραπτή εγγύηση 2 ετών;','Τις εργασίες και τα ζητήματα που αναφέρονται στους συμφωνημένους όρους του έργου. Η αποκατάσταση καλυπτόμενου προβλήματος γίνεται χωρίς πρόσθετη χρέωση. Η ακριβής κάλυψη, έναρξη και οι επιμέρους όροι καταγράφονται γραπτώς.')]
-def guarantee():return f'''<section class="warranty-band"><div class="arc-container warranty-grid"><div class="warranty-number"><span>02</span><p>ΧΡΟΝΙΑ ΓΡΑΠΤΗ ΕΓΓΥΗΣΗ</p></div><div>{kicker('ΦΡΟΝΤΙΔΑ ΜΕΤΑ ΤΗΝ ΠΑΡΑΔΟΣΗ')}<h2>Η σχέση μας δεν τελειώνει με την παράδοση.</h2><p>Παραδίδουμε το ανακαινισμένο σου διαμέρισμα με γραπτή εγγύηση καλής λειτουργίας 2 ετών για τις εργασίες που καλύπτονται από τη σύμβαση. Αν προκύψει καλυπτόμενο ζήτημα, αναλαμβάνουμε την αποκατάστασή του χωρίς πρόσθετη χρέωση, σύμφωνα με τους όρους της.</p>{link(WARRANTY,'Δες πώς λειτουργεί η εγγύησή μας','arc-link')}</div></div></section>'''
-def comparison(p):
- if not p.get('before') or not p.get('after'):return ''
- return f'''<figure class="before-after" data-comparison><div class="comparison-stage">{pic(p['after'],'Μετά — '+p['title'])}<div class="comparison-before">{pic(p['before'],'Πριν — '+p['title'])}</div><span class="compare-label before-label">ΠΡΙΝ</span><span class="compare-label after-label">ΜΕΤΑ</span><div class="comparison-handle" aria-hidden="true"><span>↔</span></div><input type="range" min="0" max="100" value="50" aria-label="Σύγκριση πριν και μετά: '+p['title']+'" aria-valuetext="50% πριν, 50% μετά"></div><figcaption>Πραγματικά καρέ από την επίσημη παρουσίαση του ίδιου έργου. Οι γωνίες λήψης διαφέρουν ελαφρώς. Σύρε ή χρησιμοποίησε τα βελάκια.</figcaption></figure>'''
-def kitchen_comparison():
- return f'''<figure class="before-after kitchen-comparison" id="kitchen-transformation" data-comparison data-diagonal><div class="kitchen-comparison-heading"><div>{kicker('ΠΡΑΓΜΑΤΙΚΗ ΜΕΤΑΜΟΡΦΩΣΗ / ΠΑΛΑΜΑ 7')}<h3>Ίδιο ακίνητο.<br><em>Μια άλλη καθημερινότητα.</em></h3></div><p>Σύρε τη γραμμή.<br>Ανακάλυψε τη διαφορά.</p></div><div class="comparison-stage">{pic('/assets/portfolio/grigoriou-palama-7/after-08.webp','Ολοκληρωμένη πράσινη κουζίνα με νησίδα — Γρηγορίου Παλαμά 7') }<div class="comparison-before">{pic('/assets/portfolio/grigoriou-palama-7/before-01.webp','Η αρχική κουζίνα πριν από την ανακαίνιση — Γρηγορίου Παλαμά 7')}</div><span class="compare-label before-label">01 / ΠΡΙΝ</span><span class="compare-label after-label">02 / ΜΕΤΑ</span><div class="comparison-handle" aria-hidden="true"><svg width="100%" height="100%" preserveAspectRatio="none"><line x1="100%" y1="0" x2="0" y2="100%" stroke="currentColor" stroke-width="2"/></svg><span>↔</span></div><input type="range" min="0" max="100" value="45" aria-label="Ποσοστό εμφάνισης αρχικής κουζίνας — Παλαμά 7" aria-valuetext="45% πριν, 55% μετά"></div><div class="comparison-footer"><div class="comparison-presets" role="group" aria-label="Προβολή κουζίνας"><button type="button" data-compare-value="100" aria-pressed="false">Πριν</button><button type="button" data-compare-value="45" aria-pressed="true">Σύγκριση</button><button type="button" data-compare-value="0" aria-pressed="false">Μετά</button></div>{link('/el/erga/grigoriou-palama-7','Δες όλο το έργο','arc-link')}</div><figcaption>Γρηγορίου Παλαμά 7 · Πραγματικές φωτογραφίες πριν και μετά την ανακαίνιση. Οι γωνίες λήψης διαφέρουν. Σύρε ή χρησιμοποίησε τα βελάκια του πληκτρολογίου.</figcaption></figure>'''
-
-hero=f'''<section class="blueprint-hero"><div class="arc-container hero-grid"><div class="hero-copy">{kicker('ARCUS DEVELOPMENT / ΘΕΣΣΑΛΟΝΙΚΗ')}<h1>Κάθε χώρος κρύβει<br><em>μια νέα αρχή.</em></h1><p>Τη σχεδιάζουμε μαζί. Την κάνουμε πραγματικότητα.<br>Ολικές ανακαινίσεις διαμερισμάτων, από την πρώτη κάτοψη έως την τελευταία λεπτομέρεια.</p><div class="hero-actions">{link(CONTACT,'Συζήτησε το έργο σου','arc-button','data-event="click_primary_cta"')}{link(WORK,'Δες τις μεταμορφώσεις μας','arc-link')}</div></div><figure class="hero-plan">{plan_transition(True)}<figcaption><span>ΠΡΑΓΜΑΤΙΚΟ ΕΡΓΟ / ARCUS DEVELOPMENT</span><a href="/el/erga/athanasiou-diakou-16">Η ιστορία του έργου ↗</a></figcaption></figure></div><div class="arc-container hero-bottom-line"><span>DESIGN WITH PURPOSE.</span><a href="#services" aria-label="Δες τις δύο υπηρεσίες">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a><span>EXECUTION WITH PRECISION.</span></div></section>'''
-proof='<div class="proof-strip arc-container"><span>Μέλος του Arcus Group</span><span>Μελέτη πριν από την κατασκευή</span><span>2 χρόνια γραπτή εγγύηση</span></div>'
-method=f'''<section class="arc-section method-section"><div class="arc-container"><div class="section-title"><div>{kicker('FROM PLAN TO REALITY')}<h2>Πρώτα το βλέπεις.<br>Έπειτα το ζεις.</h2></div><p>Η μελέτη συνδέει αυτό που φαντάζεσαι με αυτό που κατασκευάζεται. Κάθε επιλογή έχει θέση μέσα σε ένα ολοκληρωμένο σχέδιο.</p></div><div class="method-steps"><article><span>01 / PLAN</span><h3>Κατανοούμε τον χώρο.</h3><p>Αποτύπωση και εναλλακτικές κατόψεις. Η λειτουργικότητα παίρνει μορφή.</p></article><article><span>02 / RENDER</span><h3>Βλέπεις την πρόταση.</h3><p>Η τρισδιάστατη απεικόνιση βοηθά να εγκρίνεις υλικά, αναλογίες και ατμόσφαιρα.</p></article><article><span>03 / REALITY</span><h3>Η ιδέα γίνεται χώρος.</h3><p>Οργανωμένη κατασκευή, έλεγχος και τελική παράδοση με βάση όσα συμφωνήσαμε.</p></article></div>{kitchen_comparison()}</div></section>'''
-selected=f'''<section class="arc-section arc-container"><div class="section-title"><div>{kicker('ΕΠΙΛΕΓΜΕΝΑ ΕΡΓΑ / ARCUS DEVELOPMENT')}<h2>Χώροι που άλλαξαν.<br>Ιδέες που έγιναν πράξη.</h2></div>{link(WORK,'Όλα τα έργα','arc-link')}</div>{workgrid()}</section>'''
-process=f'''<section class="arc-section process-section"><div class="arc-container"><div class="section-title"><div>{kicker('HOW WE WORK')}<h2>Μία ομάδα.<br>Κάθε βήμα ξεκάθαρο.</h2></div>{link(PROCESS,'Η διαδικασία αναλυτικά','arc-link')}</div><div class="steps-grid">{''.join(f'<article><span>{i+1:02d}</span><h3>{t}</h3><p>{c}</p></article>' for i,(t,c) in enumerate(steps))}</div></div></section>'''
-investor=f'''<section class="arc-section arc-container investor-split"><div>{kicker('INVESTMENT / ΠΡΩΤΑ Η ΕΦΙΚΤΟΤΗΤΑ')}<h2>Η αξία ξεκινά<br>από τη σωστή<br><em>κάτοψη.</em></h2><p>Πριν από οποιαδήποτε κατασκευή, εξετάζουμε τις δυνατότητες του διαμερίσματος. Συγκρίνουμε εναλλακτικές διαρρυθμίσεις και μελετάμε περισσότερες αυτόνομες κατοικίες, εφόσον είναι τεχνικά και νομικά εφικτό.</p>{link(INV,'Εξερεύνησε την επενδυτική αξιοποίηση','arc-link')}<p class="fine-print">Η τεχνική δυνατότητα και οι νόμιμες εγκρίσεις εξετάζονται ανά ακίνητο. Δεν προεξοφλούνται αριθμός ιδιοκτησιών, μίσθωμα ή απόδοση.</p></div><div class="investor-visual">{plan_transition()}</div></section>'''
-if archive_projects:selected=portfolio_design.showcase(archive_projects,pic)
-home_steps=[('Ακούμε & αποτυπώνουμε','Ξεκινάμε από τον στόχο σου και τις πραγματικές δυνατότητες του χώρου.'),('Σχεδιάζουμε & παρουσιάζουμε','Κατόψεις, υλικά και renders κάνουν τη νέα καθημερινότητα ορατή πριν από την κατασκευή.'),('Οργανώνουμε & κατασκευάζουμε','Συμφωνούμε αντικείμενο, κόστος και πρόγραμμα. Συντονίζουμε συνεργεία και ελέγχουμε τις εργασίες.'),('Παραδίδουμε & φροντίζουμε','Τελικός έλεγχος, παράδοση και υποστήριξη με τη συμφωνημένη γραπτή εγγύηση.')]
-home_process='<section class="arc-section process-section"><div class="arc-container"><div class="section-title"><div>'+kicker('ΑΠΟ ΤΗΝ ΙΔΕΑ ΣΤΟ ΣΠΙΤΙ ΣΟΥ')+'<h2>Πρώτα το βλέπεις.<br>Έπειτα το ζεις.</h2></div>'+link(PROCESS,'Η διαδικασία αναλυτικά','arc-link')+'</div><div class="steps-grid">'+''.join(f'<article><span>{i+1:02d}</span><h3>{t}</h3><p>{c}</p></article>' for i,(t,c) in enumerate(home_steps))+'</div></div></section>'
-home='<main id="main">'+hero+proof+f'<section class="arc-section arc-container" id="services"><div class="section-title"><div>{kicker("TWO PATHS. ONE TEAM.")}<h2>Ο δικός σου χώρος.<br>Ο δικός σου στόχος.</h2></div><p>Δύο διαφορετικές αφετηρίες. Η ίδια φροντίδα στη μελέτη, στην υλοποίηση και σε κάθε λεπτομέρεια.</p></div><div class="service-grid">'+service_cards+'</div></section>'+selected+'<section class="arc-section arc-container">'+kitchen_comparison()+'</section>'+home_process+guarantee()+f'<section class="arc-section arc-container faq-section"><div>{kicker("ΠΡΙΝ ΞΕΚΙΝΗΣΟΥΜΕ")}<h2>Κάθε ερώτηση<br>έχει τη θέση της.</h2>{link("/el/sychnes-erotiseis","Όλες οι απαντήσεις","arc-link")}</div>'+faq(basefaq)+'</section>'+finalcta()+'</main>'
-page('home','Arcus Development | Ολικές Ανακαινίσεις Διαμερισμάτων','Ολική ανακαίνιση διαμερίσματος στη Θεσσαλονίκη για κατοικία ή επένδυση. Μελέτη, 3D, κατασκευή και 2ετής γραπτή εγγύηση.',home)
-# Service landing pages.
-resbody='<main id="main">'+intro('01 / ΓΙΑ ΤΟ ΣΠΙΤΙ ΜΟΥ','Όχι απλώς ένα ανακαινισμένο σπίτι.<br><em>Το δικό σου σπίτι.</em>','Κάθε άνθρωπος ζει διαφορετικά. Γι’ αυτό η ολική ανακαίνιση αρχίζει με τις ανάγκες, τις συνήθειες και την αισθητική σου. Αποτυπώνουμε τον υπάρχοντα χώρο, παρουσιάζουμε φωτορεαλιστικά τη νέα του διαμόρφωση και οργανώνουμε την κατασκευή.',link(CONTACT+'?intent=home','Μίλησε με την ομάδα μας'))
-if projects:resbody+=f'<figure class="service-hero-image arc-container">{pic(projects[0]["cover"],"Πραγματική ανακαίνιση Arcus στη Νέα Παραλία","eager")}<figcaption>Νέα Παραλία · Πραγματικό έργο Arcus Development · Καρέ επίσημης παρουσίασης</figcaption></figure>'
-resbody+=f'<section class="arc-section arc-container"><div class="section-title"><div>{kicker("ΜΙΑ ΕΝΙΑΙΑ ΕΜΠΕΙΡΙΑ")}<h2>Από την ανάγκη<br>μέχρι την τελευταία λεπτομέρεια.</h2></div><p>Η μελέτη, τα renders και η κατασκευή συνδέονται μέσα στο ίδιο έργο. Το ακριβές αντικείμενο συμφωνείται πριν από την έναρξη.</p></div><div class="steps-grid">'+''.join(f'<article><span>{i+1:02d}</span><h3>{t}</h3><p>{d}</p></article>' for i,(t,d) in enumerate([('Αποτύπωση & ανάγκες','Μετρήσεις και συζήτηση για τη χρήση κάθε δωματίου.'),('Διαρρύθμιση & σχεδιασμός','Εναλλακτικές λύσεις, υλικά, φωτισμός και λειτουργικές λεπτομέρειες.'),('Φωτορεαλιστική εικόνα','3D παρουσίαση των επιλογών της συμφωνημένης μελέτης.'),('Τεχνική οργάνωση','Προδιαγραφές, προϋπολογισμός και σειρά εργασιών.'),('Συντονισμός κατασκευής','Συνεργεία, επικοινωνία και έλεγχοι ποιότητας.'),('Παράδοση & φροντίδα','Τελικός έλεγχος, φάκελος έργου και γραπτή εγγύηση.')] ))+'</div><p class="fine-print">Αποξηλώσεις, δίκτυα, μπάνιο, κουζίνα, δάπεδα, κουφώματα, φωτισμός, χρωματισμοί και επίπλωση περιλαμβάνονται μόνο όπως ορίζονται στη συμφωνημένη τεχνική περιγραφή.</p></section>'+method+guarantee()+f'<section class="arc-section arc-container faq-section"><div>{kicker("ΟΙ ΕΠΙΛΟΓΕΣ ΣΟΥ")}<h2>Να ξέρεις<br>τι συμφωνούμε.</h2></div>'+faq([('Ποιος επιλέγει τα υλικά;','Η επιλογή γίνεται μαζί σου, με βάση τη μελέτη, τη χρήση των χώρων και το συμφωνημένο εύρος κόστους.'),('Ποιος συντονίζει τα συνεργεία;','Η ομάδα της Arcus οργανώνει τη σειρά των συμφωνημένων εργασιών και ορίζει το σημείο επικοινωνίας για το έργο.'),basefaq[1],basefaq[4]])+'</section>'+finalcta('?intent=home')+'</main>'
-page('oliki-anakainisi-diamerismatos','Ολική Ανακαίνιση Διαμερίσματος | Arcus Development','Ολική ανακαίνιση διαμερίσματος στη Θεσσαλονίκη: αποτύπωση, διαρρύθμιση, 3D, υλικά, οργάνωση κατασκευής και 2ετής γραπτή εγγύηση.',resbody)
-invbody='<main id="main">'+intro('02 / ΓΙΑ ΕΠΕΝΔΥΣΗ','Περισσότερη αξία<br>από κάθε <em>τετραγωνικό.</em>','Εξετάζουμε τις πραγματικές δυνατότητες ενός διαμερίσματος και σχεδιάζουμε λειτουργικές λύσεις για επενδυτική χρήση. Μελετάμε περισσότερες μικρότερες κατοικίες μόνο όταν οι τεχνικές και πολεοδομικές συνθήκες το επιτρέπουν.',link(CONTACT+'?intent=investment','Ζήτησε αξιολόγηση διαμερίσματος'))
-invbody+=f'<section class="arc-section arc-container investor-split"><div>{kicker("ΠΡΩΤΑ Η ΕΦΙΚΤΟΤΗΤΑ")}<h2>Πρώτα εξετάζουμε.<br>Μετά σχεδιάζουμε.</h2><p>Η αποτύπωση, τα διαθέσιμα έγγραφα και ο έλεγχος από τον αρμόδιο μηχανικό προηγούνται της απόφασης κατασκευής. Κάθε πρόταση λαμβάνει υπόψη φωτισμό, ιδιωτικότητα, πρόσβαση και υποδομές.</p><ul class="editorial-list"><li>Υφιστάμενη κατάσταση και τεχνικοί περιορισμοί</li><li>Κανονισμοί και απαιτούμενες εγκρίσεις</li><li>Εναλλακτικές λειτουργικές διαρρυθμίσεις</li><li>Σαφές αντικείμενο και προϋπολογισμός υλοποίησης</li></ul></div><div><figure class="investment-case">{pic('/assets/portfolio/athanasiou-diakou-16/after-24.webp','Αθανασίου Διάκου 16 — ολοκληρωμένη κατοικία μετά την ανακαίνιση')}<figcaption><span class="arc-kicker">ΠΡΑΓΜΑΤΙΚΟ ΕΡΓΟ / ΤΡΕΙΣ ΚΑΤΟΙΚΙΕΣ</span><h3>Αθανασίου Διάκου 16</h3><p>Τρεις πλήρως επιπλωμένες κατοικίες, με θέρμανση αερίου και κλιματισμό. Δες τη μελέτη και το ολοκληρωμένο αποτέλεσμα.</p>{link('/el/erga/athanasiou-diakou-16','Δες το έργο','arc-link')}</figcaption></figure></div></section>'
-invbody+=f'<section class="arc-section process-section"><div class="arc-container"><div class="section-title"><div>{kicker("ΣΥΓΚΡΙΝΟΥΜΕ ΠΡΙΝ ΑΠΟΦΑΣΙΣΟΥΜΕ")}<h2>Η σωστή λύση<br>χρειάζεται τεκμηρίωση.</h2></div><p>Συγκρίνουμε τις εναλλακτικές διαρρυθμίσεις ως προς την επιφάνεια, τη λειτουργικότητα και το κόστος υλοποίησης. Έτσι μπορείς να αποφασίσεις με συγκεκριμένα κριτήρια.</p></div><div class="comparison-table"><table><caption>Τι εξετάζουμε στις εναλλακτικές προτάσεις</caption><thead><tr><th>Κριτήριο</th><th>Τι περιλαμβάνει η μελέτη</th></tr></thead><tbody><tr><th>Καθαρή ωφέλιμη επιφάνεια</th><td>Αποτύπωση και κατανομή ανά λειτουργικό χώρο.</td></tr><tr><th>Αυτονομία</th><td>Δυνατότητα ανεξάρτητης χρήσης, είσοδοι και εγκαταστάσεις.</td></tr><tr><th>Ποιότητα κατοίκησης</th><td>Φυσικό φως, αερισμός, ιδιωτικότητα και κυκλοφορία.</td></tr><tr><th>Εφικτότητα</th><td>Περιορισμοί, απαιτούμενες εγκρίσεις και εκτιμώμενο αντικείμενο εργασιών.</td></tr><tr><th>Εικόνα πριν την κατασκευή</th><td>3D renders των μονάδων που προβλέπει η συμφωνημένη μελέτη.</td></tr></tbody></table></div><p class="fine-print">Ο διαχωρισμός εξετάζεται μόνο εφόσον είναι τεχνικά και νομικά εφικτός. Δεν παρέχεται προκαταβολική εγγύηση άδειας, μισθώματος ή επενδυτικής απόδοσης.</p></div></section>'+guarantee()+f'<section class="arc-section arc-container faq-section"><div>{kicker("ΕΠΕΝΔΥΣΗ ΜΕ ΣΑΦΕΙΣ ΒΑΣΕΙΣ")}<h2>Οι σωστές ερωτήσεις,<br>από την αρχή.</h2></div>'+faq([basefaq[3],('Περιλαμβάνεται η μελέτη στην αρχική συζήτηση;','Στην πρώτη συζήτηση συγκεντρώνουμε βασικά στοιχεία και τον στόχο σου. Η έκταση, τα παραδοτέα και η αμοιβή αποτύπωσης, τεχνικού ελέγχου και μελέτης καθορίζονται στην πρόταση συνεργασίας.'),('Ποιος ελέγχει τις εγκρίσεις;','Ο κατάλληλος μηχανικός ελέγχει τις απαιτήσεις του συγκεκριμένου ακινήτου. Η τελική λύση διαμορφώνεται με βάση αυτόν τον έλεγχο.'),basefaq[4]])+'</section>'+finalcta('?intent=investment')+'</main>'
-page('ependytiki-anakainisi-diamerismatos','Επενδυτική Ανακαίνιση & Διαχωρισμός Διαμερισμάτων | Arcus Development','Επενδυτική αξιοποίηση διαμερισμάτων στη Θεσσαλονίκη. Έλεγχος εφικτότητας, εναλλακτικές κατόψεις, 3D και οργανωμένη κατασκευή.',invbody)
-# Verified portfolio, including honest empty filter states.
-portfolio='<main id="main">'+intro('SELECTED WORK','Η μεταμόρφωση<br>έχει <em>υπογραφή.</em>','Πραγματικές ανακαινίσεις διαμερισμάτων από το δημοσιευμένο αρχείο της Arcus. Δες την αρχική κατάσταση, τις παρεμβάσεις και τους ολοκληρωμένους χώρους.')+f'<section class="arc-container portfolio-section"><div class="portfolio-tools" role="group" aria-label="Φίλτρα έργων"><button data-project-filter="all" aria-pressed="true">Όλα</button><button data-project-filter="residential" aria-pressed="false">Κατοικίες</button><button data-project-filter="investment" aria-pressed="false">Επενδυτικά</button><button data-project-filter="split" aria-pressed="false">Διαχωρισμοί</button><p id="project-count" aria-live="polite">{len(projects)} έργα</p></div>'+workgrid()+f'<div class="portfolio-empty" hidden><h2>Κάθε έργο, η δική του διαδρομή.</h2><p>Δεν υπάρχει ακόμη δημοσιευμένη παρουσίαση σε αυτή την κατηγορία. Μίλησέ μας για τις δυνατότητες του δικού σου διαμερίσματος.</p>{link(CONTACT+"?intent=investment","Συζήτησε την ιδέα σου")}</div></section>'+finalcta()+'</main>'
-page('erga','Έργα Ανακαίνισης | Arcus Development','Τρεις πραγματικές ανακαινίσεις της Arcus στη Θεσσαλονίκη: Νέα Παραλία, Σταυρούπολη και κέντρο. Φωτογραφίες πριν και μετά.',portfolio)
-for p in projects:
- facts=f'<div><dt>Περιοχή</dt><dd>{p["area"]}</dd></div><div><dt>Τύπος</dt><dd>Ανακαίνιση διαμερίσματος</dd></div>'+(f'<div><dt>Εμβαδόν</dt><dd>{p["sqm"]} m²</dd></div>' if p.get('sqm') else '')
- scope=''.join(f'<li>{esc(x)}</li>' for x in p['scope'])
- body='<main id="main">'+intro('PROJECT / '+p['area'],p['title'],p['summary'])+f'<section class="arc-container"><dl class="project-facts">{facts}</dl>'+comparison(p)+f'<div class="arc-section editorial-split-new"><div>{kicker("Η ΠΑΡΕΜΒΑΣΗ")}<h2>Ένας χώρος.<br>Μια νέα καθημερινότητα.</h2></div><div><p>{p["summary"]}</p><h3>Το αντικείμενο της ανακαίνισης</h3><ul class="editorial-list">{scope}</ul><p>Η σύγκριση δείχνει την αρχική και την τελική κατάσταση, όπως παρουσιάστηκαν από την ομάδα της Arcus.</p>{link(p["source"],"Η επίσημη παρουσίαση του έργου","arc-link",'target="_blank" rel="noopener"')}</div></div><div class="project-gallery">'+''.join(f'<figure>{pic(g["src"],g["alt"]+" — "+p["area"])}<figcaption>{g["alt"]}</figcaption></figure>' for g in p['gallery'])+'</div><p class="fine-print">Φωτογραφικά καρέ από την επίσημη δημοσίευση της Arcus Development. Διατηρούνται οι αρχικές ενδείξεις της παρουσίασης.</p></section>'+finalcta()+'</main>'
- page('erga--'+p['slug'],p['title']+' | Arcus Development',p['summary'],body)
-fullsteps=[('Brief','Συζητάμε τη χρήση, τις ανάγκες, τον στόχο και τα βασικά στοιχεία του ακινήτου.','Συνοπτική καταγραφή στόχων και επόμενο βήμα.'),('Αποτύπωση','Επίσκεψη, μετρήσεις, φωτογραφίες και αρχικός έλεγχος της υφιστάμενης κατάστασης.','Αποτύπωση του χώρου και των βασικών περιορισμών.'),('Μελέτη','Εξετάζουμε διαρρυθμίσεις, λειτουργικές ανάγκες, υλικά και αισθητική κατεύθυνση.','Κάτοψη και προτεινόμενη αρχιτεκτονική λύση.'),('Οπτικοποίηση','Παρουσιάζουμε τον σχεδιασμό σε 3D και επιβεβαιώνουμε τις συμφωνημένες επιλογές.','Εγκεκριμένη σχεδιαστική κατεύθυνση και renders σύμφωνα με τη μελέτη.'),('Οργάνωση','Οριστικοποιούμε τεχνική περιγραφή, προϋπολογισμό, φάσεις και τις απαιτούμενες εγκρίσεις.','Συγκεκριμένη πρόταση, σύμβαση και πρόγραμμα.'),('Υλοποίηση','Συντονίζουμε τις εργασίες, ελέγχουμε την ποιότητα και ενημερώνουμε για την πρόοδο.','Παρακολούθηση σταδίων και τελική παράδοση.'),('After-sales','Ολοκληρώνουμε τον έλεγχο παραλαβής, τον φάκελο και τη γραπτή εγγύηση.','Φάκελος παράδοσης, 2ετής γραπτή εγγύηση και κανάλι αιτημάτων υποστήριξης.')]
-body='<main id="main">'+intro('THE PROCESS','Από την πρώτη συζήτηση.<br>Μέχρι <em>μετά την παράδοση.</em>','Η βεβαιότητα χτίζεται με καθαρά βήματα. Ξέρεις τι εξετάζουμε, τι αποφασίζουμε και τι παραλαμβάνεις σε κάθε στάδιο.')+'<section class="arc-container detailed-process">'+''.join(f'<article><span class="step-index">{i+1:02d}</span><h2>{t}</h2><div><p>{d}</p><div class="deliverable"><span>ΤΙ ΠΑΡΑΛΑΜΒΑΝΕΙΣ</span><p>{r}</p></div></div></article>' for i,(t,d,r) in enumerate(fullsteps))+'</section><div class="arc-container scope-note"><p>Η αποτύπωση, ο τεχνικός έλεγχος, η μελέτη και τα renders αποτελούν συγκεκριμένα παραδοτέα. Η έκταση και η αμοιβή τους συμφωνούνται πριν από την ανάθεση.</p></div>'+finalcta()+'</main>'
-page('diadikasia','Η Διαδικασία Ανακαίνισης | Arcus Development','Τα επτά στάδια του έργου: brief, αποτύπωση, μελέτη, 3D, οργάνωση, κατασκευή και υποστήριξη μετά την παράδοση.',body)
-# Warranty uses the owner-authorized promise; no fabricated PDF terms or response SLA.
-wbody='<main id="main">'+intro('ΦΡΟΝΤΙΔΑ ΜΕΤΑ ΤΗΝ ΠΑΡΑΔΟΣΗ','Δίπλα σου.<br>Και <em>μετά την παράδοση.</em>','Ένα έργο ολοκληρώνεται όταν ο χώρος λειτουργεί όπως σχεδιάστηκε. Συνοδεύουμε τις καλυπτόμενες εργασίες με γραπτή εγγύηση καλής λειτουργίας 2 ετών.',link(CONTACT+'?kind=support','Άνοιξε αίτημα υποστήριξης'))+guarantee()+f'<section class="arc-section arc-container editorial-split-new"><div>{kicker("ΓΡΑΠΤΑ. ΚΑΘΑΡΑ. ΣΥΓΚΕΚΡΙΜΕΝΑ.")}<h2>Η κάλυψη<br>του δικού σου έργου.</h2></div><div><p>Οι πλήρεις όροι συνδέονται με τη σύμβαση και τον φάκελο παράδοσης του ακινήτου σου. Εκεί καταγράφονται η ημερομηνία έναρξης και λήξης, οι καλυπτόμενες εργασίες και εγκαταστάσεις και οι τυχόν επιμέρους όροι.</p><ul class="editorial-list"><li>Γραπτή διάρκεια και συγκεκριμένο αντικείμενο κάλυψης.</li><li>Χωρίς πρόσθετη χρέωση για αποκατάσταση καλυπτόμενων προβλημάτων.</li><li>Χειρισμός υλικών και εγγυήσεων κατασκευαστών σύμφωνα με τα έγγραφα του έργου.</li><li>Καταγραφή αιτήματος και αξιολόγηση με βάση τους συμφωνημένους όρους.</li></ul><h3>Τι δεν καλύπτεται συνήθως</h3><p>Σύμφωνα με τους όρους της σύμβασης, η εγγύηση δεν καλύπτει κατά κανόνα:</p><ul class="editorial-list"><li>Τη φυσιολογική φθορά από τη χρήση.</li><li>Ζημιές από κακή χρήση, έλλειψη συντήρησης ή ατύχημα.</li><li>Επεμβάσεις ή αλλαγές από τρίτους μετά την παράδοση.</li><li>Συσκευές και προϊόντα με δική τους εγγύηση κατασκευαστή, για τα οποία σε βοηθάμε να την αξιοποιήσεις.</li><li>Υλικά ή εξοπλισμό που προμηθεύτηκες εσύ.</li></ul><p>Για αντίγραφο των όρων που ισχύουν στο έργο σου, επικοινώνησε με την ομάδα μας. Η παρουσίαση αυτή δεν αντικαθιστά τη σύμβαση και δεν περιορίζει τα δικαιώματα που σου δίνει ο νόμος ως καταναλωτή.</p>{link(CONTACT+"?kind=support","Ζήτησε τους όρους του έργου σου","arc-link")}</div></section><section class="arc-section process-section"><div class="arc-container"><div class="section-title"><div>{kicker("AFTER-SALES")}<h2>Πώς ζητάς<br>τη βοήθειά μας.</h2></div><p>Μια σαφής περιγραφή και λίγες φωτογραφίες βοηθούν την ομάδα να κατανοήσει το ζήτημα.</p></div><div class="method-steps"><article><span>01 / ΑΝΑΦΟΡΑ</span><h3>Περιέγραψε το ζήτημα.</h3><p>Χρησιμοποίησε τη φόρμα υποστήριξης ή κάλεσε στο 2310 445 935.</p></article><article><span>02 / ΕΛΕΓΧΟΣ</span><h3>Εξετάζουμε την περίπτωση.</h3><p>Συσχετίζουμε το αίτημα με το έργο και τους γραπτούς όρους κάλυψης.</p></article><article><span>03 / ΦΡΟΝΤΙΔΑ</span><h3>Οργανώνουμε το επόμενο βήμα.</h3><p>Για καλυπτόμενο πρόβλημα, η αποκατάσταση δεν επιβαρύνεται με πρόσθετη χρέωση.</p></article></div></div></section>'+finalcta('?kind=support')+'</main>'
-page('eggyisi-ypostirixi','Εγγύηση 2 Ετών & After-sales | Arcus Development','Γραπτή εγγύηση καλής λειτουργίας 2 ετών για τις καλυπτόμενες εργασίες και οργανωμένη υποστήριξη μετά την παράδοση.',wbody)
-def field(name,label,kind='text',extra='',required=False):
- return f'<div class="form-field"><label for="{name}">{label}{" <span>*</span>" if required else ""}</label><input id="{name}" name="{name}" type="{kind}" {extra} {"required" if required else ""} aria-describedby="{name}-error"><span class="field-error" id="{name}-error"></span></div>'
-form=f'''<form id="project-form" class="project-form" novalidate enctype="multipart/form-data"><input name="kind" type="hidden" value="project"><input name="source" type="hidden" value="/el/epikoinonia"><input name="idempotency" type="hidden"><div class="honeypot" aria-hidden="true"><label>Website<input name="website" autocomplete="off" tabindex="-1"></label></div><fieldset class="intent-options"><legend>Τι θέλεις να δημιουργήσεις; <span>*</span></legend><label><input type="radio" name="intent" value="home" required><span>01 / Για το σπίτι μου</span></label><label><input type="radio" name="intent" value="investment"><span>02 / Για επένδυση</span></label><span class="field-error" id="intent-error"></span></fieldset><div class="form-grid">{field('name','Ονοματεπώνυμο',extra='autocomplete="name" maxlength="120"',required=True)}{field('area','Περιοχή ακινήτου',extra='placeholder="Δήμος ή γειτονιά" maxlength="160"',required=True)}{field('phone','Τηλέφωνο','tel','autocomplete="tel" maxlength="40"')}{field('email','Email','email','autocomplete="email" maxlength="200"')}</div><p class="form-help">Χρειαζόμαστε τουλάχιστον έναν τρόπο επικοινωνίας: τηλέφωνο ή email.</p><div class="form-grid optional-fields">{field('sqm','Εμβαδόν (m²) — προαιρετικό','number','min="1" max="10000" step="1"')}<div class="form-field"><label for="timeline">Πότε το σκέφτεσαι; — προαιρετικό</label><select id="timeline" name="timeline"><option value="">Επίλεξε</option><option value="now">Άμεσα</option><option value="1-3">Σε 1–3 μήνες</option><option value="later">Αργότερα</option></select><span class="field-error" id="timeline-error"></span></div></div><div class="form-field"><label for="description">Λίγα λόγια για τον χώρο — προαιρετικό</label><textarea id="description" name="description" rows="4" maxlength="3000" placeholder="Τι θα ήθελες να αλλάξει;"></textarea><span class="field-error" id="description-error"></span></div><div class="form-field upload-field"><label for="files">Κάτοψη ή φωτογραφίες — προαιρετικό</label><input id="files" name="files" type="file" multiple accept="image/jpeg,image/png,image/webp,application/pdf" aria-describedby="files-help files-error"><p id="files-help">Έως 3 αρχεία · JPG, PNG, WebP ή PDF · 8 MB το καθένα. Αφαίρεσε στοιχεία ταυτότητας, τρίτων και ακριβείς διευθύνσεις.</p><span class="field-error" id="files-error"></span></div><label class="privacy-check"><input type="checkbox" name="privacy" value="yes" required><span>Έχω διαβάσει την <a href="/el/aporrito" target="_blank" rel="noopener">ενημέρωση απορρήτου</a> για τη διαχείριση του αιτήματός μου. *</span></label><span class="field-error" id="privacy-error"></span><div id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></div><button class="arc-button" type="submit">Στείλε το αίτημά σου <span aria-hidden="true">↗</span></button><noscript><p>Για την ηλεκτρονική υποβολή χρειάζεται JavaScript. Μπορείς να μας καλέσεις στο <a href="tel:+302310445935">2310 445 935</a>.</p></noscript></form>'''
-contactbody='<main id="main">'+intro('ΑΣ ΣΧΕΔΙΑΣΟΥΜΕ ΜΑΖΙ','Κάθε ιδέα ξεκινά<br>με μια <em>συζήτηση.</em>','Πες μας την περιοχή, το μέγεθος και τι θέλεις να αλλάξει. Θα επικοινωνήσουμε για να συζητήσουμε τις ανάγκες σου.')+f'<section class="arc-section arc-container contact-grid"><aside><h2>Ο δικός σου χώρος.<br>Η επόμενη αρχή.</h2><p>Θεσσαλονίκη<br>Τσαλουχίδη 54, 2ος όροφος</p><a class="contact-big-phone" href="tel:+302310445935" data-event="click_phone">2310 445 935</a><p>Για υποστήριξη μετά την παράδοση:</p>{link(CONTACT+"?kind=support","Αίτημα after-sales","arc-link")}<p class="fine-print">Η αρχική αίτηση δεν αποτελεί ανάθεση έργου ή επιβεβαίωση ραντεβού. Το αντικείμενο και η αμοιβή μελέτης και τεχνικού ελέγχου συμφωνούνται στην πρόταση.</p></aside><div>{form}</div></section></main>'
-location_section=f'''<section class="arc-container contact-location" aria-labelledby="location-title"><figure>{pic('/assets/arcus-headquarters.webp','Το κτίριο των γραφείων Arcus στην Τσαλουχίδη 54, Θεσσαλονίκη','eager')}<figcaption>Τα γραφεία μας στην Τσαλουχίδη 54.</figcaption></figure><div class="contact-location-info">{kicker('ΕΛΑ ΝΑ ΓΝΩΡΙΣΤΟΥΜΕ')}<h2 id="location-title">Οι ιδέες σου<br>έχουν διεύθυνση.</h2><address>Τσαλουχίδη 54, 2ος όροφος<br>Θεσσαλονίκη</address><p>Πριν από την επίσκεψή σου, επικοινώνησε μαζί μας για να προγραμματίσουμε τη συνάντησή μας.</p><a class="arc-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=Τσαλουχίδη+54,+Θεσσαλονίκη" target="_blank" rel="noopener noreferrer">Οδηγίες διαδρομής <span aria-hidden="true">↗</span></a><iframe title="Χάρτης γραφείων Arcus — Τσαλουχίδη 54, Θεσσαλονίκη" src="https://maps.google.com/maps?q=Τσαλουχίδη+54,+Θεσσαλονίκη&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div></section>'''
-contactbody=contactbody.replace('<section class="arc-section arc-container contact-grid">',location_section+'<section class="arc-section arc-container contact-grid">')
-page('epikoinonia','Συζήτησε το Έργο σου | Arcus Development','Αίτημα ολικής ανακαίνισης, επενδυτικής αξιοποίησης ή after-sales υποστήριξης. Arcus Development, Θεσσαλονίκη, 2310 445 935.',contactbody)
-privacy='<main id="main">'+intro('ΕΝΗΜΕΡΩΣΗ ΑΠΟΡΡΗΤΟΥ','Τα στοιχεία σου.<br>Με <em>συγκεκριμένο σκοπό.</em>','Πώς χρησιμοποιούμε τα στοιχεία που μας στέλνεις μέσω της ιστοσελίδας και ποια δικαιώματα έχεις.')+'<section class="arc-container legal-copy"><h2>Ποιος είναι υπεύθυνος</h2><p><strong>ARCUS DEVELOPMENT Ε.Ε.</strong><br>Ι. Τσαλουχίδη 54, 54248 Θεσσαλονίκη<br>ΑΦΜ 802211949, ΔΟΥ Ζ΄ Θεσσαλονίκης, Αρ. ΓΕΜΗ 172215306000<br>Email <a href="mailto:info@arcusdevelopment.gr">info@arcusdevelopment.gr</a>, τηλέφωνο <a href="tel:+302310445935">2310 445 935</a></p><p>Η ARCUS DEVELOPMENT Ε.Ε. είναι ο υπεύθυνος επεξεργασίας για τα στοιχεία που υποβάλλονται στην ιστοσελίδα arcusdevelopment.gr.</p><h2>Ποια στοιχεία συλλέγουμε</h2><p>Μέσω της φόρμας: το όνομά σου, το τηλέφωνο ή/και το email σου, τη γενική περιοχή του ακινήτου και όσα προαιρετικά στοιχεία ή αρχεία (κάτοψη, φωτογραφίες) επιλέξεις να στείλεις. Δεν χρειάζονται στοιχεία ταυτότητας, οικονομικά έγγραφα ή προσωπικά δεδομένα τρίτων· αφαίρεσέ τα από τα αρχεία πριν τα στείλεις.</p><p>Κατά την επίσκεψη, ο πάροχος φιλοξενίας καταγράφει προσωρινά τεχνικά στοιχεία της σύνδεσης (π.χ. διεύθυνση IP, τύπο browser) για τη λειτουργία και την ασφάλεια της ιστοσελίδας.</p><h2>Για ποιο σκοπό και με ποια νομική βάση</h2><ul><li><strong>Απάντηση στο αίτημά σου και προετοιμασία πρότασης:</strong> μέτρα πριν από τη σύναψη σύμβασης, κατόπιν δικού σου αιτήματος (άρθρο 6 παρ. 1 β΄ ΓΚΠΔ).</li><li><strong>Υποστήριξη και εγγύηση μετά την παράδοση:</strong> εκτέλεση της σύμβασης του έργου σου (άρθρο 6 παρ. 1 β΄ ΓΚΠΔ).</li><li><strong>Ασφάλεια της ιστοσελίδας και προστασία από κατάχρηση:</strong> έννομο συμφέρον μας (άρθρο 6 παρ. 1 στ΄ ΓΚΠΔ).</li></ul><p>Η φόρμα δεν σε εγγράφει σε λίστα διαφημιστικών μηνυμάτων και δεν χρησιμοποιούμε τα στοιχεία σου για αυτοματοποιημένες αποφάσεις ή κατάρτιση προφίλ.</p><h2>Πώς διακινούνται τα στοιχεία</h2><p>Τα στοιχεία και τα αρχεία σου αποστέλλονται με email στην ομάδα της Arcus Development (info@arcusdevelopment.gr). Η ιστοσελίδα δεν τα αποθηκεύει σε βάση δεδομένων. Τα συνημμένα αποθηκεύονται προσωρινά σε ιδιωτικό χώρο του παρόχου φιλοξενίας μόνο για να επισυναφθούν στο email και διαγράφονται μόλις σταλεί το αίτημα. Τα συνημμένα δεν δημοσιεύονται ποτέ στο portfolio.</p><h2>Ποιοι άλλοι έχουν πρόσβαση</h2><p>Τα στοιχεία σου δεν πωλούνται και δεν διατίθενται σε τρίτους για δικούς τους σκοπούς. Πρόσβαση έχουν μόνο οι συνεργάτες της Arcus Development που χειρίζονται το αίτημα και οι πάροχοι που μας εξυπηρετούν τεχνικά, ως εκτελούντες την επεξεργασία:</p><ul><li><strong>Vercel Inc.</strong>: φιλοξενία της ιστοσελίδας και προσωρινή αποθήκευση των συνημμένων (κέντρο δεδομένων στη Φρανκφούρτη).</li><li><strong>Resend</strong>: αποστολή των email της φόρμας.</li><li><strong>Hetzner Online GmbH</strong> (Γερμανία): ο διακομιστής ηλεκτρονικού ταχυδρομείου όπου παραλαμβάνονται τα email.</li></ul><p>Η Vercel και η Resend είναι εταιρείες με έδρα στις ΗΠΑ. Όπου τα στοιχεία διαβιβάζονται εκτός του Ευρωπαϊκού Οικονομικού Χώρου, η διαβίβαση στηρίζεται στο Πλαίσιο Προστασίας Δεδομένων ΕΕ-ΗΠΑ ή στις τυποποιημένες συμβατικές ρήτρες της Ευρωπαϊκής Επιτροπής (άρθρα 45 και 46 ΓΚΠΔ).</p><h2>Πόσο διατηρούνται</h2><ul><li><strong>Συνημμένα στον διακομιστή της ιστοσελίδας:</strong> διαγράφονται αμέσως μετά την αποστολή του αιτήματος.</li><li><strong>Αιτήματα που δεν οδήγησαν σε συνεργασία:</strong> έως 24 μήνες από την τελευταία επικοινωνία μας και στη συνέχεια διαγράφονται.</li><li><strong>Αν αναλάβουμε το έργο σου:</strong> για όσο διαρκεί η σύμβαση και η εγγύηση και για όσο επιπλέον απαιτεί η φορολογική και λοιπή νομοθεσία.</li><li><strong>Τεχνικά στοιχεία σύνδεσης:</strong> για περιορισμένο χρόνο, σύμφωνα με την πολιτική του παρόχου φιλοξενίας.</li></ul><h2>Τα δικαιώματά σου</h2><p>Έχεις δικαίωμα πρόσβασης στα στοιχεία σου, διόρθωσης, διαγραφής, περιορισμού της επεξεργασίας, φορητότητας και εναντίωσης. Για να τα ασκήσεις, γράψε μας στο <a href="mailto:info@arcusdevelopment.gr">info@arcusdevelopment.gr</a> ή κάλεσε στο <a href="tel:+302310445935">2310 445 935</a>, αναφέροντας τον κωδικό αιτήματος εφόσον τον έχεις. Απαντάμε το αργότερο εντός ενός μήνα.</p><p>Αν θεωρείς ότι η επεξεργασία των στοιχείων σου παραβιάζει τη νομοθεσία, μπορείς να υποβάλεις καταγγελία στην Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα (Κηφισίας 1-3, 11523 Αθήνα, <a href="https://www.dpa.gr" target="_blank" rel="noopener">www.dpa.gr</a>).</p><h2>Cookies και μετρήσεις</h2><p>Η ιστοσελίδα δεν χρησιμοποιεί cookies, Google Analytics ή διαφημιστική παρακολούθηση. Το μόνο που αποθηκεύεται στον browser σου είναι η επιλογή παύσης των κινούμενων στοιχείων, αν την ενεργοποιήσεις, και διαγράφεται όταν κλείσεις την καρτέλα. Οι εξωτερικοί σύνδεσμοι (χάρτες, YouTube, άλλες ιστοσελίδες του Arcus Group) ανοίγουν σε ξεχωριστή σελίδα και εφαρμόζουν τις δικές τους πολιτικές.</p><p class="fine-print">Τελευταία ενημέρωση: 6 Νοεμβρίου 2026. Αν αλλάξει ο τρόπος που χειριζόμαστε τα στοιχεία σου, θα ενημερώσουμε αυτή τη σελίδα.</p></section></main>'
-page('aporrito','Ενημέρωση Απορρήτου | Arcus Development','Πώς η ARCUS DEVELOPMENT Ε.Ε. χρησιμοποιεί τα στοιχεία της φόρμας επικοινωνίας, πόσο τα διατηρεί και ποια δικαιώματα έχεις.',privacy)
-# Retain the six approved company subsections and their content, update their navigation and positioning.
-legacy_map={'company.html':('etaireia','Η Εταιρεία | Arcus Development'),'philosophy.html':('filosofia','Φιλοσοφία & Αξίες | Arcus Development'),'faq.html':('sychnes-erotiseis','Συχνές Ερωτήσεις | Arcus Development'),'glossary.html':('techniko-lexiko','Τεχνικό Λεξικό | Arcus Development')}
-for name,(slug,title) in legacy_map.items():
- src=(ROOT/'site/legacy'/name).read_text();body=re.search(r'<main.*?</main>',src,re.S).group(0)
- for a,b in replacements.items():body=body.replace(a,b)
- body=re.sub(r'<a\b[^>]*href="/el/grafeio"[^>]*>.*?</a>','',body,flags=re.S)
- body=body.replace('href="index.html"','href="/el"').replace('href="index.html#approach"',f'href="{PROCESS}"').replace('href="index.html#services"','href="/el#services"')
- body=body.replace('Ασχολούμαστε με τον σχεδιασμό, την κατασκευή και την ανακαίνιση ακινήτων.','Εστιάζουμε στην ολική ανακαίνιση διαμερισμάτων για κατοικία και επενδυτική αξιοποίηση, με μελέτη, 3D απεικόνιση, οργανωμένη κατασκευή και υποστήριξη μετά την παράδοση.')
- body=body.replace('Από μια διαφορετική διαρρύθμιση μέχρι μια συνολική ανακαίνιση,','Σε κάθε ολική ανακαίνιση,')
- if slug=='sychnes-erotiseis':body='<main id="main">'+intro('ΟΔΗΓΟΣ / ΣΥΧΝΕΣ ΕΡΩΤΗΣΕΙΣ','Μια καθαρή εικόνα.<br>Πριν από <em>την πρώτη απόφαση.</em>','Όσα χρειάζεται να γνωρίζεις για τη μελέτη, το κόστος, την υλοποίηση και τη φροντίδα του έργου.')+'<section class="arc-container arc-section narrow-faq">'+faq(basefaq+[('Η μελέτη παρέχεται δωρεάν;','Η αρχική επικοινωνία βοηθά να καταγράψουμε τον στόχο. Το αντικείμενο και η αμοιβή αποτύπωσης, ελέγχου, μελέτης και renders συμφωνούνται πριν από την ανάθεση.'),('Μπορώ να επιλέξω δικά μου υλικά;','Συζητάμε τις επιλογές σου σε συνδυασμό με τις τεχνικές απαιτήσεις και τον συμφωνημένο προϋπολογισμό.'),('Πώς υποβάλλω ζήτημα μετά την παράδοση;','Χρησιμοποίησε την επιλογή after-sales στη φόρμα επικοινωνίας ή κάλεσε στο 2310 445 935. Συμπλήρωσε τη γενική περιοχή, περιγραφή και προαιρετικές φωτογραφίες.'),('Αναλαμβάνετε μεμονωμένες μικροεργασίες;','Εστιάζουμε στην ολική ανακαίνιση διαμερισμάτων για κατοικία ή επενδυτική αξιοποίηση. Η μελέτη, τα renders και η κατασκευή συνδέονται σε αυτή την ολοκληρωμένη εμπειρία.')])+'</section>'+finalcta()+'</main>'
- page(slug,title,{'grafeio':'Το γραφείο της Arcus Development στη Θεσσαλονίκη: Τσαλουχίδη 54, 2ος όροφος. Επικοινώνησε για να συζητήσουμε την ανακαίνισή σου.','techniko-lexiko':'Κατόψεις, αποτύπωση, renders και όροι ανακαίνισης σε απλά ελληνικά. Ένας πρακτικός οδηγός από την Arcus Development.','sychnes-erotiseis':'Απαντήσεις για το κόστος, τη μελέτη, τα υλικά και τα στάδια ολικής ανακαίνισης διαμερίσματος από την Arcus Development.'}.get(slug,'Η φιλοσοφία της Arcus Development στην ολική ανακαίνιση διαμερισμάτων.'),body,slug!='sychnes-erotiseis')
+import project_portfolio as portfolio
 import company_story
-company_story.render(page,intro,kicker,link,pic,service_cards,finalcta)
+import one_stop_journey
+from plan_transition import plan_transition
+
+ROOT = Path(__file__).resolve().parents[1]
+P = ROOT / 'site/pages'
+P.mkdir(parents=True, exist_ok=True)
+projects = json.loads((ROOT / 'site/data/drive-projects.json').read_text())
+
+HOME = '/el'; RES = '/el/oliki-anakainisi-diamerismatos'; INV = '/el/ependytiki-anakainisi-diamerismatos'
+CONTACT = '/el/epikoinonia'; WORK = '/el/erga'; PROCESS = '/el/diadikasia'; WARRANTY = '/el/eggyisi-ypostirixi'
+OSS = '/el/one-stop-shop'; BLOG = 'https://arcusrealestate.gr/el/blog'; PRIVACY = '/el/aporrito'
+companylinks = [('/el/etaireia', 'Ποιοι είμαστε'), ('/el/filosofia', 'Φιλοσοφία & αξίες'), (PROCESS, 'Η διαδικασία'),
+                ('/el/sychnes-erotiseis', 'Συχνές ερωτήσεις'), ('/el/techniko-lexiko', 'Τεχνικό λεξικό')]
+
+# ---------------------------------------------------------------- small building blocks
+ARROW = '<span class="arw" aria-hidden="true">↗</span>'
 
 
-oss_services=json.loads((ROOT/'site/data/one-stop-shop.json').read_text())['services']
-oss_cards=''.join(f'<a class="oss-service" href="{x["url"]}"><span class="oss-number">{i+1:02d}</span><h3>{esc(x["title"])}</h3><p>{esc(x["description"])}</p><span class="oss-destination">{"ARCUS DEVELOPMENT" if x["url"].startswith("/") else "ARCUS REAL ESTATE / ΔΙΚΤΥΟ ΣΥΝΕΡΓΑΤΩΝ"}</span><span class="arc-link">Μάθε περισσότερα <span aria-hidden="true">↗</span></span></a>' for i,x in enumerate(oss_services))
-oss_body='<main id="main">'+intro('ARCUS GROUP / ONE STOP SHOP','Ένας συνεργάτης.<br>Για κάθε <em>επόμενο βήμα.</em>','Όλες οι υπηρεσίες για το ακίνητό σου, κάτω από μία στέγη. Η Arcus Development δημιουργεί τον χώρο. Το δίκτυο της Arcus σε υποστηρίζει σε όλη τη διαδρομή του.',link('#oss-services','Εξερεύνησε τις υπηρεσίες'))+'<section class="oss-overview arc-container"><span>ΑΓΟΡΑ</span><span aria-hidden="true">→</span><span>ΔΗΜΙΟΥΡΓΙΑ</span><span aria-hidden="true">→</span><span>ΑΞΙΟΠΟΙΗΣΗ</span></section><section class="arc-section arc-container editorial-split-new"><div>'+kicker('Η ΑΞΙΑ ΤΗΣ ΣΥΝΔΕΣΗΣ')+'<h2>Το ακίνητό σου.<br>Μια ολοκληρωμένη διαδρομή.</h2></div><div><p>Από την αναζήτηση και την αγορά μέχρι την ανακαίνιση, τη μίσθωση και τη διαχείριση, κάθε απόφαση επηρεάζει την επόμενη. Το One Stop Shop φέρνει τις υπηρεσίες και τους κατάλληλους συνεργάτες της Arcus σε ένα κοινό σημείο αναφοράς.</p><p>Η ομάδα της Development αναλαμβάνει τη μελέτη και την ολική ανακαίνιση. Για τις υπόλοιπες ανάγκες, σε συνδέουμε με τις αρμόδιες ομάδες και τους εξειδικευμένους συνεργάτες του δικτύου.</p></div></section><section class="oss-services-section" id="oss-services"><div class="arc-container arc-section"><div class="section-title"><div>'+kicker('10 ΥΠΗΡΕΣΙΕΣ / ΕΝΑ ΔΙΚΤΥΟ')+'<h2>Όσα χρειάζεται<br>το επόμενο βήμα σου.</h2></div><p>Διάλεξε αυτό που σε ενδιαφέρει. Κάθε υπηρεσία σε οδηγεί στη σχετική παρουσίαση της Arcus.</p></div><div class="oss-service-grid">'+oss_cards+'</div></div></section><section class="arc-section arc-container"><div class="section-title"><div>'+kicker('ΓΙΑΤΙ ONE STOP SHOP')+'<h2>Λιγότερη αναζήτηση.<br>Περισσότερη συνεννόηση.</h2></div></div><div class="steps-grid">'+''.join(f'<article><span>{i+1:02d}</span><h3>{t}</h3><p>{d}</p></article>' for i,(t,d) in enumerate([('Ένα σημείο αναφοράς','Ξεκινάς από την ανάγκη σου και βρίσκεις την κατάλληλη ομάδα.'),('Συνολική εικόνα','Συνδέουμε τις ανάγκες πριν, κατά τη διάρκεια και μετά την ανακαίνιση.'),('Εξειδικευμένοι συνεργάτες','Κάθε αντικείμενο υποστηρίζεται από τους αρμόδιους επαγγελματίες.'),('Καθαρή συνεργασία','Το αντικείμενο, οι όροι και η αμοιβή κάθε υπηρεσίας συμφωνούνται ξεχωριστά.')]))+'</div></section><section class="final-cta arc-container">'+kicker('ΑΣ ΞΕΚΙΝΗΣΟΥΜΕ ΑΠΟ ΕΣΕΝΑ')+'<div><h2>Τι χρειάζεται<br>το ακίνητό σου σήμερα;</h2>'+link('https://arcusrealestate.gr/el/communication','Μίλησε με την ομάδα Arcus','arc-button light')+'</div></section></main>'
-from one_stop_journey import render as render_journey
-oss_start=oss_body.index('<section class="oss-overview')
-oss_end=oss_body.index('<section class="final-cta',oss_start)
-oss_body=oss_body[:oss_start]+render_journey()+oss_body[oss_end:]
-oss_body=oss_body.replace('#oss-services','#oss-journey')
-page('one-stop-shop','One Stop Shop | Arcus Development','Το δίκτυο υπηρεσιών της Arcus για το ακίνητό σου: αγορά, ανακαίνιση, διαχείριση, εκτίμηση και εξειδικευμένη υποστήριξη.',oss_body)
+def btn(url, label, cls='btn', extra=''):
+    return f'<a class="{cls}" href="{url}" {extra}>{label}{ARROW}</a>'
 
-if archive_projects:
- portfolio_design.render(archive_projects,page,intro,pic,kicker,link,finalcta)
+
+def more(url, label, extra=''):
+    return f'<a class="more" href="{url}" {extra}>{label}{ARROW}</a>'
+
+
+def eyebrow(t):
+    return f'<p class="eyebrow">{t}</p>'
+
+
+def pic(src, alt, loading='lazy', cls='', sizes='(max-width: 700px) 100vw, 60vw'):
+    path = ROOT / 'public' / src.lstrip('/')
+    w, h = Image.open(path).size if path.exists() else (1440, 960)
+    srcset = ''
+    thumb = src.replace('.webp', '-640.webp')
+    if src.startswith('/assets/portfolio/') and (ROOT / 'public' / thumb.lstrip('/')).exists():
+        tw = Image.open(ROOT / 'public' / thumb.lstrip('/')).width
+        srcset = f' srcset="{thumb} {tw}w, {src} {w}w" sizes="{sizes}"'
+    fetch = ' fetchpriority="high"' if loading == 'eager' else ''
+    c = f' class="{cls}"' if cls else ''
+    return f'<img{c} src="{src}"{srcset} alt="{esc(alt)}" width="{w}" height="{h}" loading="{loading}" decoding="async"{fetch}>'
+
+
+def head(k, title, text='', side=''):
+    """Section heading: eyebrow + serif title on the left, short text or link on the right."""
+    right = f'<div class="sec-side">{f"<p>{text}</p>" if text else ""}{side}</div>' if (text or side) else ''
+    return f'<div class="sec-head">{f"<div>{eyebrow(k)}<h2>{title}</h2></div>"}{right}</div>'
+
+
+def intro(k, title, description, cta=None, cls=''):
+    return (f'<section class="intro wrap {cls}">{eyebrow(k)}<h1 class="display">{title}</h1>'
+            f'<div class="intro-foot"><p class="lede">{description}</p>{cta or ""}</div></section>')
+
+
+def steps(items, cls='steps'):
+    return f'<ol class="{cls}">' + ''.join(
+        f'<li><span class="num">{i + 1:02d}</span><h3>{t}</h3><p>{d}</p></li>' for i, (t, d) in enumerate(items)) + '</ol>'
+
+
+def faq(items):
+    return '<div class="faq">' + ''.join(
+        f'<details><summary><span>{q}</span><i aria-hidden="true"></i></summary><div><p>{a}</p></div></details>'
+        for q, a in items) + '</div>'
+
+
+def finalcta(intent=''):
+    return (f'<section class="closing"><div class="wrap closing-inner">{eyebrow("Το επόμενο κεφάλαιο")}'
+            f'<h2>Έχεις ένα διαμέρισμα.<br><em>Ας δούμε τι μπορεί να γίνει.</em></h2>'
+            f'<div class="closing-actions">{btn(CONTACT + intent, "Περιέγραψέ μας το ακίνητό σου", "btn btn-light", "data-event=\"click_primary_cta\"")}'
+            f'<a class="closing-phone" href="tel:+302310445935" data-event="click_phone"><span>ή κάλεσε</span>2310 445 935</a></div></div></section>')
+
+
+def legal(name):
+    html = (ROOT / 'site/data/legal' / name).read_text().strip()
+    return html.replace('class="arc-link"', 'class="more"').replace('class="editorial-list"', 'class="list"').replace(
+        '<span aria-hidden="true">↗</span>', ARROW)
+
+
+# ---------------------------------------------------------------- header and footer
+def nav_desktop():
+    company = ''.join(f'<a href="{u}"><span>{i + 1:02d}</span>{l}</a>' for i, (u, l) in enumerate(companylinks))
+    return (
+        '<nav class="nav" aria-label="Κύρια πλοήγηση">'
+        f'<details class="drop"><summary>Η εταιρεία μας<i aria-hidden="true"></i></summary><div class="drop-panel drop-list">{company}</div></details>'
+        f'<a href="{WORK}">Τα έργα μας</a>'
+        '<details class="drop"><summary>Οι υπηρεσίες μας<i aria-hidden="true"></i></summary><div class="drop-panel drop-paths">'
+        f'<a href="{RES}" data-event="select_service_home"><span>01</span><strong>Για το σπίτι μου</strong><small>Ολική ανακαίνιση, με αφετηρία τη δική σου καθημερινότητα.</small></a>'
+        f'<a href="{INV}" data-event="select_service_investment"><span>02</span><strong>Για επένδυση</strong><small>Λειτουργική αξιοποίηση, με τεχνικό έλεγχο πριν από κάθε απόφαση.</small></a>'
+        '</div></details>'
+        f'<a href="{OSS}">One Stop Shop</a><a href="{BLOG}">Blog</a><a href="{CONTACT}">Επικοινωνία</a></nav>')
+
+
+def nav_mobile():
+    return (
+        '<nav class="mnav" id="mnav" aria-label="Πλοήγηση κινητού" hidden><div class="mnav-inner">'
+        f'<a href="{HOME}">Αρχική</a>'
+        f'<details><summary>Η εταιρεία μας</summary><div>{"".join(f"<a href=\"{u}\">{l}</a>" for u, l in companylinks)}</div></details>'
+        f'<a href="{WORK}">Τα έργα μας</a>'
+        f'<details><summary>Οι υπηρεσίες μας</summary><div><a href="{RES}">Για το σπίτι μου</a><a href="{INV}">Για επένδυση</a></div></details>'
+        f'<a href="{OSS}">One Stop Shop</a><a href="{BLOG}">Blog</a><a href="{WARRANTY}">Εγγύηση & φροντίδα</a><a href="{CONTACT}">Επικοινωνία</a>'
+        f'<div class="mnav-foot">{btn(CONTACT, "Συζήτησε το έργο σου", "btn", "data-event=\"click_primary_cta\"")}<a href="tel:+302310445935">2310 445 935</a></div>'
+        '</div></nav>')
+
+
+header = (
+    '<header class="site-header"><div class="header-inner">'
+    '<a class="brand" href="/el" aria-label="Arcus Development — Αρχική"><img src="/assets/arcus-development.png" alt="Arcus Development" width="202" height="138"></a>'
+    + nav_desktop() +
+    btn(CONTACT, 'Συζήτησε το έργο σου', 'btn btn-sm header-cta', 'data-event="click_primary_cta"') +
+    '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Άνοιγμα μενού"><span></span><span></span></button>'
+    '</div>' + nav_mobile() + '</header>')
+
+group_logos = [
+    ('/el', '/assets/arcus-development.png', 'Arcus Development', 202, 138, 'Arcus Development — Αρχική', False),
+    ('https://arcusrealestate.gr/el', '/assets/arcus-real-estate.png', 'Arcus Real Estate', 146, 87, 'Arcus Real Estate — ανοίγει σε νέα καρτέλα', True),
+    (None, '/assets/arcus-lab.png', 'Arcus Lab', 204, 120, '', False),
+    ('https://www.arcusbnb.com', '/assets/arcbnb.png', 'Arcus BnB — We manage properties', 172, 148, 'Arcus BnB — ανοίγει σε νέα καρτέλα', True),
+    ('https://arcusrealestate.gr/el/blog', '/assets/estate.png', 'Estate Magazine', 228, 89, 'Estate Magazine — Διαβάστε τα περιοδικά μας (νέα καρτέλα)', True),
+    ('https://www.youtube.com/@-arcusrealestate888', '/assets/brand/beyond-horizontal.png', 'Beyond Real Estate by Arcus Group', 1165, 405, 'Beyond Real Estate — Το podcast μας στο YouTube (νέα καρτέλα)', True),
+]
+
+
+def logo_item(u, src, alt, w, h, label, ext):
+    img = f'<img src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy">'
+    if not u:
+        return f'<li><span>{img}</span></li>'
+    target = ' target="_blank" rel="noopener noreferrer"' if ext else ''
+    return f'<li><a href="{u}"{target} aria-label="{label}">{img}</a></li>'
+
+
+footer = (
+    '<footer class="site-footer" id="footer" aria-label="Arcus Development — Πληροφορίες και δίκτυο"><div class="wrap">'
+    '<div class="footer-top">'
+    '<div class="footer-id"><a class="footer-brand" href="/el" aria-label="Arcus Development — Επιστροφή στην αρχή"><img src="/assets/arcus-development.png" alt="Arcus Development" width="202" height="138" loading="lazy"></a>'
+    '<p class="footer-motto">Η πρώτη ύλη είναι η ιδέα σου.<br><em>Μαζί της δίνουμε μορφή.</em></p></div>'
+    '<nav class="footer-col" aria-label="Γρήγοροι σύνδεσμοι"><h3>Σελίδες</h3>'
+    f'<a href="/el">Αρχική</a><a href="/el/etaireia">Η εταιρεία μας</a><a href="{WORK}">Τα έργα μας</a><a href="/el#services">Υπηρεσίες</a><a href="{OSS}">One Stop Shop</a><a href="{BLOG}">Blog</a></nav>'
+    '<nav class="footer-col" aria-label="Οδηγός"><h3>Οδηγός</h3>'
+    f'<a href="{PROCESS}">Η διαδικασία</a><a href="/el/filosofia">Φιλοσοφία και αξίες</a><a href="/el/sychnes-erotiseis">Συχνές ερωτήσεις</a><a href="/el/techniko-lexiko">Τεχνικό λεξικό</a><a href="{WARRANTY}">Εγγύηση & φροντίδα</a></nav>'
+    '<div class="footer-col footer-contact"><h3>Επικοινωνία</h3><address>Τσαλουχίδη 54, 2ος όροφος<br>Θεσσαλονίκη</address>'
+    '<a href="tel:+302310445935">+30 2310 445 935</a><a href="mailto:info@arcusdevelopment.gr">info@arcusdevelopment.gr</a>'
+    f'<a class="footer-form" href="{CONTACT}">Στείλε μας ένα μήνυμα{ARROW}</a></div>'
+    '</div>'
+    '<div class="footer-group"><div class="footer-group-head"><p>Μέλος του Arcus Group</p><p>Όλες οι υπηρεσίες για το ακίνητό σου, κάτω από μία στέγη.</p></div>'
+    '<ul class="group-logos" aria-label="Τα brands του Arcus Group">' + ''.join(logo_item(*g) for g in group_logos) + '</ul>'
+    '<div class="footer-certs" aria-label="Πιστοποιήσεις και διακρίσεις Arcus">'
+    '<a href="https://arcusrealestate.gr/el" target="_blank" rel="noopener noreferrer" title="ISO 9001 — Λειτουργία μεσιτικών γραφείων και δικτύου franchise"><img src="/assets/brand/iso-9001.png" alt="Arcus — ISO 9001, μεσιτικά γραφεία και δίκτυο franchise" width="263" height="391" loading="lazy"></a>'
+    '<a href="https://arcusrealestate.gr/el" target="_blank" rel="noopener noreferrer" title="Great Place to Work — Δεκέμβριος 2025 έως Δεκέμβριος 2026"><img src="/assets/brand/great-place-to-work-2025-2026.webp" alt="Great Place to Work Certified — Δεκέμβριος 2025 έως Δεκέμβριος 2026, Ελλάδα" width="438" height="620" loading="lazy"></a>'
+    '</div></div>'
+    '<div class="footer-bottom"><p>Μελέτη <span aria-hidden="true">/</span> Ανακαίνιση <span aria-hidden="true">/</span> Φροντίδα</p>'
+    '<p>© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε. · ΑΦΜ 802211949 · Αρ. ΓΕΜΗ 172215306000</p>'
+    f'<p class="footer-legal"><a href="{PRIVACY}">Απόρρητο</a><a href="#top">Στην αρχή <span aria-hidden="true">↑</span></a></p></div>'
+    '</div></footer>')
+(ROOT / 'components/header.html').write_text(header)
+(ROOT / 'components/footer-current.html').write_text(footer)
+
+
+# ---------------------------------------------------------------- the page shell
+def page(slug, title, description, body):
+    route = '/el' if slug == 'home' else '/el/' + slug.replace('--', '/')
+    schema = {'@context': 'https://schema.org', '@type': 'Organization', 'name': 'Arcus Development', 'url': 'https://arcusdevelopment.gr/el',
+              'telephone': '+302310445935', 'address': {'@type': 'PostalAddress', 'streetAddress': 'Τσαλουχίδη 54, 2ος όροφος', 'addressLocality': 'Θεσσαλονίκη', 'addressCountry': 'GR'}}
+    crumbs = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': 1, 'name': 'Αρχική', 'item': 'https://arcusdevelopment.gr/el'},
+        {'@type': 'ListItem', 'position': 2, 'name': title.split(' | ')[0], 'item': 'https://arcusdevelopment.gr' + route}]}
+    if slug.startswith('erga--'):
+        crumbs['itemListElement'].insert(1, {'@type': 'ListItem', 'position': 2, 'name': 'Τα έργα μας', 'item': 'https://arcusdevelopment.gr/el/erga'})
+        crumbs['itemListElement'][-1]['position'] = 3
+    m = re.search(r'<img[^>]+src="(/assets/portfolio/[^"]+)"', body)
+    social = 'https://arcusdevelopment.gr' + (m.group(1) if m else '/assets/portfolio/soulioti-17/home-kitchen-light.webp')
+    ld = '<script type="application/ld+json">' + json.dumps(schema, ensure_ascii=False) + '</script>'
+    if slug != 'home':
+        ld += '<script type="application/ld+json">' + json.dumps(crumbs, ensure_ascii=False) + '</script>'
+    cta = '' if slug == 'epikoinonia' else f'<div class="sticky-cta is-hidden">{btn(CONTACT, "Συζήτησε το έργο σου", "btn", "data-event=\"click_primary_cta\"")}</div>'
+    html = (
+        '<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+        '<meta name="theme-color" content="#f5f2eb"><meta name="robots" content="noindex,nofollow">'
+        f'<title>{esc(title)}</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="https://arcusdevelopment.gr{route}">'
+        f'<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website">'
+        f'<meta property="og:locale" content="el_GR"><meta property="og:url" content="https://arcusdevelopment.gr{route}"><meta property="og:site_name" content="Arcus Development">'
+        f'<meta property="og:image" content="{social}"><meta property="og:image:alt" content="{esc(title)}"><meta name="twitter:card" content="summary_large_image">'
+        f'<meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{social}">'
+        '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/favicon.svg">'
+        '<link rel="preload" href="/assets/fonts/noto-serif-display-greek.woff2" as="font" type="font/woff2" crossorigin>'
+        '<link rel="preload" href="/assets/manrope-greek.woff2" as="font" type="font/woff2" crossorigin>'
+        '<link rel="stylesheet" href="/styles.css">' + ld +
+        '<script>document.documentElement.classList.add("js")</script><script src="/app.js" defer></script></head>'
+        f'<body id="top"><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>{header}{body}{footer}{cta}</body></html>')
+    (P / (slug + '.html')).write_text(html)
+
+
+# ---------------------------------------------------------------- shared sections
+home_steps = [('Ακούμε & αποτυπώνουμε', 'Ξεκινάμε από τον στόχο σου και τις πραγματικές δυνατότητες του χώρου.'),
+              ('Σχεδιάζουμε & παρουσιάζουμε', 'Κατόψεις, υλικά και renders κάνουν τη νέα καθημερινότητα ορατή πριν από την κατασκευή.'),
+              ('Οργανώνουμε & κατασκευάζουμε', 'Συμφωνούμε αντικείμενο, κόστος και πρόγραμμα. Συντονίζουμε συνεργεία και ελέγχουμε τις εργασίες.'),
+              ('Παραδίδουμε & φροντίζουμε', 'Τελικός έλεγχος, παράδοση και υποστήριξη με τη συμφωνημένη γραπτή εγγύηση.')]
+basefaq = [
+    ('Πόσο διαρκεί μια ολική ανακαίνιση;', 'Η διάρκεια προκύπτει από την αποτύπωση, το αντικείμενο εργασιών, τις απαιτούμενες εγκρίσεις και τη διαθεσιμότητα υλικών. Το πρόγραμμα συμφωνείται πριν ξεκινήσει η κατασκευή.'),
+    ('Πότε γνωρίζω το κόστος;', 'Μετά τον έλεγχο του ακινήτου και τον καθορισμό των εργασιών και προδιαγραφών. Η πρόταση περιγράφει συγκεκριμένο αντικείμενο, επιλογές και προϋπολογισμό. Τυχόν αλλαγές συζητούνται πριν εκτελεστούν.'),
+    ('Θα δω τον χώρο σε 3D;', 'Η τρισδιάστατη παρουσίαση εντάσσεται στη μελέτη που συμφωνούμε, ώστε να κατανοήσεις τη διαρρύθμιση, τα υλικά και την ατμόσφαιρα πριν από την κατασκευή. Η έκταση και η αμοιβή της μελέτης ορίζονται στην πρόταση.'),
+    ('Μπορεί κάθε διαμέρισμα να διαχωριστεί;', 'Όχι. Εξετάζουμε πρώτα την τεχνική και νομική δυνατότητα, τις υποδομές, τον φωτισμό, την πρόσβαση και τις απαιτούμενες εγκρίσεις με τον αρμόδιο μηχανικό.'),
+    ('Τι καλύπτει η γραπτή εγγύηση 2 ετών;', 'Τις εργασίες και τα ζητήματα που αναφέρονται στους συμφωνημένους όρους του έργου. Η αποκατάσταση καλυπτόμενου προβλήματος γίνεται χωρίς πρόσθετη χρέωση. Η ακριβής κάλυψη, έναρξη και οι επιμέρους όροι καταγράφονται γραπτώς.')]
+
+
+def guarantee():
+    return ('<section class="warranty"><div class="wrap warranty-grid"><div class="warranty-mark" aria-hidden="true"><span>2</span><small>χρόνια<br>γραπτή εγγύηση</small></div>'
+            f'<div class="warranty-copy">{eyebrow("Φροντίδα μετά την παράδοση")}<h2>Η σχέση μας δεν τελειώνει<br><em>με την παράδοση.</em></h2>'
+            '<p>Παραδίδουμε το ανακαινισμένο σου διαμέρισμα με γραπτή εγγύηση καλής λειτουργίας 2 ετών για τις εργασίες που καλύπτονται από τη σύμβαση. Αν προκύψει καλυπτόμενο ζήτημα, αναλαμβάνουμε την αποκατάστασή του χωρίς πρόσθετη χρέωση, σύμφωνα με τους όρους της.</p>'
+            f'{more(WARRANTY, "Δες πώς λειτουργεί η εγγύησή μας")}</div></div></section>')
+
+
+def kitchen_comparison():
+    return (
+        '<figure class="compare" id="kitchen-transformation" data-comparison>'
+        '<div class="compare-stage">' + pic('/assets/portfolio/grigoriou-palama-7/after-08.webp', 'Ολοκληρωμένη πράσινη κουζίνα με νησίδα — Γρηγορίου Παλαμά 7', sizes='100vw') +
+        '<div class="compare-before">' + pic('/assets/portfolio/grigoriou-palama-7/before-01.webp', 'Η αρχική κουζίνα πριν από την ανακαίνιση — Γρηγορίου Παλαμά 7', sizes='100vw') + '</div>'
+        '<span class="compare-tag tag-before">Πριν</span><span class="compare-tag tag-after">Μετά</span>'
+        '<div class="compare-handle" aria-hidden="true"><span>↔</span></div>'
+        '<input type="range" min="0" max="100" value="50" aria-label="Ποσοστό εμφάνισης αρχικής κουζίνας — Παλαμά 7" aria-valuetext="50% πριν, 50% μετά"></div>'
+        '<div class="compare-foot"><div class="segmented" role="group" aria-label="Προβολή κουζίνας">'
+        '<button type="button" data-compare-value="100" aria-pressed="false">Πριν</button><button type="button" data-compare-value="50" aria-pressed="true">Σύγκριση</button><button type="button" data-compare-value="0" aria-pressed="false">Μετά</button></div>'
+        f'<figcaption>Γρηγορίου Παλαμά 7 · Πραγματικές φωτογραφίες πριν και μετά την ανακαίνιση. Οι γωνίες λήψης διαφέρουν. Σύρε ή χρησιμοποίησε τα βελάκια του πληκτρολογίου.</figcaption>'
+        f'{more("/el/erga/grigoriou-palama-7", "Δες όλο το έργο")}</div></figure>')
+
+
+def paths():
+    rows = [('01', 'Για το σπίτι μου', 'Ολική ανακαίνιση διαμερίσματος', 'Το σπίτι σου, ξανασχεδιασμένο γύρω από τη ζωή σου. Από την πρώτη ιδέα μέχρι την ολοκληρωμένη παράδοση.', RES, 'select_service_home',
+             '/assets/portfolio/soulioti-17/home-kitchen-light.webp', 'Ανακαινισμένη κουζίνα με ανθρακί ντουλάπια, ξύλινη επένδυση και φυσικό φως', 'Σουλιώτη 17'),
+            ('02', 'Για επένδυση', 'Επενδυτική αξιοποίηση διαμερίσματος', 'Κάθε τετραγωνικό με σκοπό. Νέες διαρρυθμίσεις και, όπου είναι τεχνικά και νομικά εφικτό, περισσότερες αυτόνομες κατοικίες.', INV, 'select_service_investment',
+             '/assets/portfolio/kolokotroni-14/investment-studio.webp', 'Κουζίνα και καθιστικό ανακαινισμένης γκαρσονιέρας στην Κολοκοτρώνη 14', 'Κολοκοτρώνη 14')]
+    return '<div class="paths">' + ''.join(
+        f'<a class="path" href="{u}" data-event="{ev}"><figure class="path-media">{pic(src, alt, sizes="(max-width: 900px) 100vw, 58vw")}<figcaption>{where} · Πραγματικό έργο</figcaption></figure>'
+        f'<div class="path-copy"><p class="path-num">{n} <span>— {k}</span></p><h3>{t}</h3><p>{c}</p><span class="more">Εξερεύνησε την υπηρεσία{ARROW}</span></div></a>'
+        for n, k, t, c, u, ev, src, alt, where in rows) + '</div>'
+
+
+# ---------------------------------------------------------------- home
+hero = (
+    '<section class="hero"><div class="wrap hero-head">'
+    f'<div class="hero-title">{eyebrow("Arcus Development · Θεσσαλονίκη")}<h1 class="display">Κάθε χώρος κρύβει<br><em>μια νέα αρχή.</em></h1></div>'
+    '<div class="hero-side"><p class="lede">Τη σχεδιάζουμε μαζί. Την κάνουμε πραγματικότητα. Ολικές ανακαινίσεις διαμερισμάτων, από την πρώτη κάτοψη έως την τελευταία λεπτομέρεια.</p>'
+    f'<div class="actions">{btn(CONTACT, "Συζήτησε το έργο σου", "btn", "data-event=\"click_primary_cta\"")}{more(WORK, "Δες τις μεταμορφώσεις μας")}</div></div></div>'
+    '<div class="wrap hero-media">'
+    f'<a class="hero-main" href="/el/erga/soulioti-17"><figure>{pic("/assets/portfolio/soulioti-17/after-17.webp", "Σουλιώτη 17 — κουζίνα με πάγκο και κρυφό φωτισμό", "eager", sizes="(max-width: 900px) 100vw, 66vw")}<figcaption><span>Σουλιώτη 17</span>Ολική ανακαίνιση{ARROW}</figcaption></figure></a>'
+    f'<a class="hero-aside" href="/el/erga/athanasiou-diakou-16"><figure>{pic("/assets/portfolio/athanasiou-diakou-16/after-22.webp", "Κουζίνα με πορτοκαλί τοίχο και ξύλινο πάγκο — Αθανασίου Διάκου 16", "eager", sizes="(max-width: 900px) 100vw, 30vw")}<figcaption><span>Αθανασίου Διάκου 16</span>Τρεις κατοικίες{ARROW}</figcaption></figure></a>'
+    '</div>'
+    '<ul class="wrap proof"><li><b>Arcus Group</b>Μέλος του ομίλου</li><li><b>Μελέτη</b>πριν από την κατασκευή</li><li><b>2 χρόνια</b>γραπτή εγγύηση</li></ul></section>')
+
+services_sec = (
+    f'<section class="sec wrap" id="services">{head("01 — Δύο διαδρομές, μία ομάδα", "Ο δικός σου χώρος.<br><em>Ο δικός σου στόχος.</em>", "Δύο διαφορετικές αφετηρίες. Η ίδια φροντίδα στη μελέτη, στην υλοποίηση και σε κάθε λεπτομέρεια.")}'
+    + paths() + '</section>')
+
+compare_sec = (
+    '<section class="sec sec-tint"><div class="wrap">'
+    + head('02 — Πραγματική μεταμόρφωση', 'Ίδιο ακίνητο.<br><em>Μια άλλη καθημερινότητα.</em>', 'Σύρε τη γραμμή. Ανακάλυψε τη διαφορά.')
+    + kitchen_comparison() + '</div></section>')
+
+work_sec = (
+    f'<section class="sec wrap" id="selected-works">{head("03 — Επιλεγμένα έργα", "Οι ιδέες μας,<br><em>στην πράξη.</em>", side=more(WORK, f"Όλα τα έργα ({len(projects)})"))}'
+    + portfolio.showcase(projects, pic) + '</section>')
+
+process_sec = (
+    '<section class="sec sec-tint"><div class="wrap">'
+    + head('04 — Από την ιδέα στο σπίτι σου', 'Πρώτα το βλέπεις.<br><em>Έπειτα το ζεις.</em>', side=more(PROCESS, 'Η διαδικασία αναλυτικά'))
+    + steps(home_steps, 'steps steps-4') + '</div></section>')
+
+investor_sec = (
+    '<section class="sec wrap split split-plan">'
+    f'<div class="split-copy">{eyebrow("05 — Πρώτα η εφικτότητα")}<h2>Η αξία ξεκινά<br>από τη σωστή <em>κάτοψη.</em></h2>'
+    '<p>Πριν από οποιαδήποτε κατασκευή, εξετάζουμε τις δυνατότητες του διαμερίσματος. Συγκρίνουμε εναλλακτικές διαρρυθμίσεις και μελετάμε περισσότερες αυτόνομες κατοικίες, εφόσον είναι τεχνικά και νομικά εφικτό.</p>'
+    f'{more(INV, "Εξερεύνησε την επενδυτική αξιοποίηση")}'
+    '<p class="fine">Η τεχνική δυνατότητα και οι νόμιμες εγκρίσεις εξετάζονται ανά ακίνητο. Δεν προεξοφλούνται αριθμός ιδιοκτησιών, μίσθωμα ή απόδοση.</p></div>'
+    f'<div class="split-visual">{plan_transition()}</div></section>')
+
+faq_sec = (
+    '<section class="sec wrap faq-wrap">'
+    f'<div class="faq-head">{eyebrow("Πριν ξεκινήσουμε")}<h2>Κάθε ερώτηση<br><em>έχει τη θέση της.</em></h2>{more("/el/sychnes-erotiseis", "Όλες οι απαντήσεις")}</div>'
+    + faq(basefaq) + '</section>')
+
+oss_teaser = (
+    '<section class="sec sec-tint"><div class="wrap split split-oss">'
+    f'<div>{eyebrow("Arcus Group · One Stop Shop")}<h2>Ένας χώρος.<br><em>Όλες οι δυνατότητες.</em></h2></div>'
+    '<div><p class="lede">Η ανακαίνιση είναι ένα κεφάλαιο στην ιστορία του ακινήτου σου. Μέσα από το δίκτυο της Arcus, συνδέουμε τη δημιουργία του χώρου με την αγορά, τη διαχείριση, την εκτίμηση και τις υπηρεσίες που χρειάζεσαι πριν και μετά.</p>'
+    f'{more(OSS, "Γνώρισε το One Stop Shop")}</div></div></section>')
+
+home = '<main id="main">' + hero + services_sec + compare_sec + work_sec + process_sec + investor_sec + guarantee() + faq_sec + oss_teaser + finalcta() + '</main>'
+page('home', 'Arcus Development | Ολικές Ανακαινίσεις Διαμερισμάτων', 'Ολική ανακαίνιση διαμερίσματος στη Θεσσαλονίκη για κατοικία ή επένδυση. Μελέτη, 3D, κατασκευή και 2ετής γραπτή εγγύηση.', home)
+
+# ---------------------------------------------------------------- service pages
+method_sec = (
+    '<section class="sec sec-tint"><div class="wrap">'
+    + head('Από την κάτοψη στην πραγματικότητα', 'Πρώτα το βλέπεις.<br><em>Έπειτα το ζεις.</em>', 'Η μελέτη συνδέει αυτό που φαντάζεσαι με αυτό που κατασκευάζεται. Κάθε επιλογή έχει θέση μέσα σε ένα ολοκληρωμένο σχέδιο.')
+    + '<ol class="steps steps-3 steps-label"><li><span class="num">Κάτοψη</span><h3>Κατανοούμε τον χώρο.</h3><p>Αποτύπωση και εναλλακτικές κατόψεις. Η λειτουργικότητα παίρνει μορφή.</p></li>'
+    '<li><span class="num">Render</span><h3>Βλέπεις την πρόταση.</h3><p>Η τρισδιάστατη απεικόνιση βοηθά να εγκρίνεις υλικά, αναλογίες και ατμόσφαιρα.</p></li>'
+    '<li><span class="num">Υλοποίηση</span><h3>Η ιδέα γίνεται χώρος.</h3><p>Οργανωμένη κατασκευή, έλεγχος και τελική παράδοση με βάση όσα συμφωνήσαμε.</p></li></ol>'
+    + kitchen_comparison() + '</div></section>')
+
+res_steps = [('Αποτύπωση & ανάγκες', 'Μετρήσεις και συζήτηση για τη χρήση κάθε δωματίου.'), ('Διαρρύθμιση & σχεδιασμός', 'Εναλλακτικές λύσεις, υλικά, φωτισμός και λειτουργικές λεπτομέρειες.'),
+             ('Φωτορεαλιστική εικόνα', '3D παρουσίαση των επιλογών της συμφωνημένης μελέτης.'), ('Τεχνική οργάνωση', 'Προδιαγραφές, προϋπολογισμός και σειρά εργασιών.'),
+             ('Συντονισμός κατασκευής', 'Συνεργεία, επικοινωνία και έλεγχοι ποιότητας.'), ('Παράδοση & φροντίδα', 'Τελικός έλεγχος, φάκελος έργου και γραπτή εγγύηση.')]
+resbody = ('<main id="main">' + intro('01 — Για το σπίτι μου', 'Όχι απλώς ένα ανακαινισμένο σπίτι.<br><em>Το δικό σου σπίτι.</em>',
+                                      'Κάθε άνθρωπος ζει διαφορετικά. Γι’ αυτό η ολική ανακαίνιση αρχίζει με τις ανάγκες, τις συνήθειες και την αισθητική σου. Αποτυπώνουμε τον υπάρχοντα χώρο, παρουσιάζουμε φωτορεαλιστικά τη νέα του διαμόρφωση και οργανώνουμε την κατασκευή.',
+                                      btn(CONTACT + '?intent=home', 'Μίλησε με την ομάδα μας'))
+           + f'<figure class="wrap wide-figure">{pic("/assets/portfolio/vyronos-37/edited-kitchen-living.webp", "Βύρωνος 37 — κουζίνα και καθιστικό σε ενιαίο χώρο", "eager", sizes="100vw")}<figcaption>Βύρωνος 37, Σταυρούπολη · Ολοκληρωμένο έργο Arcus Development</figcaption></figure>'
+           + '<section class="sec wrap">' + head('Μια ενιαία εμπειρία', 'Από την ανάγκη<br><em>μέχρι την τελευταία λεπτομέρεια.</em>', 'Η μελέτη, τα renders και η κατασκευή συνδέονται μέσα στο ίδιο έργο. Το ακριβές αντικείμενο συμφωνείται πριν από την έναρξη.')
+           + steps(res_steps, 'steps steps-3') + '<p class="fine">Αποξηλώσεις, δίκτυα, μπάνιο, κουζίνα, δάπεδα, κουφώματα, φωτισμός, χρωματισμοί και επίπλωση περιλαμβάνονται μόνο όπως ορίζονται στη συμφωνημένη τεχνική περιγραφή.</p></section>'
+           + method_sec + guarantee()
+           + f'<section class="sec wrap faq-wrap"><div class="faq-head">{eyebrow("Οι επιλογές σου")}<h2>Να ξέρεις<br><em>τι συμφωνούμε.</em></h2></div>'
+           + faq([('Ποιος επιλέγει τα υλικά;', 'Η επιλογή γίνεται μαζί σου, με βάση τη μελέτη, τη χρήση των χώρων και το συμφωνημένο εύρος κόστους.'),
+                  ('Ποιος συντονίζει τα συνεργεία;', 'Η ομάδα της Arcus οργανώνει τη σειρά των συμφωνημένων εργασιών και ορίζει το σημείο επικοινωνίας για το έργο.'), basefaq[1], basefaq[4]])
+           + '</section>' + finalcta('?intent=home') + '</main>')
+page('oliki-anakainisi-diamerismatos', 'Ολική Ανακαίνιση Διαμερίσματος | Arcus Development', 'Ολική ανακαίνιση διαμερίσματος στη Θεσσαλονίκη: αποτύπωση, διαρρύθμιση, 3D, υλικά, οργάνωση κατασκευής και 2ετής γραπτή εγγύηση.', resbody)
+
+invbody = ('<main id="main">' + intro('02 — Για επένδυση', 'Περισσότερη αξία<br>από κάθε <em>τετραγωνικό.</em>',
+                                      'Εξετάζουμε τις πραγματικές δυνατότητες ενός διαμερίσματος και σχεδιάζουμε λειτουργικές λύσεις για επενδυτική χρήση. Μελετάμε περισσότερες μικρότερες κατοικίες μόνο όταν οι τεχνικές και πολεοδομικές συνθήκες το επιτρέπουν.',
+                                      btn(CONTACT + '?intent=investment', 'Ζήτησε αξιολόγηση διαμερίσματος'))
+           + '<section class="sec wrap split split-plan">'
+           f'<div class="split-copy">{eyebrow("Πρώτα η εφικτότητα")}<h2>Πρώτα εξετάζουμε.<br><em>Μετά σχεδιάζουμε.</em></h2><p>Η αποτύπωση, τα διαθέσιμα έγγραφα και ο έλεγχος από τον αρμόδιο μηχανικό προηγούνται της απόφασης κατασκευής. Κάθε πρόταση λαμβάνει υπόψη φωτισμό, ιδιωτικότητα, πρόσβαση και υποδομές.</p>'
+           '<ul class="list"><li>Υφιστάμενη κατάσταση και τεχνικοί περιορισμοί</li><li>Κανονισμοί και απαιτούμενες εγκρίσεις</li><li>Εναλλακτικές λειτουργικές διαρρυθμίσεις</li><li>Σαφές αντικείμενο και προϋπολογισμός υλοποίησης</li></ul></div>'
+           f'<div class="split-visual">{plan_transition()}</div></section>'
+           '<section class="wrap case">'
+           f'<a class="case-media" href="/el/erga/athanasiou-diakou-16">{pic("/assets/portfolio/athanasiou-diakou-16/after-24.webp", "Αθανασίου Διάκου 16 — ολοκληρωμένη κατοικία μετά την ανακαίνιση", sizes="(max-width: 900px) 100vw, 60vw")}</a>'
+           f'<div class="case-copy">{eyebrow("Πραγματικό έργο · Τρεις κατοικίες")}<h3>Αθανασίου Διάκου 16</h3><p>Τρεις πλήρως επιπλωμένες κατοικίες, με θέρμανση αερίου και κλιματισμό. Δες τη μελέτη και το ολοκληρωμένο αποτέλεσμα.</p>{more("/el/erga/athanasiou-diakou-16", "Δες το έργο")}</div></section>'
+           '<section class="sec sec-tint"><div class="wrap">'
+           + head('Συγκρίνουμε πριν αποφασίσουμε', 'Η σωστή λύση<br><em>χρειάζεται τεκμηρίωση.</em>', 'Συγκρίνουμε τις εναλλακτικές διαρρυθμίσεις ως προς την επιφάνεια, τη λειτουργικότητα και το κόστος υλοποίησης. Έτσι μπορείς να αποφασίσεις με συγκεκριμένα κριτήρια.')
+           + '<div class="table"><table><caption>Τι εξετάζουμε στις εναλλακτικές προτάσεις</caption><thead><tr><th scope="col">Κριτήριο</th><th scope="col">Τι περιλαμβάνει η μελέτη</th></tr></thead><tbody>'
+           '<tr><th scope="row">Καθαρή ωφέλιμη επιφάνεια</th><td>Αποτύπωση και κατανομή ανά λειτουργικό χώρο.</td></tr><tr><th scope="row">Αυτονομία</th><td>Δυνατότητα ανεξάρτητης χρήσης, είσοδοι και εγκαταστάσεις.</td></tr>'
+           '<tr><th scope="row">Ποιότητα κατοίκησης</th><td>Φυσικό φως, αερισμός, ιδιωτικότητα και κυκλοφορία.</td></tr><tr><th scope="row">Εφικτότητα</th><td>Περιορισμοί, απαιτούμενες εγκρίσεις και εκτιμώμενο αντικείμενο εργασιών.</td></tr>'
+           '<tr><th scope="row">Εικόνα πριν την κατασκευή</th><td>3D renders των μονάδων που προβλέπει η συμφωνημένη μελέτη.</td></tr></tbody></table></div>'
+           '<p class="fine">Ο διαχωρισμός εξετάζεται μόνο εφόσον είναι τεχνικά και νομικά εφικτός. Δεν παρέχεται προκαταβολική εγγύηση άδειας, μισθώματος ή επενδυτικής απόδοσης.</p></div></section>'
+           + guarantee()
+           + f'<section class="sec wrap faq-wrap"><div class="faq-head">{eyebrow("Επένδυση με σαφείς βάσεις")}<h2>Οι σωστές ερωτήσεις,<br><em>από την αρχή.</em></h2></div>'
+           + faq([basefaq[3], ('Περιλαμβάνεται η μελέτη στην αρχική συζήτηση;', 'Στην πρώτη συζήτηση συγκεντρώνουμε βασικά στοιχεία και τον στόχο σου. Η έκταση, τα παραδοτέα και η αμοιβή αποτύπωσης, τεχνικού ελέγχου και μελέτης καθορίζονται στην πρόταση συνεργασίας.'),
+                  ('Ποιος ελέγχει τις εγκρίσεις;', 'Ο κατάλληλος μηχανικός ελέγχει τις απαιτήσεις του συγκεκριμένου ακινήτου. Η τελική λύση διαμορφώνεται με βάση αυτόν τον έλεγχο.'), basefaq[4]])
+           + '</section>' + finalcta('?intent=investment') + '</main>')
+page('ependytiki-anakainisi-diamerismatos', 'Επενδυτική Ανακαίνιση & Διαχωρισμός Διαμερισμάτων | Arcus Development', 'Επενδυτική αξιοποίηση διαμερισμάτων στη Θεσσαλονίκη. Έλεγχος εφικτότητας, εναλλακτικές κατόψεις, 3D και οργανωμένη κατασκευή.', invbody)
+
+# ---------------------------------------------------------------- process
+fullsteps = [('Brief', 'Συζητάμε τη χρήση, τις ανάγκες, τον στόχο και τα βασικά στοιχεία του ακινήτου.', 'Συνοπτική καταγραφή στόχων και επόμενο βήμα.'),
+             ('Αποτύπωση', 'Επίσκεψη, μετρήσεις, φωτογραφίες και αρχικός έλεγχος της υφιστάμενης κατάστασης.', 'Αποτύπωση του χώρου και των βασικών περιορισμών.'),
+             ('Μελέτη', 'Εξετάζουμε διαρρυθμίσεις, λειτουργικές ανάγκες, υλικά και αισθητική κατεύθυνση.', 'Κάτοψη και προτεινόμενη αρχιτεκτονική λύση.'),
+             ('Οπτικοποίηση', 'Παρουσιάζουμε τον σχεδιασμό σε 3D και επιβεβαιώνουμε τις συμφωνημένες επιλογές.', 'Εγκεκριμένη σχεδιαστική κατεύθυνση και renders σύμφωνα με τη μελέτη.'),
+             ('Οργάνωση', 'Οριστικοποιούμε τεχνική περιγραφή, προϋπολογισμό, φάσεις και τις απαιτούμενες εγκρίσεις.', 'Συγκεκριμένη πρόταση, σύμβαση και πρόγραμμα.'),
+             ('Υλοποίηση', 'Συντονίζουμε τις εργασίες, ελέγχουμε την ποιότητα και ενημερώνουμε για την πρόοδο.', 'Παρακολούθηση σταδίων και τελική παράδοση.'),
+             ('After-sales', 'Ολοκληρώνουμε τον έλεγχο παραλαβής, τον φάκελο και τη γραπτή εγγύηση.', 'Φάκελος παράδοσης, 2ετής γραπτή εγγύηση και κανάλι αιτημάτων υποστήριξης.')]
+body = ('<main id="main">' + intro('Η διαδικασία', 'Από την πρώτη συζήτηση.<br>Μέχρι <em>μετά την παράδοση.</em>', 'Η βεβαιότητα χτίζεται με καθαρά βήματα. Ξέρεις τι εξετάζουμε, τι αποφασίζουμε και τι παραλαμβάνεις σε κάθε στάδιο.')
+        + company_story.subnav(PROCESS, companylinks)
+        + '<section class="wrap timeline"><ol>' + ''.join(
+            f'<li><span class="num">{i + 1:02d}</span><h2>{t}</h2><div><p>{d}</p><p class="deliverable"><span>Τι παραλαμβάνεις</span>{r}</p></div></li>' for i, (t, d, r) in enumerate(fullsteps))
+        + '</ol><p class="fine">Η αποτύπωση, ο τεχνικός έλεγχος, η μελέτη και τα renders αποτελούν συγκεκριμένα παραδοτέα. Η έκταση και η αμοιβή τους συμφωνούνται πριν από την ανάθεση.</p></section>' + finalcta() + '</main>')
+page('diadikasia', 'Η Διαδικασία Ανακαίνισης | Arcus Development', 'Τα επτά στάδια του έργου: brief, αποτύπωση, μελέτη, 3D, οργάνωση, κατασκευή και υποστήριξη μετά την παράδοση.', body)
+
+# ---------------------------------------------------------------- warranty (approved legal text, verbatim)
+wbody = ('<main id="main">' + intro('Φροντίδα μετά την παράδοση', 'Δίπλα σου.<br>Και <em>μετά την παράδοση.</em>', 'Ένα έργο ολοκληρώνεται όταν ο χώρος λειτουργεί όπως σχεδιάστηκε. Συνοδεύουμε τις καλυπτόμενες εργασίες με γραπτή εγγύηση καλής λειτουργίας 2 ετών.', btn(CONTACT + '?kind=support', 'Άνοιξε αίτημα υποστήριξης'))
+         + guarantee()
+         + f'<section class="sec wrap prose-split"><div>{eyebrow("Γραπτά. Καθαρά. Συγκεκριμένα.")}<h2>Η κάλυψη<br><em>του δικού σου έργου.</em></h2></div><div class="prose">{legal("eggyisi-terms.html")}</div></section>'
+         + '<section class="sec sec-tint"><div class="wrap">' + head('After-sales', 'Πώς ζητάς<br><em>τη βοήθειά μας.</em>', 'Μια σαφής περιγραφή και λίγες φωτογραφίες βοηθούν την ομάδα να κατανοήσει το ζήτημα.')
+         + '<ol class="steps steps-3 steps-label"><li><span class="num">01 · Αναφορά</span><h3>Περιέγραψε το ζήτημα.</h3><p>Χρησιμοποίησε τη φόρμα υποστήριξης ή κάλεσε στο 2310 445 935.</p></li>'
+         '<li><span class="num">02 · Έλεγχος</span><h3>Εξετάζουμε την περίπτωση.</h3><p>Συσχετίζουμε το αίτημα με το έργο και τους γραπτούς όρους κάλυψης.</p></li>'
+         '<li><span class="num">03 · Φροντίδα</span><h3>Οργανώνουμε το επόμενο βήμα.</h3><p>Για καλυπτόμενο πρόβλημα, η αποκατάσταση δεν επιβαρύνεται με πρόσθετη χρέωση.</p></li></ol></div></section>'
+         + finalcta('?kind=support') + '</main>')
+page('eggyisi-ypostirixi', 'Εγγύηση 2 Ετών & After-sales | Arcus Development', 'Γραπτή εγγύηση καλής λειτουργίας 2 ετών για τις καλυπτόμενες εργασίες και οργανωμένη υποστήριξη μετά την παράδοση.', wbody)
+
+
+# ---------------------------------------------------------------- contact (form fields must match lib/inquiry-validation.mjs)
+def field(name, label, kind='text', extra='', required=False):
+    return (f'<div class="field"><label for="{name}">{label}{" <span>*</span>" if required else ""}</label>'
+            f'<input id="{name}" name="{name}" type="{kind}" {extra} {"required" if required else ""} aria-describedby="{name}-error"><span class="field-error" id="{name}-error"></span></div>')
+
+
+form = (
+    '<form id="project-form" class="form" novalidate enctype="multipart/form-data"><input name="kind" type="hidden" value="project"><input name="source" type="hidden" value="/el/epikoinonia"><input name="idempotency" type="hidden">'
+    '<div class="honeypot" aria-hidden="true"><label>Website<input name="website" autocomplete="off" tabindex="-1"></label></div>'
+    '<fieldset class="intent-options"><legend>Τι θέλεις να δημιουργήσεις; <span>*</span></legend>'
+    '<label><input type="radio" name="intent" value="home" required><span><b>01</b>Για το σπίτι μου</span></label>'
+    '<label><input type="radio" name="intent" value="investment"><span><b>02</b>Για επένδυση</span></label><span class="field-error" id="intent-error"></span></fieldset>'
+    '<div class="form-grid">' + field('name', 'Ονοματεπώνυμο', extra='autocomplete="name" maxlength="120"', required=True)
+    + field('area', 'Περιοχή ακινήτου', extra='placeholder="Δήμος ή γειτονιά" maxlength="160"', required=True)
+    + field('phone', 'Τηλέφωνο', 'tel', 'autocomplete="tel" maxlength="40"') + field('email', 'Email', 'email', 'autocomplete="email" maxlength="200"') + '</div>'
+    '<p class="form-help">Χρειαζόμαστε τουλάχιστον έναν τρόπο επικοινωνίας: τηλέφωνο ή email.</p>'
+    '<div class="form-grid">' + field('sqm', 'Εμβαδόν (m²) — προαιρετικό', 'number', 'min="1" max="10000" step="1"')
+    + '<div class="field"><label for="timeline">Πότε το σκέφτεσαι; — προαιρετικό</label><select id="timeline" name="timeline"><option value="">Επίλεξε</option><option value="now">Άμεσα</option><option value="1-3">Σε 1–3 μήνες</option><option value="later">Αργότερα</option></select><span class="field-error" id="timeline-error"></span></div></div>'
+    '<div class="field"><label for="description">Λίγα λόγια για τον χώρο — προαιρετικό</label><textarea id="description" name="description" rows="4" maxlength="3000" placeholder="Τι θα ήθελες να αλλάξει;"></textarea><span class="field-error" id="description-error"></span></div>'
+    '<div class="field upload-field"><label for="files">Κάτοψη ή φωτογραφίες — προαιρετικό</label><input id="files" name="files" type="file" multiple accept="image/jpeg,image/png,image/webp,application/pdf" aria-describedby="files-help files-error">'
+    '<p id="files-help">Έως 3 αρχεία · JPG, PNG, WebP ή PDF · 8 MB το καθένα. Αφαίρεσε στοιχεία ταυτότητας, τρίτων και ακριβείς διευθύνσεις.</p><span class="field-error" id="files-error"></span></div>'
+    '<label class="privacy-check"><input type="checkbox" name="privacy" value="yes" required><span>Έχω διαβάσει την <a href="/el/aporrito" target="_blank" rel="noopener">ενημέρωση απορρήτου</a> για τη διαχείριση του αιτήματός μου. *</span></label><span class="field-error" id="privacy-error"></span>'
+    '<div id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></div>'
+    f'<button class="btn btn-submit" type="submit">Στείλε το αίτημά σου {ARROW}</button>'
+    '<noscript><p>Για την ηλεκτρονική υποβολή χρειάζεται JavaScript. Μπορείς να μας καλέσεις στο <a href="tel:+302310445935">2310 445 935</a>.</p></noscript></form>')
+contactbody = ('<main id="main">' + intro('Ας σχεδιάσουμε μαζί', 'Κάθε ιδέα ξεκινά<br>με μια <em>συζήτηση.</em>', 'Πες μας την περιοχή, το μέγεθος και τι θέλεις να αλλάξει. Θα επικοινωνήσουμε για να συζητήσουμε τις ανάγκες σου.')
+               + '<section class="sec-tight wrap contact-grid"><aside class="contact-aside"><h2>Ο δικός σου χώρος.<br><em>Η επόμενη αρχή.</em></h2>'
+               '<a class="contact-phone" href="tel:+302310445935" data-event="click_phone">2310 445 935</a><a class="contact-mail" href="mailto:info@arcusdevelopment.gr" data-event="click_email">info@arcusdevelopment.gr</a>'
+               '<address>Τσαλουχίδη 54, 2ος όροφος<br>Θεσσαλονίκη</address>'
+               f'<div class="contact-support"><p>Για υποστήριξη μετά την παράδοση:</p>{more(CONTACT + "?kind=support", "Αίτημα after-sales")}</div>'
+               '<p class="fine">Η αρχική αίτηση δεν αποτελεί ανάθεση έργου ή επιβεβαίωση ραντεβού. Το αντικείμενο και η αμοιβή μελέτης και τεχνικού ελέγχου συμφωνούνται στην πρόταση.</p></aside>'
+               f'<div class="form-card">{form}</div></section>'
+               '<section class="sec wrap location" aria-labelledby="location-title">'
+               f'<figure>{pic("/assets/arcus-headquarters.webp", "Το κτίριο των γραφείων Arcus στην Τσαλουχίδη 54, Θεσσαλονίκη", sizes="(max-width: 900px) 100vw, 55vw")}<figcaption>Τα γραφεία μας στην Τσαλουχίδη 54.</figcaption></figure>'
+               f'<div>{eyebrow("Έλα να γνωριστούμε")}<h2 id="location-title">Οι ιδέες σου<br><em>έχουν διεύθυνση.</em></h2><address>Τσαλουχίδη 54, 2ος όροφος<br>Θεσσαλονίκη</address>'
+               '<p>Πριν από την επίσκεψή σου, επικοινώνησε μαζί μας για να προγραμματίσουμε τη συνάντησή μας.</p>'
+               '<a class="more" href="https://www.google.com/maps/dir/?api=1&amp;destination=Τσαλουχίδη+54,+Θεσσαλονίκη" target="_blank" rel="noopener noreferrer">Οδηγίες διαδρομής' + ARROW + '</a></div></section></main>')
+page('epikoinonia', 'Συζήτησε το Έργο σου | Arcus Development', 'Αίτημα ολικής ανακαίνισης, επενδυτικής αξιοποίησης ή after-sales υποστήριξης. Arcus Development, Θεσσαλονίκη, 2310 445 935.', contactbody)
+
+# ---------------------------------------------------------------- privacy (approved legal text, verbatim)
+privacy = ('<main id="main">' + intro('Ενημέρωση απορρήτου', 'Τα στοιχεία σου.<br>Με <em>συγκεκριμένο σκοπό.</em>', 'Πώς χρησιμοποιούμε τα στοιχεία που μας στέλνεις μέσω της ιστοσελίδας και ποια δικαιώματα έχεις.')
+           + f'<section class="wrap legal prose">{legal("aporrito.html")}</section></main>')
+page('aporrito', 'Ενημέρωση Απορρήτου | Arcus Development', 'Πώς η ARCUS DEVELOPMENT Ε.Ε. χρησιμοποιεί τα στοιχεία της φόρμας επικοινωνίας, πόσο τα διατηρεί και ποια δικαιώματα έχεις.', privacy)
+
+# ---------------------------------------------------------------- company section, portfolio, one stop shop
+company_story.render(page, intro, eyebrow, head, more, btn, pic, steps, faq, basefaq, paths, finalcta, companylinks, ROOT)
+portfolio.render(projects, page, intro, pic, eyebrow, head, more, finalcta)
+page('one-stop-shop', 'One Stop Shop | Arcus Development', 'Το δίκτυο υπηρεσιών της Arcus για το ακίνητό σου: αγορά, ανακαίνιση, διαχείριση, εκτίμηση και εξειδικευμένη υποστήριξη.',
+     '<main id="main">' + intro('Arcus Group · One Stop Shop', 'Ένας συνεργάτης.<br>Για κάθε <em>επόμενο βήμα.</em>', 'Όλες οι υπηρεσίες για το ακίνητό σου, κάτω από μία στέγη. Η Arcus Development δημιουργεί τον χώρο. Το δίκτυο της Arcus σε υποστηρίζει σε όλη τη διαδρομή του.', btn('#oss-journey', 'Εξερεύνησε τις υπηρεσίες'))
+     + one_stop_journey.render(eyebrow)
+     + '<section class="closing"><div class="wrap closing-inner">' + eyebrow('Ας ξεκινήσουμε από εσένα') + '<h2>Τι χρειάζεται<br><em>το ακίνητό σου σήμερα;</em></h2><div class="closing-actions">'
+     + btn('https://arcusrealestate.gr/el/communication', 'Μίλησε με την ομάδα Arcus', 'btn btn-light') + '</div></div></section></main>')
+
 # Retired pages must not survive regeneration or enter the sitemap.
-for retired in ['admin','grafeio','erga--perraivou-9','erga--nea-paralia','erga--stavroupoli','erga--city-studio','kariera']:
- (P/(retired+'.html')).unlink(missing_ok=True)
-# Responsive images use the genuine same frame at both sizes.
-for f in P.glob('*.html'):
- html=f.read_text().replace('<a href="/el/kariera">Καριέρα</a>','')
- html=re.sub(r'src="(/assets/projects/[^\"]+)\.webp"',lambda m:f'src="{m[1]}.webp" srcset="{m[1]}-430.webp {Image.open(ROOT/"public"/(m[1].lstrip("/")+"-430.webp")).width}w, {m[1]}.webp {Image.open(ROOT/"public"/(m[1].lstrip("/")+".webp")).width}w" sizes="(max-width: 600px) 92vw, 50vw"',html)
- html=html.replace('aria-label="Σύγκριση πριν και μετά: \'+p[\'title\']+\'"','aria-label="Σύγκριση πραγματικού έργου πριν και μετά"')
- f.write_text(html)
+for retired in ['admin', 'grafeio', 'erga--perraivou-9', 'erga--nea-paralia', 'erga--stavroupoli', 'erga--city-studio', 'kariera']:
+    (P / (retired + '.html')).unlink(missing_ok=True)
 print(f'Authored {len(list(P.glob("*.html")))} pages')
