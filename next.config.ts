@@ -8,9 +8,16 @@ const aliases: Record<string, string> = {
   "/philosophy.html": "/el/filosofia",
   "/faq.html": "/el/sychnes-erotiseis",
   "/glossary.html": "/el/techniko-lexiko",
-  "/careers.html": "/el/kariera",
-  "/office.html": "/el/grafeio",
+  "/careers.html": "/el/etaireia",
+  "/office.html": "/el/epikoinonia",
   "/el/admin": "/el",
+  // Pages retired in the v37 sync (PR #1, 2026-11-01).
+  "/el/kariera": "/el/etaireia",
+  "/el/grafeio": "/el/epikoinonia",
+  "/el/erga/nea-paralia": "/el/erga",
+  "/el/erga/stavroupoli": "/el/erga",
+  "/el/erga/city-studio": "/el/erga",
+  "/el/erga/perraivou-9": "/el/erga",
   // Live WordPress pages (2026-11) that carry meaning; theme demo pages are left to 404.
   "/epikoinonia": "/el/epikoinonia",
   "/contact-2": "/el/epikoinonia",

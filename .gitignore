@@ -44,3 +44,6 @@ yarn-error.log*
 
 # Built client bundle (npm run build:client)
 /public/blob-upload.js
+
+# Python
+__pycache__/
