@@ -173,7 +173,7 @@ footer = (
     '<a href="https://arcusrealestate.gr/el" target="_blank" rel="noopener noreferrer" title="Great Place to Work — Δεκέμβριος 2025 έως Δεκέμβριος 2026"><img src="/assets/brand/great-place-to-work-2025-2026.webp" alt="Great Place to Work Certified — Δεκέμβριος 2025 έως Δεκέμβριος 2026, Ελλάδα" width="438" height="620" loading="lazy"></a>'
     '</div></div>'
     '<div class="footer-bottom"><p>Μελέτη <span aria-hidden="true">/</span> Ανακαίνιση <span aria-hidden="true">/</span> Φροντίδα</p>'
-    '<p>© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε. · ΑΦΜ 802211949 · Αρ. ΓΕΜΗ 172215306000</p>'
+    '<p>© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε.</p>'
     f'<p class="footer-legal"><a href="{PRIVACY}">Απόρρητο</a><a href="#top">Στην αρχή <span aria-hidden="true">↑</span></a></p></div>'
     '</div></footer>')
 (ROOT / 'components/header.html').write_text(header)

@@ -19,7 +19,8 @@ something (the before/after slider, the CAD plan before/after).
 | `--paper` | `#f5f2eb` | page background |
 | `--paper-2` / `--paper-3` | `#ece7dc` / `#e2dbcd` | tinted sections, warranty band |
 | `--ink` / `--ink-2` / `--ink-3` | `#1d1c1a` / `#4b4842` / `#77726a` | text, body, labels |
-| `--green` | `#2d3e33` | the one accent: closing block, footer, buttons on hover |
+| `--green` | `#2d3e33` | the one accent: closing block, buttons on hover |
+| `--footer` | `#1a1c1b` | footer (near-black, so the ISO and Great Place to Work badges sit cleanly) |
 | `--sage` | `#557259` | emphasis text (`<em>`), a lighter tint of the same green |
 
 Type: `Manrope` only. Headings weight 350, letter-spacing −0.045em, `<em>` upright in sage;
@@ -30,7 +31,7 @@ on Greek (capitals would get a τόνος).
 
 Home: hero on a dark green-charcoal gradient (headline + the real CAD plan of Αθ. Διάκου 16, auto-switching Πριν/Μετά until touched) → proof line → two paths (zig-zag) → Παλαμά 7
 before/after → four selected projects → four steps → investment block (photo) → 2-year warranty
-→ FAQ → One Stop Shop → green closing block that runs into the green footer.
+→ FAQ → One Stop Shop → green closing block, then the near-black footer.
 
 Desktop navigation: both dropdowns are full-width mega menus (company: five pages with a
 one-line description each plus a photo; services: two photo cards).

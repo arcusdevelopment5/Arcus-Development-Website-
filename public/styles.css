@@ -9,7 +9,7 @@
   --paper:#f5f2eb; --paper-2:#ece7dc; --paper-3:#e2dbcd;
   --ink:#1d1c1a; --ink-2:#4b4842; --ink-3:#77726a;
   --line:#d9d1c2; --line-2:#c3b9a6;
-  --green:#2d3e33; --sage:#557259; --green-2:#3b5143; --green-ink:#eef0e9; --green-muted:#b5bfb2; --green-line:#ffffff1f;
+  --green:#2d3e33; --sage:#557259; --green-2:#3b5143; --green-ink:#eef0e9; --green-muted:#b5bfb2; --green-line:#ffffff1f; --footer:#1a1c1b;
   --serif:Manrope,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
   --sans:Manrope,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
   --gutter:clamp(20px,4.2vw,64px);
@@ -343,9 +343,8 @@ button{cursor:pointer}
 .closing-phone{display:grid;font-family:var(--serif);font-size:30px;line-height:1.15;color:var(--green-ink)}
 .closing-phone span{font-family:var(--sans);font-size:13px;color:var(--green-muted)}
 .closing-phone:hover{color:#fff}
-.site-footer{background:var(--green);color:var(--green-ink);padding-top:clamp(20px,3vw,40px)}
-.closing+.site-footer,main:has(>.closing:last-child)+.site-footer{border-top:1px solid var(--green-line)}
-.site-footer p,.site-footer address{color:var(--green-muted)}
+.site-footer{background:var(--footer);color:var(--green-ink);padding-top:clamp(20px,3vw,40px)}
+.site-footer p,.site-footer address{color:#a9aca6}
 .footer-top{display:grid;grid-template-columns:minmax(0,1.7fr) repeat(3,minmax(0,1fr));gap:40px;padding-block:clamp(48px,5vw,72px)}
 .footer-brand img{width:96px;opacity:.95}
 .footer-motto{margin-top:26px;font-family:var(--serif);font-size:clamp(24px,2vw,30px);line-height:1.2;color:var(--green-ink)!important;font-weight:350}
