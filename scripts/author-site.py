@@ -153,29 +153,38 @@ def logo_item(u, src, alt, w, h, label, ext):
     return f'<li><a href="{u}"{target} aria-label="{label}">{img}</a></li>'
 
 
+ICON = {'pin': '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>', 'phone': '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 3 3 5-3 3a16 16 0 0 0 6 6l3-3 5 3v3a2 2 0 0 1-2 2C9.6 21.4 2.6 14.4 2 5a2 2 0 0 1 2-2Z"/></svg>', 'mail': '<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 6 9 7 9-7"/></svg>', 'chat': '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/></svg>'}
+footer_links = [(OSS, 'One Stop Shop'), (WORK, 'Τα έργα μας'), (WARRANTY, 'Εγγύηση & φροντίδα'), ('/el', 'Αρχική'), ('/el/etaireia', 'Η εταιρεία μας'),
+                ('/el/filosofia', 'Φιλοσοφία και αξίες'), ('/el/sychnes-erotiseis', 'Συχνές ερωτήσεις'), ('/el/techniko-lexiko', 'Τεχνικό λεξικό'),
+                ('/el#services', 'Υπηρεσίες'), (BLOG, 'Blog')]
 footer = (
-    '<footer class="site-footer" id="footer" aria-label="Arcus Development — Πληροφορίες και δίκτυο"><div class="wrap">'
-    '<div class="footer-top">'
-    '<div class="footer-id"><a class="footer-brand" href="/el" aria-label="Arcus Development — Επιστροφή στην αρχή"><img src="/assets/arcus-development.png" alt="Arcus Development" width="202" height="138" loading="lazy"></a>'
-    '<p class="footer-motto">Η πρώτη ύλη είναι η ιδέα σου.<br><em>Μαζί της δίνουμε μορφή.</em></p></div>'
-    '<nav class="footer-col" aria-label="Γρήγοροι σύνδεσμοι"><h3>Σελίδες</h3>'
-    f'<a href="/el">Αρχική</a><a href="/el/etaireia">Η εταιρεία μας</a><a href="{WORK}">Τα έργα μας</a><a href="/el#services">Υπηρεσίες</a><a href="{OSS}">One Stop Shop</a><a href="{BLOG}">Blog</a></nav>'
-    '<nav class="footer-col" aria-label="Οδηγός"><h3>Οδηγός</h3>'
-    f'<a href="{PROCESS}">Η διαδικασία</a><a href="/el/filosofia">Φιλοσοφία και αξίες</a><a href="/el/sychnes-erotiseis">Συχνές ερωτήσεις</a><a href="/el/techniko-lexiko">Τεχνικό λεξικό</a><a href="{WARRANTY}">Εγγύηση & φροντίδα</a></nav>'
-    '<div class="footer-col footer-contact"><h3>Επικοινωνία</h3><address>Τσαλουχίδη 54, 2ος όροφος<br>Θεσσαλονίκη</address>'
-    '<a href="tel:+302310445935">+30 2310 445 935</a><a href="mailto:info@arcusdevelopment.gr">info@arcusdevelopment.gr</a>'
-    f'<a class="footer-form" href="{CONTACT}">Στείλε μας ένα μήνυμα{ARROW}</a></div>'
-    '</div>'
-    '<div class="footer-group"><div class="footer-group-head"><p>Μέλος του Arcus Group</p><p>Όλες οι υπηρεσίες για το ακίνητό σου, κάτω από μία στέγη.</p></div>'
+    '<footer class="site-footer" id="footer" aria-label="Arcus Development — Πληροφορίες και δίκτυο">'
+    '<div class="footer-strip"><div class="wrap footer-strip-inner">'
+    '<div class="footer-group-intro"><p class="footer-eyebrow">Arcus Group</p><h2>Μέλος του Arcus Group</h2><p>Όλες οι υπηρεσίες για το ακίνητό σου,<br>κάτω από μία στέγη.</p></div>'
     '<ul class="group-logos" aria-label="Τα brands του Arcus Group">' + ''.join(logo_item(*g) for g in group_logos) + '</ul>'
+    '</div></div>'
+    '<div class="wrap footer-main">'
+    '<div class="footer-id"><a class="footer-brand" href="/el" aria-label="Arcus Development — Επιστροφή στην αρχή"><img src="/assets/arcus-development.png" alt="Arcus Development" width="202" height="138" loading="lazy"></a>'
+    '<p class="footer-motto">Η πρώτη ύλη είναι η ιδέα σου.<br>Μαζί της δίνουμε μορφή.</p>'
     '<div class="footer-certs" aria-label="Πιστοποιήσεις και διακρίσεις Arcus">'
     '<a href="https://arcusrealestate.gr/el" target="_blank" rel="noopener noreferrer" title="ISO 9001 — Λειτουργία μεσιτικών γραφείων και δικτύου franchise"><img src="/assets/brand/iso-9001.png" alt="Arcus — ISO 9001, μεσιτικά γραφεία και δίκτυο franchise" width="263" height="391" loading="lazy"></a>'
     '<a href="https://arcusrealestate.gr/el" target="_blank" rel="noopener noreferrer" title="Great Place to Work — Δεκέμβριος 2025 έως Δεκέμβριος 2026"><img src="/assets/brand/great-place-to-work-2025-2026.webp" alt="Great Place to Work Certified — Δεκέμβριος 2025 έως Δεκέμβριος 2026, Ελλάδα" width="438" height="620" loading="lazy"></a>'
     '</div></div>'
-    '<div class="footer-bottom"><p>Μελέτη <span aria-hidden="true">/</span> Ανακαίνιση <span aria-hidden="true">/</span> Φροντίδα</p>'
+    '<nav class="footer-col footer-nav" aria-label="Γρήγοροι σύνδεσμοι"><h3>Γρήγοροι σύνδεσμοι</h3>' + ''.join(f'<a href="{u}">{l}</a>' for u, l in footer_links) + '</nav>'
+    '<div class="footer-col footer-contact"><h3>Επικοινωνία</h3><address>'
+    f'<p>{ICON["pin"]}<span>Τσαλουχίδη 54, 2ος όροφος<br>Θεσσαλονίκη</span></p>'
+    f'<a href="tel:+302310445935">{ICON["phone"]}<span>+30 2310 445 935</span></a>'
+    f'<a href="mailto:info@arcusdevelopment.gr" data-event="click_email">{ICON["mail"]}<span>info@arcusdevelopment.gr</span></a>'
+    f'<a href="{CONTACT}">{ICON["chat"]}<span>Στείλε μας ένα μήνυμα <span aria-hidden="true">↗</span></span></a>'
+    '</address></div>'
+    '<div class="footer-col footer-project"><h3>Κάθε ιδέα, μια αρχή.</h3><p>Έχεις έναν χώρο στο μυαλό σου;<br>Ας ανακαλύψουμε τι μπορεί να γίνει.</p>'
+    f'<a class="footer-project-link" href="{CONTACT}" data-event="click_primary_cta">Το δικό σου έργο<span aria-hidden="true">↗</span></a></div>'
+    '<p class="footer-signature" lang="en">Imagine.<br>Create.<br><em>Live.</em></p>'
+    '</div>'
+    '<div class="footer-bottom"><div class="wrap footer-bottom-inner"><p>Μελέτη <span aria-hidden="true">/</span> Ανακαίνιση <span aria-hidden="true">/</span> Φροντίδα</p>'
     '<p>© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε.</p>'
-    f'<p class="footer-legal"><a href="{PRIVACY}">Απόρρητο</a><a href="#top">Στην αρχή <span aria-hidden="true">↑</span></a></p></div>'
-    '</div></footer>')
+    f'<a href="{PRIVACY}">Απόρρητο</a><a href="#top">Στην αρχή <span aria-hidden="true">↑</span></a></div></div>'
+    '</footer>')
 (ROOT / 'components/header.html').write_text(header)
 (ROOT / 'components/footer-current.html').write_text(footer)
 

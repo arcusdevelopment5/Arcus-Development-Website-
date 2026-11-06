@@ -31,7 +31,7 @@ on Greek (capitals would get a τόνος).
 
 Home: hero on a dark green-charcoal gradient (headline + the real CAD plan of Αθ. Διάκου 16, auto-switching Πριν/Μετά until touched) → proof line → two paths (zig-zag) → Παλαμά 7
 before/after → four selected projects → four steps → investment block (photo) → 2-year warranty
-→ FAQ → One Stop Shop → green closing block, then the near-black footer.
+→ FAQ → One Stop Shop → green closing block, then the near-black footer, built in the structure of the v37 Arcus Group footer (group strip with six logos; brand + ISO/GPTW, links, contact, «Κάθε ιδέα, μια αρχή.», «Imagine. Create. Live.»; floor-plan line drawing in the corner).
 
 Desktop navigation: both dropdowns are full-width mega menus (company: five pages with a
 one-line description each plus a photo; services: two photo cards).
