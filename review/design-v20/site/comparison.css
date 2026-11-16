@@ -1,0 +1,10 @@
+.rb-compare{position:relative;width:100%;height:100%;overflow:hidden;--split:50%;isolation:isolate;user-select:none}
+.compare-stage .rb-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;filter:none;transform:none}
+.rb-before{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--split)) 0 0)}
+.rb-label{position:absolute;top:20px;z-index:2;padding:7px 14px;background:#151b16a6;color:#fff;border-radius:999px;font-size:14px;pointer-events:none}.rb-label-before{left:20px}.rb-label-after{right:20px}
+.rb-divider{position:absolute;top:0;left:0;height:100%;width:0;z-index:3;touch-action:pan-y}
+.rb-divider::before{content:'';position:absolute;top:0;bottom:0;width:3px;left:-1.5px;background:linear-gradient(to top,transparent,#fff 25%,#fff 75%,transparent);pointer-events:none}
+.rb-divider button{position:absolute;left:0;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;border:1px solid #ffffff88;background:#f5f2eb;color:#172014;display:grid;place-items:center;cursor:grab;box-shadow:0 4px 18px #0004;touch-action:pan-y}
+.rb-divider button:active{cursor:grabbing}.rb-divider button:focus-visible{outline:3px solid #acc29b;outline-offset:5px}
+@media(max-width:600px){.rb-label{top:12px;padding:6px 10px}.rb-label-before{left:12px}.rb-label-after{right:12px}.rb-divider button{width:46px;height:46px}}
+.compare-stage > .rb-compare{position:absolute;inset:0}

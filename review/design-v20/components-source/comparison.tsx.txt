@@ -1,0 +1,38 @@
+// Adapted from the user-supplied React Bits Pro ComparisonSlider.
+import React,{useRef,useState,useEffect} from 'react';
+import {createRoot} from 'react-dom/client';
+import gsap from 'gsap';
+import {Draggable} from 'gsap/Draggable';
+import {InertiaPlugin} from 'gsap/InertiaPlugin';
+import {useGSAP} from '@gsap/react';
+import {GripVertical} from 'lucide-react';
+gsap.registerPlugin(Draggable,InertiaPlugin,useGSAP);
+function ComparisonSlider({before,after,figure}:{before:HTMLImageElement,after:HTMLImageElement,figure:HTMLElement}){
+ const box=useRef<HTMLDivElement>(null),handle=useRef<HTMLDivElement>(null),pos=useRef(50),engine=useRef<Draggable|null>(null),paint=useRef<(p:number)=>void>(()=>{});
+ const [value,setValue]=useState(50);
+ useGSAP(()=>{
+  const el=box.current!,bar=handle.current!;
+  const update=(p:number)=>{p=Math.max(0,Math.min(100,p));pos.current=p;el.style.setProperty('--split',p+'%');setValue(p);figure.querySelectorAll<HTMLElement>('[data-compare-value]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.compareValue)===Math.round(p))));};
+  const move=(p:number)=>{gsap.killTweensOf(bar);update(p);gsap.set(bar,{x:el.clientWidth*p/100});engine.current?.update();};
+  let touched=false,visible=false,auto:gsap.core.Tween|null=null;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+  const state={position:50};
+  const stop=()=>{touched=true;auto?.kill();auto=null;};
+  const animate=()=>{auto?.kill();auto=null;if(touched||!visible||document.hidden||reduce.matches)return;state.position=pos.current;auto=gsap.to(state,{position:46+Math.random()*8,duration:2.5+Math.random(),ease:'sine.inOut',onUpdate:()=>move(state.position),onComplete:animate});};
+  paint.current=p=>{stop();move(p)};move(50);
+  const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;animate()},{threshold:.2});observer.observe(el);
+  document.addEventListener('visibilitychange',animate);reduce.addEventListener('change',animate);
+  el.addEventListener('pointerdown',stop);el.addEventListener('focusin',stop);
+  const drag=Draggable.create(bar,{type:'x',dragClickables:true,bounds:{minX:0,maxX:el.clientWidth},inertia:!matchMedia('(prefers-reduced-motion: reduce)').matches,onDrag(){update(this.x/el.clientWidth*100)},onThrowUpdate(){update(this.x/el.clientWidth*100)}})[0];engine.current=drag;
+  const resize=new ResizeObserver(()=>{drag.applyBounds({minX:0,maxX:el.clientWidth});move(pos.current)});resize.observe(el);
+  const buttons=[...figure.querySelectorAll<HTMLElement>('[data-compare-value]')];const select=(e:Event)=>{stop();move(Number((e.currentTarget as HTMLElement).dataset.compareValue))};buttons.forEach(b=>b.addEventListener('click',select));
+  return()=>{auto?.kill();observer.disconnect();document.removeEventListener('visibilitychange',animate);reduce.removeEventListener('change',animate);el.removeEventListener('pointerdown',stop);el.removeEventListener('focusin',stop);resize.disconnect();drag.kill();buttons.forEach(b=>b.removeEventListener('click',select));gsap.killTweensOf(bar)};
+ },{scope:box});
+ return <div ref={box} className="rb-compare" role="region" aria-label="Σύγκριση κουζίνας πριν και μετά την ανακαίνιση">
+  <img className="rb-image rb-after" src={after.src} alt={after.alt} draggable={false}/>
+  <div className="rb-before"><img className="rb-image" src={before.src} alt={before.alt} draggable={false}/></div>
+  <span className="rb-label rb-label-before">Πριν</span><span className="rb-label rb-label-after">Μετά</span>
+  <div ref={handle} className="rb-divider"><button type="button" role="slider" aria-label="Σύρε για σύγκριση πριν και μετά" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(value)} aria-valuetext={`${Math.round(value)}% πριν, ${100-Math.round(value)}% μετά`} onKeyDown={e=>{const keys:Record<string,number>={ArrowLeft:pos.current-5,ArrowRight:pos.current+5,Home:0,End:100};if(e.key in keys){e.preventDefault();paint.current(keys[e.key]);}}}><GripVertical size={20}/></button></div>
+ </div>
+}
+document.querySelectorAll<HTMLElement>('[data-react-comparison]').forEach(figure=>{const stage=figure.querySelector<HTMLElement>('.compare-stage')!;const before=stage.querySelector<HTMLImageElement>('.compare-before img')!;const after=stage.querySelector<HTMLImageElement>(':scope > img')!;createRoot(stage).render(<ComparisonSlider before={before} after={after} figure={figure}/>);});

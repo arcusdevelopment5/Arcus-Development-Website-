@@ -1,0 +1,20 @@
+{
+  "name": "arcus-development-review",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:carousel": "node carousel/build.mjs"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-three/fiber": "^9.0.0",
+    "gsap": "^3.15.1",
+    "lucide-react": "^1.73.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.181.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
