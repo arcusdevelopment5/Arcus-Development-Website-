@@ -1,0 +1,64 @@
+:root[data-theme=dark]{--paper:#121613;--paper-2:#1b211c;--paper-3:#272f28;--ink:#f1efe8;--ink-2:#caccc3;--ink-3:#a2aa9e;--line:#333c33;--line-2:#4e5a4c;--sage:#acc29b;--green:#a7c296;--green-2:#bfd3b2;--green-ink:#172014;--green-muted:#c0cbb9;--green-line:#ffffff25;--footer:#0d110e;--shadow:0 14px 45px #0004;color-scheme:dark}
+.theme-toggle{width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:50%;background:var(--paper-2);color:var(--ink);font-size:23px;line-height:1;cursor:pointer}.theme-toggle:hover{background:var(--paper-3)}.theme-toggle:focus-visible{outline:2px solid var(--sage);outline-offset:4px}.header-inner{gap:20px}.arcus-spin-engine{position:relative;height:100%;min-height:420px;width:100%;overflow:hidden;outline:none}
+[data-theme=dark] .brand img{filter:brightness(0) invert(1);opacity:.94}
+[data-theme=dark] .btn-light:hover{background:#283328;color:var(--ink);border-color:var(--line-2)}
+[data-theme=dark] .hero .btn:hover{background:#c4d6ba;color:#172014}
+[data-theme=dark] .plan{color:#c7c4b9;background:var(--paper-2)}
+[data-theme=dark] .oss-knowledge{background:var(--paper-2)}
+[data-theme=dark] .work-meta,[data-theme=dark] .work-stages{color:var(--ink-2)}
+[data-theme=dark] .work-copy .work-meta,[data-theme=dark] .work-copy .work-stages{color:#f0eee6}
+[data-theme=dark] .journey-window,[data-theme=dark] .journey-clean{background:#121815}
+[data-theme=dark] .journey-tabs{border-color:var(--line)}
+[data-theme=dark] .journey-tabs button{color:#adb5a9}
+[data-theme=dark] .journey-tabs button[aria-selected=true]{color:#f1f2e9;background:#253026;border-bottom-color:#a7c296}
+[data-theme=dark] .journey-eyebrow,[data-theme=dark] .journey-heading>p:last-child,[data-theme=dark] .journey-stage-copy p,[data-theme=dark] .journey-tools span{color:#abb3a6}
+[data-theme=dark] .journey-explore{background:#19221bee;color:#e4e8dd}
+[data-theme=dark] .journey-explore button,[data-theme=dark] .journey-return,[data-theme=dark] .journey-buttons button{background:#253026;border-color:#4a5947;color:#f1f2e9}
+[data-theme=dark] .journey-thumbs button[aria-pressed=true]{border-color:#b3cc9d}
+[data-theme=dark] .journey-bottom{border-color:var(--line)}
+[data-theme=dark] .journey-all-button{color:#c1cab9}
+[data-theme=dark] .journey-next{background:#acc59c;color:#182016}
+[data-theme=dark] .segmented input:checked+span{color:var(--paper)}
+[data-theme=dark] ::selection{background:#647d55;color:#fff}
+@media(max-width:1280px){.header-cta{display:none}.header-inner{gap:16px}.theme-toggle{margin-left:auto}}
+@media(max-width:800px){.header-inner{gap:12px}.nav-toggle{margin-left:0}.theme-toggle{width:38px;height:38px;flex-basis:38px}}
+[data-theme=dark] .site-footer,[data-theme=dark] .closing{--green-ink:#eef0e9;--green-muted:#b5bfb2;--green:#2d3e33;--green-2:#3b5143}
+[data-theme=dark] .closing{background:#1e3025;border-top:1px solid #3b5143}
+[data-theme=dark] .hero .btn{color:#172014}
+[data-theme=dark] .stage-dark{color:#f1efe8;background:#171e18}
+[data-theme=dark] .stage-dark h2,[data-theme=dark] .stage-dark h3,[data-theme=dark] .stage-dark .gallery figcaption span{color:#f1efe8}
+.nav>a,.drop>summary{white-space:nowrap}
+@media(min-width:981px) and (max-width:1450px){.header-inner{gap:12px}.nav{font-size:13px;gap:0}.nav>a,.drop>summary{padding-inline:10px}.header-cta{font-size:13px;padding-inline:18px}}
+[data-theme=dark] .hero .segmented button[aria-pressed=true]{color:#172014}
+
+/* V15: consistent navigation and contact dark palette. */
+@media(min-width:981px) and (max-width:1450px){.header-cta{display:none}.nav{gap:0}.nav>a,.drop>summary{padding-inline:8px}}
+[data-theme=dark] .form-card{background:var(--paper-2);border-color:var(--line-2);box-shadow:0 16px 48px #0002}
+[data-theme=dark] .field input,[data-theme=dark] .field select,[data-theme=dark] .field textarea{color:var(--ink);background:var(--paper);border-color:#687361;caret-color:var(--sage)}
+[data-theme=dark] .field input::placeholder,[data-theme=dark] .field textarea::placeholder{color:#a2aa9e;opacity:1}
+[data-theme=dark] .field input:focus,[data-theme=dark] .field select:focus,[data-theme=dark] .field textarea:focus{color:var(--ink);background:#202920;border-color:var(--sage);box-shadow:0 0 0 3px #acc29b30}
+[data-theme=dark] .field input:autofill{box-shadow:0 0 0 1000px #202920 inset;-webkit-text-fill-color:var(--ink)}
+[data-theme=dark] .intent-options label>span{color:var(--ink);background:var(--paper);border-color:#687361}
+[data-theme=dark] .intent-options input:checked+span{color:#172014;background:#acc29b;border-color:#acc29b}
+[data-theme=dark] .intent-options input:checked+span b{color:#34482b}
+[data-theme=dark] .privacy-check>span{color:var(--ink-2)}
+[data-theme=dark] .privacy-check a{color:var(--sage)}
+[data-theme=dark] .field-error,[data-theme=dark] .field label>span,[data-theme=dark] .form legend>span{color:#ffb29d}
+[data-theme=dark] .field [aria-invalid=true]{border-color:#ffb29d}
+[data-theme=dark] .form-help,[data-theme=dark] .upload-field p,[data-theme=dark] .contact-aside .fine{color:#b8c0b2}
+[data-theme=dark] .review-form-notice{color:var(--ink-2);background:var(--paper);border-color:var(--sage)}
+[data-theme=dark] .btn-submit{background:var(--sage);color:#172014;border-color:var(--sage)}
+[data-theme=dark] .btn-submit:hover{background:#c4d6ba;border-color:#c4d6ba}
+
+/* Architectural grid and gentle cursor light, homepage hero only. */
+.home-grid .hero{position:relative;isolation:isolate;--grid-line:rgba(255,255,255,.045)}
+.home-grid .hero::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:22px 22px}
+.home-grid .hero .plan-stage{background-image:none}
+.home-grid .hero .plan{background:transparent}
+.hero-cursor-light{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .5s ease;background:radial-gradient(340px circle at var(--light-x,50%) var(--light-y,50%),rgba(194,218,176,.13),rgba(194,218,176,.035) 48%,transparent 75%)}
+.hero-cursor-light::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(213,233,197,.19) 1px,transparent 1px),linear-gradient(90deg,rgba(213,233,197,.19) 1px,transparent 1px);background-size:22px 22px;mask-image:radial-gradient(270px circle at var(--light-x,50%) var(--light-y,50%),#000,transparent 85%);-webkit-mask-image:radial-gradient(270px circle at var(--light-x,50%) var(--light-y,50%),#000,transparent 85%)}
+.home-grid .hero.is-pointer-lit .hero-cursor-light{opacity:1}
+@media (hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.hero-cursor-light{display:none}}
+
+/* Stop both grid and cursor glow at the proof-row divider. */
+.home-grid .hero::before,.home-grid .hero .hero-cursor-light{bottom:auto;height:var(--hero-grid-end,0px);overflow:hidden}

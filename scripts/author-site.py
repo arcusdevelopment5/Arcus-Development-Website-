@@ -1,8 +1,8 @@
 """Authors every page of arcusdevelopment.gr into site/pages/*.html.
 
-Design: the ARCUSCRM-533 "monograph" redesign. One stylesheet (public/styles.css), one script
-(public/app.js). Text and facts are the approved copy of the previous version; legal text lives
-verbatim in site/data/legal/. Run with `npm run content`.
+The production shell, consent and contact form are authored here. Approved design
+fragments and page-specific assets live in site/design/ and are applied by design_pages.py.
+Legal text lives verbatim in site/data/legal/. Run with `npm run content`.
 """
 from pathlib import Path
 from html import escape as esc
@@ -12,6 +12,7 @@ from PIL import Image
 import project_portfolio as portfolio
 import company_story
 import one_stop_journey
+import design_pages
 from plan_transition import plan_transition
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -113,7 +114,7 @@ def nav_desktop():
         f'<details class="drop"><summary aria-controls="company-menu">Η εταιρεία μας<i aria-hidden="true"></i></summary>{company_mega}</details>'
         f'<a href="{WORK}">Τα έργα μας</a>'
         f'<details class="drop"><summary aria-controls="service-menu">Οι υπηρεσίες μας<i aria-hidden="true"></i></summary>{paths_mega}</details>'
-        f'<a href="{OSS}">One Stop Shop</a><a href="{BLOG}">Blog</a><a href="{CONTACT}">Επικοινωνία</a></nav>')
+        f'<a href="{OSS}">One Stop Shop</a><a href="/el/odigoi">Οδηγοί ανακαίνισης</a><a href="{BLOG}">Blog</a><a href="{CONTACT}">Επικοινωνία</a></nav>')
 
 
 def nav_mobile():
@@ -123,7 +124,7 @@ def nav_mobile():
         f'<details><summary>Η εταιρεία μας</summary><div>{"".join(f"<a href=\"{u}\">{l}</a>" for u, l in companylinks)}</div></details>'
         f'<a href="{WORK}">Τα έργα μας</a>'
         f'<details><summary>Οι υπηρεσίες μας</summary><div><a href="{RES}">Για το σπίτι μου</a><a href="{INV}">Για επένδυση</a></div></details>'
-        f'<a href="{OSS}">One Stop Shop</a><a href="{BLOG}">Blog</a><a href="{WARRANTY}">Εγγύηση & φροντίδα</a><a href="{CONTACT}">Επικοινωνία</a>'
+        f'<a href="{OSS}">One Stop Shop</a><a href="/el/odigoi">Οδηγοί ανακαίνισης</a><a href="{BLOG}">Blog</a><a href="{WARRANTY}">Εγγύηση & φροντίδα</a><a href="{CONTACT}">Επικοινωνία</a>'
         f'<div class="mnav-foot">{btn(CONTACT, "Συζήτησε το έργο σου", "btn", "data-event=\"click_primary_cta\"")}<a href="tel:+302310445935">2310 445 935</a></div>'
         '</div></nav>')
 
@@ -157,7 +158,7 @@ def logo_item(u, src, alt, w, h, label, ext):
 ICON = {'pin': '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>', 'phone': '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 3 3 5-3 3a16 16 0 0 0 6 6l3-3 5 3v3a2 2 0 0 1-2 2C9.6 21.4 2.6 14.4 2 5a2 2 0 0 1 2-2Z"/></svg>', 'mail': '<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 6 9 7 9-7"/></svg>', 'chat': '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/></svg>'}
 footer_links = [(OSS, 'One Stop Shop'), (WORK, 'Τα έργα μας'), (WARRANTY, 'Εγγύηση & φροντίδα'), ('/el', 'Αρχική'), ('/el/etaireia', 'Η εταιρεία μας'),
                 ('/el/filosofia', 'Φιλοσοφία και αξίες'), ('/el/sychnes-erotiseis', 'Συχνές ερωτήσεις'), ('/el/techniko-lexiko', 'Τεχνικό λεξικό'),
-                ('/el#services', 'Υπηρεσίες'), (BLOG, 'Blog')]
+                ('/el#services', 'Υπηρεσίες'), ('/el/odigoi', 'Οδηγοί ανακαίνισης'), (BLOG, 'Blog')]
 footer = (
     '<footer class="site-footer" id="footer" aria-label="Arcus Development — Πληροφορίες και δίκτυο">'
     '<div class="footer-strip"><div class="wrap footer-strip-inner">'
@@ -183,7 +184,7 @@ footer = (
     '<p class="footer-signature" lang="en">Imagine.<br>Create.<br><em>Live.</em></p>'
     '</div>'
     '<div class="footer-bottom"><div class="wrap footer-bottom-inner"><p>Μελέτη <span aria-hidden="true">/</span> Ανακαίνιση <span aria-hidden="true">/</span> Φροντίδα</p>'
-    '<p>© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε.</p>'
+    '<p>© <span id="year">2026</span> ARCUS DEVELOPMENT Ε.Ε. · ΑΦΜ 802211949 · Αρ. ΓΕΜΗ 172215306000</p>'
     f'<span class="footer-legal"><a href="{PRIVACY}">Απόρρητο</a><button type="button" data-consent-open>Ρυθμίσεις cookies</button></span><a href="#top">Στην αρχή <span aria-hidden="true">↑</span></a></div></div>'
     '</footer>')
 (ROOT / 'components/header.html').write_text(header)
@@ -195,6 +196,7 @@ CONSENT_BANNER = '<div class="consent" id="consent" role="region" aria-labelledb
 
 
 def page(slug, title, description, body):
+    title, description, body = design_pages.content(slug, title, description, body)
     route = '/el' if slug == 'home' else '/el/' + slug.replace('--', '/')
     schema = {'@context': 'https://schema.org', '@type': 'Organization', 'name': 'Arcus Development', 'url': 'https://arcusdevelopment.gr/el',
               'telephone': '+302310445935', 'address': {'@type': 'PostalAddress', 'streetAddress': 'Τσαλουχίδη 54, 2ος όροφος', 'addressLocality': 'Θεσσαλονίκη', 'addressCountry': 'GR'}}
@@ -221,9 +223,9 @@ def page(slug, title, description, body):
         f'<meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{social}">'
         '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/favicon.svg">'
         '<link rel="preload" href="/assets/manrope-greek.woff2" as="font" type="font/woff2" crossorigin>'
-        '<link rel="stylesheet" href="/styles.css">' + ld +
+        '<link rel="stylesheet" href="/styles.css">' + design_pages.head(slug) + ld +
         '<script>document.documentElement.classList.add("js")</script><script src="/app.js" defer></script></head>'
-        f'<body id="top"><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>{header}{body}{footer}{cta}{CONSENT_BANNER}</body></html>')
+        f'<body id="top" class="{design_pages.body_class(slug)}"><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>{header}{body}{footer}{cta}{CONSENT_BANNER}{design_pages.scripts(slug)}</body></html>')
     (P / (slug + '.html')).write_text(html)
 
 
@@ -450,6 +452,11 @@ page('one-stop-shop', 'One Stop Shop | Arcus Development', 'Το δίκτυο υ
      + one_stop_journey.render(eyebrow)
      + '<section class="closing"><div class="wrap closing-inner">' + eyebrow('Ας ξεκινήσουμε από εσένα') + '<h2>Τι χρειάζεται<br><em>το ακίνητό σου σήμερα;</em></h2><div class="closing-actions">'
      + btn('https://arcusrealestate.gr/el/communication', 'Μίλησε με την ομάδα Arcus', 'btn btn-light') + '</div></div></section></main>')
+
+# Renovation guides use the same production shell and enter the existing sitemap.
+for slug, data in design_pages.PAGES.items():
+    if slug == 'odigoi' or slug.startswith('odigoi--'):
+        page(slug, data['title'], data['description'], '')
 
 # Retired pages must not survive regeneration or enter the sitemap.
 for retired in ['admin', 'grafeio', 'erga--perraivou-9', 'erga--nea-paralia', 'erga--stavroupoli', 'erga--city-studio', 'kariera']:

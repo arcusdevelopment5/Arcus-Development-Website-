@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+<defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#dad8cb" stroke-width=".7"/></pattern><filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#13251b" flood-opacity=".12"/></filter></defs>
+<rect width="1200" height="900" fill="#e8e5da"/><rect width="1200" height="900" fill="url(#grid)"/>
+<g font-family="Arial, sans-serif"><text x="64" y="77" fill="#52644f" font-size="16" letter-spacing="3">ARCUS DEVELOPMENT / ΜΕΛΕΤΗ ΚΟΣΤΟΥΣ</text><text x="60" y="143" fill="#23392c" font-size="46">Κάθε χώρος. Ένα πλάνο.</text><text x="64" y="185" fill="#64705d" font-size="21">Από την κάτοψη στον προϋπολογισμό της ανακαίνισης.</text>
+<rect x="54" y="229" width="1092" height="581" rx="8" fill="#f7f5ed" filter="url(#shadow)"/>
+<g transform="translate(100 285)"><text x="0" y="0" font-size="13" fill="#6e7869" letter-spacing="2">01 / Ο ΧΩΡΟΣ</text>
+<rect x="26" y="48" width="502" height="385" fill="#efeee5" stroke="#23392c" stroke-width="8"/>
+<path d="M326 48V252H528M26 286H202V433" fill="none" stroke="#23392c" stroke-width="7"/>
+<path d="M326 178V240M202 341V405" stroke="#f7f5ed" stroke-width="12"/>
+<path d="M326 180H267A59 59 0 00326 239M202 342H143A59 59 0 00202 401" fill="none" stroke="#83947b" stroke-width="1.5"/>
+<path d="M70 48H238M528 80V177M285 433H454" stroke="#f7f5ed" stroke-width="12"/><path d="M70 48H238M528 80V177M285 433H454" stroke="#869f8b" stroke-width="3"/>
+<g stroke="#8a9882" fill="#e0e7d7" stroke-width="2"><rect x="62" y="106" width="42" height="121" rx="7"/><rect x="110" y="124" width="80" height="87" rx="5"/><rect x="201" y="97" width="78" height="24" rx="4"/>
+<rect x="360" y="82" width="129" height="128" rx="4"/><rect x="368" y="91" width="51" height="29" rx="6"/><rect x="429" y="91" width="51" height="29" rx="6"/><path d="M361 131H488"/>
+<rect x="50" y="307" width="49" height="101" rx="8"/><ellipse cx="153" cy="318" rx="21" ry="12"/><rect x="130" y="374" width="43" height="35" rx="13"/>
+<path d="M251 286H488V322H287V392H251Z"/><rect x="343" y="292" width="43" height="24" rx="4"/><circle cx="445" cy="301" r="7"/><circle cx="466" cy="309" r="6"/></g>
+<g fill="#304b38"><circle cx="244" cy="240" r="21"/><circle cx="462" cy="220" r="21"/><circle cx="148" cy="356" r="21"/><circle cx="447" cy="370" r="21"/></g><g fill="#fff" font-size="14" text-anchor="middle"><text x="244" y="245">01</text><text x="462" y="225">02</text><text x="148" y="361">03</text><text x="447" y="375">04</text></g>
+<path d="M26 462H528M26 453V471M528 453V471" fill="none" stroke="#8b9683"/><text x="277" y="488" text-anchor="middle" fill="#697463" font-size="14">Κάτοψη · προδιαγραφές · ποσότητες</text></g>
+<g transform="translate(713 285)"><text x="0" y="0" font-size="13" fill="#6e7869" letter-spacing="2">02 / Ο ΠΡΟΫΠΟΛΟΓΙΣΜΟΣ</text><g stroke="#dadfd2"><path d="M0 44H367M0 138H367M0 232H367M0 326H367M0 420H367"/></g>
+<g fill="#53694b" font-size="15"><text x="0" y="80">01</text><text x="0" y="174">02</text><text x="0" y="268">03</text><text x="0" y="362">04</text></g>
+<g fill="#23392c" font-size="23"><text x="43" y="80">Οικοδομικές εργασίες</text><text x="43" y="174">Υλικά &amp; επιφάνειες</text><text x="43" y="268">Εγκαταστάσεις</text><text x="43" y="362">Εξοπλισμός</text></g>
+<g fill="#77816e" font-size="16"><text x="43" y="110">Καθαιρέσεις · διαρρύθμιση</text><text x="43" y="204">Δάπεδα · χρώματα · επενδύσεις</text><text x="43" y="298">Ύδρευση · ρεύμα · θέρμανση</text><text x="43" y="392">Κουζίνα · μπάνιο · έπιπλα</text></g>
+<rect x="0" y="443" width="367" height="56" rx="3" fill="#304b38"/><text x="183" y="478" text-anchor="middle" font-size="18" fill="#f0f2e9">Ποσότητες × προδιαγραφές</text></g>
+<text x="64" y="855" font-size="15" fill="#6b7764">Ενδεικτικό διάγραμμα σχεδιασμού · Δεν αποτελεί κάτοψη συγκεκριμένου έργου ή οικονομική προσφορά.</text></g></svg>

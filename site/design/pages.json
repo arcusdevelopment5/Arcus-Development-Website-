@@ -1,0 +1,671 @@
+{
+  "aporrito": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": ""
+  },
+  "diadikasia": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "",
+    "title": "Η Διαδικασία Ανακαίνισης | Arcus Development",
+    "description": "Τα επτά στάδια του έργου: brief, αποτύπωση, μελέτη, 3D, οργάνωση, κατασκευή και υποστήριξη μετά την παράδοση.",
+    "schema": []
+  },
+  "eggyisi-ypostirixi": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": ""
+  },
+  "ependytiki-anakainisi-diamerismatos": {
+    "styles": [
+      "/design.css",
+      "/project-cards.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "",
+    "title": "Επενδυτική Ανακαίνιση & Διαχωρισμός Διαμερισμάτων | Arcus Development",
+    "description": "Επενδυτική αξιοποίηση διαμερισμάτων στη Θεσσαλονίκη. Έλεγχος εφικτότητας, εναλλακτικές κατόψεις, 3D και οργανωμένη κατασκευή.",
+    "schema": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Επενδυτική αξιοποίηση διαμερίσματος",
+        "areaServed": {
+          "@type": "City",
+          "name": "Θεσσαλονίκη"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Arcus Development",
+          "url": "https://arcusdevelopment.gr/el"
+        },
+        "url": "https://arcusdevelopment.gr/el/ependytiki-anakainisi-diamerismatos"
+      }
+    ]
+  },
+  "epikoinonia": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/contact-context.js",
+        "module": false
+      }
+    ],
+    "body_class": "",
+    "title": "Συζήτησε το Έργο σου | Arcus Development",
+    "description": "Αίτημα ολικής ανακαίνισης, επενδυτικής αξιοποίησης ή after-sales υποστήριξης. Arcus Development, Θεσσαλονίκη, 2310 445 935.",
+    "schema": []
+  },
+  "erga--agiou-dimitriou-113": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/passage.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-passage.js",
+        "module": true
+      }
+    ],
+    "body_class": "",
+    "title": "Αγίου Δημητρίου: Ανακαίνιση διαμερίσματος | Arcus",
+    "description": "Μελέτη ανακαίνισης διαμερίσματος στην Αγίου Δημητρίου. Δείτε την προτεινόμενη διαρρύθμιση και τις 3D απεικονίσεις των χώρων.",
+    "schema": []
+  },
+  "erga--artemidos-37": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/passage.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-passage.js",
+        "module": true
+      }
+    ],
+    "body_class": "",
+    "title": "Αρτέμιδος: Διαμόρφωση δύο κατοικιών | Arcus",
+    "description": "Δύο κατοικίες στην Αρτέμιδος: δείτε την αρχική κατάσταση, τις σχεδιαστικές προτάσεις και τους ολοκληρωμένους χώρους κάθε διαμερίσματος.",
+    "schema": []
+  },
+  "erga--athanasiou-diakou-16": {
+    "styles": [
+      "/design.css",
+      "/passage.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-passage.js",
+        "module": true
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "",
+    "title": "Αθανασίου Διάκου: Διαμόρφωση τριών κατοικιών | Arcus",
+    "description": "Διαμόρφωση ακινήτου σε τρεις επιπλωμένες κατοικίες στην Αθανασίου Διάκου. Αρχική κατάσταση, 3D μελέτη και αποτέλεσμα ανά διαμέρισμα.",
+    "schema": []
+  },
+  "erga--grigoriou-palama-7": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/passage.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-passage.js",
+        "module": true
+      }
+    ],
+    "body_class": "",
+    "title": "Γρηγορίου Παλαμά: Ολική ανακαίνιση διαμερίσματος | Arcus",
+    "description": "Ανακαίνιση διαμερίσματος στη Γρηγορίου Παλαμά. Η αρχική κουζίνα, η 3D πρόταση και οι ολοκληρωμένοι χώροι σε μία παρουσίαση.",
+    "schema": []
+  },
+  "erga": {
+    "styles": [
+      "/design.css",
+      "/project-cards.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "review-portfolio",
+    "title": "Έργα Ανακαίνισης στη Θεσσαλονίκη | Arcus Development",
+    "description": "Πραγματικά έργα ανακαίνισης και διαμόρφωσης κατοικιών της Arcus Development. Φωτογραφίες, κατόψεις, renders και η ιστορία κάθε χώρου.",
+    "schema": []
+  },
+  "erga--kanari-16": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/passage.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-passage.js",
+        "module": true
+      }
+    ],
+    "body_class": "",
+    "title": "Κανάρη: Ανακαίνιση σε δύο κατοικίες | Arcus",
+    "description": "Ανακαίνιση σε εξέλιξη στην Κανάρη. Αρχική καταγραφή, κάτοψη και ξεχωριστή 3D μελέτη για καθεμία από τις δύο κατοικίες.",
+    "schema": []
+  },
+  "erga--kolokotroni-14": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/passage.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-passage.js",
+        "module": true
+      }
+    ],
+    "body_class": "",
+    "title": "Κολοκοτρώνη: Διαμόρφωση δύο κατοικιών | Arcus",
+    "description": "Ένα δυάρι και μία γκαρσονιέρα στην Κολοκοτρώνη. Ξεχωριστές συλλογές φωτογραφιών, 3D μελέτη και κατόψεις της διαμόρφωσης.",
+    "schema": []
+  },
+  "erga--soulioti-17": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/passage.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-passage.js",
+        "module": true
+      }
+    ],
+    "body_class": "",
+    "title": "Σουλιώτη: Ολική ανακαίνιση διαμερίσματος | Arcus",
+    "description": "Ολική ανακαίνιση διαμερίσματος στη Σουλιώτη. Φωτογραφίες πριν, 3D μελέτη, κατασκευαστικές εργασίες και τελικό αποτέλεσμα.",
+    "schema": []
+  },
+  "erga--vyronos-37": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/passage.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-passage.js",
+        "module": true
+      }
+    ],
+    "body_class": "",
+    "title": "Βύρωνος: Ολική ανακαίνιση στη Σταυρούπολη | Arcus",
+    "description": "Ολική ανακαίνιση στη Σταυρούπολη: από την αρχική κατάσταση και τις εργασίες έως την κουζίνα, το καθιστικό και τους ολοκληρωμένους χώρους.",
+    "schema": []
+  },
+  "etaireia": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "",
+    "title": "Η εταιρεία μας — Μελέτη και ανακαίνιση | Arcus Development",
+    "description": "Γνώρισε την Arcus Development και τον τρόπο που οργανώνουμε τη μελέτη, τον σχεδιασμό, την κατασκευή και την παράδοση μιας ανακαίνισης.",
+    "schema": []
+  },
+  "filosofia": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "",
+    "title": "Φιλοσοφία & αξίες | Arcus Development",
+    "description": "Οι κοινές αξίες της Arcus και η δημιουργική τους έκφραση στη μελέτη, τη συνεργασία και την ολική ανακαίνιση διαμερισμάτων.",
+    "schema": []
+  },
+  "home": {
+    "styles": [
+      "/project-cards.css",
+      "/theme.css",
+      "/comparison.css",
+      "/polish.css",
+      "/editorial.css",
+      "/oss-teaser.css"
+    ],
+    "scripts": [
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-comparison.js",
+        "module": true
+      },
+      {
+        "src": "/hero-light.js",
+        "module": false
+      }
+    ],
+    "body_class": "home-grid",
+    "title": "Ανακαινίσεις Διαμερισμάτων Θεσσαλονίκη | Arcus Development",
+    "description": "Ολική ανακαίνιση διαμερίσματος στη Θεσσαλονίκη για κατοικία ή επένδυση. Μελέτη, 3D, κατασκευή και 2ετής γραπτή εγγύηση.",
+    "schema": []
+  },
+  "odigoi--diadikasia-anakainisis": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css",
+      "/renovation-guide.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/renovation-guide.js",
+        "module": false
+      }
+    ],
+    "body_class": "guide-article",
+    "title": "Ανακαίνιση διαμερίσματος βήμα προς βήμα | Arcus Development",
+    "description": "Οργάνωσε την ανακαίνιση του διαμερίσματός σου σε 8 βήματα: προετοιμασία, μελέτη, κόστος, εργασίες και παράδοση. Με πρακτική λίστα ελέγχου.",
+    "schema": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Ανακαίνιση διαμερίσματος βήμα προς βήμα",
+        "dateModified": "2026-11-19",
+        "author": {
+          "@type": "Organization",
+          "name": "Arcus Development"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Arcus Development"
+        },
+        "mainEntityOfPage": "https://arcusdevelopment.gr/el/odigoi/diadikasia-anakainisis"
+      }
+    ]
+  },
+  "odigoi": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css",
+      "/renovation-guide.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "guide-index",
+    "title": "Οδηγοί ανακαίνισης | Arcus Development",
+    "description": "Πρακτικοί οδηγοί για κόστος, διαδικασία ανακαίνισης και νέες διαρρυθμίσεις κατοικιών.",
+    "schema": []
+  },
+  "odigoi--kostos-anakainisis": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "guide-article",
+    "title": "Τι καθορίζει το κόστος μιας ανακαίνισης; | Arcus Development",
+    "description": "Πώς να συγκρίνεις προσφορές με κοινές προδιαγραφές και να ξεχωρίζεις το απαραίτητο από το προαιρετικό.",
+    "schema": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Τι καθορίζει το κόστος μιας ανακαίνισης;",
+        "dateModified": "2026-11-17",
+        "author": {
+          "@type": "Organization",
+          "name": "Arcus Development"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Arcus Development"
+        },
+        "mainEntityOfPage": "https://arcusdevelopment.gr/el/odigoi/kostos-anakainisis"
+      }
+    ]
+  },
+  "odigoi--nea-diarrythmisi-katoikion": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "guide-article",
+    "title": "Τι εξετάζουμε πριν από μια νέα διαρρύθμιση; | Arcus Development",
+    "description": "Η λειτουργικότητα, οι ανάγκες χρήσης και η αξιολόγηση του ακινήτου προηγούνται της τελικής σχεδιαστικής λύσης.",
+    "schema": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Τι εξετάζουμε πριν από μια νέα διαρρύθμιση;",
+        "dateModified": "2026-11-17",
+        "author": {
+          "@type": "Organization",
+          "name": "Arcus Development"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Arcus Development"
+        },
+        "mainEntityOfPage": "https://arcusdevelopment.gr/el/odigoi/nea-diarrythmisi-katoikion"
+      }
+    ]
+  },
+  "oliki-anakainisi-diamerismatos": {
+    "styles": [
+      "/design.css",
+      "/project-cards.css",
+      "/theme.css",
+      "/comparison.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/assets/arcus-comparison.js",
+        "module": true
+      }
+    ],
+    "body_class": "",
+    "title": "Ανακαίνιση Διαμερίσματος στη Θεσσαλονίκη | Arcus Development",
+    "description": "Ολική ανακαίνιση διαμερίσματος στη Θεσσαλονίκη: αποτύπωση, διαρρύθμιση, 3D, υλικά, οργάνωση κατασκευής και 2ετής γραπτή εγγύηση.",
+    "schema": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Ολική ανακαίνιση διαμερίσματος",
+        "areaServed": {
+          "@type": "City",
+          "name": "Θεσσαλονίκη"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "Arcus Development",
+          "url": "https://arcusdevelopment.gr/el"
+        },
+        "url": "https://arcusdevelopment.gr/el/oliki-anakainisi-diamerismatos"
+      }
+    ]
+  },
+  "one-stop-shop": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css",
+      "/center-flow.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      },
+      {
+        "src": "/center-flow.js",
+        "module": false
+      }
+    ],
+    "body_class": "review-oss",
+    "title": "One Stop Shop | Arcus Development",
+    "description": "Το δίκτυο υπηρεσιών της Arcus για το ακίνητό σου: αγορά, ανακαίνιση, διαχείριση, εκτίμηση και εξειδικευμένη υποστήριξη.",
+    "schema": []
+  },
+  "sychnes-erotiseis": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "",
+    "title": "Συχνές Ερωτήσεις | Arcus Development",
+    "description": "Απαντήσεις για το κόστος, τη μελέτη, τα υλικά και τα στάδια ολικής ανακαίνισης διαμερίσματος από την Arcus Development.",
+    "schema": []
+  },
+  "techniko-lexiko": {
+    "styles": [
+      "/design.css",
+      "/theme.css",
+      "/polish.css"
+    ],
+    "scripts": [
+      {
+        "src": "/refinements.js",
+        "module": false
+      },
+      {
+        "src": "/theme.js",
+        "module": false
+      }
+    ],
+    "body_class": "",
+    "title": "Τεχνικό Λεξικό | Arcus Development",
+    "description": "Κατόψεις, αποτύπωση, renders και όροι ανακαίνισης σε απλά ελληνικά. Ένας πρακτικός οδηγός από την Arcus Development.",
+    "schema": []
+  }
+}

@@ -1,0 +1,2 @@
+import {build} from 'esbuild';
+await build({entryPoints:{'arcus-passage':'carousel/loader.js'},bundle:true,splitting:true,jsx:'automatic',minify:true,format:'esm',target:'es2020',outdir:'dist/assets',chunkNames:'journey-[hash]',define:{'process.env.NODE_ENV':'"production"'},legalComments:'eof'});

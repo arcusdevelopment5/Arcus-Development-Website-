@@ -1,0 +1,4 @@
+const mount=document.getElementById('project-journey');
+if(mount){
+ document.body.classList.add('journey-pending');let started=false;const start=()=>{if(started)return;started=true;import('./journey.tsx').catch(()=>{mount.hidden=true;document.body.classList.remove('journey-ready','journey-pending')})};
+if('IntersectionObserver' in window){const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){io.disconnect();start()}},{rootMargin:'500px'});io.observe(mount)}else start();}
