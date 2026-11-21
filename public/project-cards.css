@@ -1,0 +1,24 @@
+/* Shared image-led project cards, including the restored original homepage. */
+.work>a{position:relative;display:grid;grid-template-columns:minmax(0,1fr);isolation:isolate;overflow:hidden;border-radius:4px;color:#fff}
+.work>a>.work-media,.work>a>.work-copy{grid-area:1/1}
+.work>a>.work-media{aspect-ratio:4/3;min-height:380px;border-radius:0}
+.work.w-tall>a>.work-media{aspect-ratio:4/4.4}
+.work>a>.work-media img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto!important;object-fit:cover}
+.work>a>.work-copy{position:relative;z-index:2;align-self:end;display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:24px 28px;margin:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-top:0;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.65)}
+.work .work-copy h3{order:0;margin:0;font-size:clamp(25px,2.5vw,38px);line-height:1.2;color:#fff}
+.work .work-copy .work-meta{order:1;min-height:0;margin:0;color:rgba(255,255,255,.9);font-size:13px}
+.work .work-copy .work-stages,.work .work-copy .work-details{order:2;margin:0;padding:0;border:0;color:rgba(255,255,255,.8);font-size:12px}
+.work .work-copy .arw{font-size:0!important;color:#fff;display:inline-block;position:relative;width:18px;height:18px;flex:0 0 18px}
+.work .work-copy .arw:before{content:'';position:absolute;top:1px;right:1px;width:10px;height:10px;border-top:1px solid currentColor;border-right:1px solid currentColor}
+.work .work-copy .arw:after{content:'';position:absolute;right:1px;top:1px;width:15px;border-top:1px solid currentColor;transform:rotate(-45deg);transform-origin:top right}
+.work .image-kind{top:14px;bottom:auto;left:auto;right:14px;z-index:3}
+.work .flag{z-index:3}
+.work>a:focus-visible{outline:3px solid #506f5a;outline-offset:5px}
+@media(max-width:800px){.work>a>.work-media,.work.w-tall>a>.work-media{aspect-ratio:4/4;min-height:360px}.work>a>.work-copy{padding:20px;gap:7px}.work .work-copy h3{font-size:27px}.work .work-copy .work-meta{font-size:12px}.work .work-copy .work-stages{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.work .work-media img{transition:none}}
+.work .work-copy .arw:before{left:auto;background:none;transform:none;border-bottom:0;border-left:0}
+.work .work-copy .arw:after{left:auto;height:0;background:none;border-right:0;border-bottom:0;border-left:0}
+.work>a>.work-media{width:100%;min-width:0}
+
+/* Soft photo scrim: completely transparent at the top; no frosted panel. */
+.work>a>.work-copy:before{content:"";position:absolute;z-index:-1;pointer-events:none;inset:-70px 0 0;background:linear-gradient(to top,rgba(10,18,14,.55) 0%,rgba(10,18,14,.36) 38%,rgba(10,18,14,.14) 70%,rgba(10,18,14,0) 100%)}

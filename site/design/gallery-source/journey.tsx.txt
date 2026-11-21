@@ -1,0 +1,66 @@
+import React,{useState,useRef,useEffect,useMemo} from 'react';
+import {createRoot} from 'react-dom/client';
+import type {ConcaveCarouselHandle} from './concave-carousel';
+const slug=location.pathname.split('/').filter(Boolean).pop()||'';
+const title=document.querySelector('h1')?.childNodes[0]?.textContent?.trim()||'Το έργο';
+const stageOptions=[{id:'before',name:'Πριν'},{id:'renders',name:'3D μελέτη'},{id:'construction',name:'Κατασκευή'},{id:'after',name:'Αποτέλεσμα'}];
+const links=stageOptions.flatMap(s=>Array.from(document.querySelectorAll<HTMLAnchorElement>(`#${s.id} .gallery-open`)).map(a=>({a,stage:s.id,caption:(a.dataset.caption||a.querySelector('img')?.alt||'').replace(/Παλαμά 7/g,'Παλαμά'),src:a.href,display:a.dataset.displaySrc||a.href,width:Number(a.querySelector('img')?.getAttribute('width'))||1920})));
+const stages=stageOptions.filter(s=>links.some(l=>l.stage===s.id));
+const diakouUnits=[{id:'Α',name:'Διαμέρισμα Α',detail:'Πορτοκαλί σύνθεση · κουζίνα & καθιστικό',cover:'after-24.webp',render:'Δ1'},{id:'Β',name:'Διαμέρισμα Β',detail:'Πράσινη κουζίνα · ξεχωριστό υπνοδωμάτιο',cover:'after-27.webp',render:'Δ2'},{id:'Γ',name:'Διαμέρισμα Γ',detail:'Ενιαίος χώρος · αναδιπλούμενο κρεβάτι',cover:'after-35.webp',render:'Δ3'}];
+
+const configs:Record<string,typeof diakouUnits>={
+ 'athanasiou-diakou-16':diakouUnits,
+ 'artemidos-37':[{id:'Δ1',name:'Διαμέρισμα 1',detail:'Πρώτη κατοικία',cover:'after-14.webp',render:'πρώτης κατοικίας'},{id:'Δ2',name:'Διαμέρισμα 2',detail:'Δεύτερη κατοικία',cover:'after-21.webp',render:'δεύτερης κατοικίας'}],
+ 'kolokotroni-14':[{id:'dyari',name:'Δυάρι',detail:'Μελέτη & ολοκληρωμένοι χώροι',cover:'after-11.webp',render:''},{id:'studio',name:'Γκαρσονιέρα',detail:'Μελέτη & ολοκληρωμένοι χώροι',cover:'studio-new-01.webp',render:''}],
+ 'kanari-16':[{id:'Δ1',name:'Διαμέρισμα 1',detail:'3D μελέτη πρώτης κατοικίας',cover:'renders-06.webp',render:'Δ1'},{id:'Δ2',name:'Διαμέρισμα 2',detail:'3D μελέτη δεύτερης κατοικίας',cover:'renders-10.webp',render:'Δ2'}]
+};
+const units=configs[slug]||[];
+const base=`/assets/portfolio/${slug}/`;
+function belongs(l:typeof links[number],u:typeof diakouUnits[number]){
+ if(slug==='kolokotroni-14'){
+  const gallery=l.a.closest('.gallery');
+  return gallery?.previousElementSibling?.textContent?.trim()===u.name;
+ }
+ if(l.stage==='before')return false;
+ return l.stage==='renders'?l.caption.includes(u.render):l.stage==='after'&&l.caption.includes(slug==='athanasiou-diakou-16'?u.name:u.id);
+}
+let gpu=false;try{const g=document.createElement('canvas').getContext('webgl2');gpu=!!g;g?.getExtension('WEBGL_lose_context')?.loseContext()}catch{}
+function Journey(){
+ const [stage,setStage]=useState('all'),[unit,setUnit]=useState('all'),[photo,setPhoto]=useState(0),[playing,setPlaying]=useState(true),[reduced,setReduced]=useState(false),[all,setAll]=useState(false),[modal,setModal]=useState(false),[rendererFailed,setRendererFailed]=useState(false);
+ const [Carousel,setCarousel]=useState<any>(null),[small,setSmall]=useState(()=>matchMedia('(max-width: 800px)').matches);
+ useEffect(()=>{const m=matchMedia('(max-width: 800px)');const change=()=>setSmall(m.matches);m.addEventListener('change',change);return()=>m.removeEventListener('change',change)},[]);
+ useEffect(()=>{if(!small&&gpu&&!matchMedia('(prefers-reduced-motion: reduce)').matches)import('./concave-carousel').then(m=>setCarousel(()=>m.default)).catch(()=>setRendererFailed(true))},[small]);
+ const dialog=useRef<HTMLDialogElement>(null);
+ const engine=useRef<ConcaveCarouselHandle>(null),touch=useRef(0),windowRef=useRef<HTMLDivElement>(null);
+ const currentUnit=units.find(u=>u.id===unit);
+ const pool=useMemo(()=>currentUnit?links.filter(l=>belongs(l,currentUnit)):links,[unit]);
+ const filtered=useMemo(()=>stage==='all'?pool:pool.filter(l=>l.stage===stage),[stage,pool]);
+ const items=useMemo(()=>filtered.map(l=>({src:small?l.src.replace('.webp','-640.webp'):l.display,alt:l.caption,title:l.caption})),[filtered,small]);
+ const active=items[Math.min(photo,items.length-1)];
+ const simple=small||!Carousel||!gpu||reduced||rendererFailed;
+ useEffect(()=>{const fail=()=>setRendererFailed(true);document.addEventListener("concave-unavailable",fail);return()=>document.removeEventListener("concave-unavailable",fail)},[]);
+ useEffect(()=>{document.body.classList.add('journey-ready');document.body.classList.remove('journey-pending');const resize=()=>document.documentElement.style.setProperty('--journey-viewport',`${document.documentElement.clientWidth}px`);resize();window.addEventListener('resize',resize);const m=matchMedia('(prefers-reduced-motion: reduce)');const update=()=>setReduced(m.matches);update();m.addEventListener('change',update);return()=>{window.removeEventListener('resize',resize);m.removeEventListener('change',update)}},[]);
+ useEffect(()=>{document.body.classList.toggle('journey-all',all)},[all]);
+ useEffect(()=>{if(!simple||!playing||reduced)return;const timer=setInterval(()=>{const r=windowRef.current?.getBoundingClientRect();if(!document.hidden&&r&&r.bottom>0&&r.top<innerHeight)setPhoto(p=>(p+1)%items.length)},5000);return()=>clearInterval(timer)},[simple,playing,reduced,items.length]);
+ const chooseUnit=(id:string)=>{setUnit(id);const u=units.find(u=>u.id===id);setStage(u?(links.some(l=>belongs(l,u)&&l.stage==='after')?'after':'renders'):'all');setPhoto(0)};
+ const chooseStage=(id:string)=>{if(id==='before')setUnit('all');setStage(id);setPhoto(0)};
+ useEffect(()=>{const follow=(e:MouseEvent)=>{const a=(e.target as Element).closest<HTMLAnchorElement>('[data-journey-stage]');if(a){setUnit('all');setStage(a.dataset.journeyStage!);setPhoto(0)}};document.addEventListener('click',follow);return()=>document.removeEventListener('click',follow)},[]);
+ const step=(d:number)=>{setPlaying(false);if(simple)setPhoto(p=>(p+d+items.length)%items.length);else d>0?engine.current?.next():engine.current?.previous()};
+ const select=(i:number)=>{setPlaying(false);setPhoto(i);engine.current?.goTo(i)};
+ const enlarge=(i=photo)=>{setPlaying(false);setPhoto(i);setModal(true)};
+ useEffect(()=>{if(modal)dialog.current?.showModal();else dialog.current?.close()},[modal]);
+ return <>
+ <div className="journey-heading"><p className="journey-eyebrow">{title}</p><h2>{units.length===3?'Ένα ακίνητο. Τρεις κατοικίες.':units.length===2?'Ένα ακίνητο. Δύο κατοικίες.':'Η διαδρομή του έργου.'}</h2><p>{units.length?'Δες όλο το έργο ή μπες σε κάθε κατοικία ξεχωριστά.':'Ανακάλυψε τους χώρους και τα στάδια του έργου.'}</p></div>
+ {units.length>0&&<div className="unit-selector" aria-label="Επιλογή διαμερίσματος"><button className="unit-overview" aria-pressed={unit==='all'} onClick={()=>chooseUnit('all')}>Όλο το έργο <span aria-hidden="true">＋</span></button><div className="unit-cards">{units.map(u=><button className="unit-card" key={u.id} aria-pressed={unit===u.id} onClick={()=>chooseUnit(u.id)}><img src={base+u.cover.replace('.webp','-640.webp')} alt="" width="640" height="427"/><span><strong>{u.name}</strong><small>{u.detail}</small></span><b aria-hidden="true">＋</b></button>)}</div></div>}
+ <div className="journey-tabs" role="group" aria-label="Στάδιο φωτογραφιών">{[{id:'all',name:'Όλες'},...stages.filter(s=>s.id==='before'||pool.some(l=>l.stage===s.id))].map(s=><button key={s.id} aria-pressed={stage===s.id} aria-controls="journey-panel" onClick={()=>chooseStage(s.id)}>{s.id==='before'&&units.length?'Πριν τον διαχωρισμό':s.name}<small>{s.id==='before'?links.filter(l=>l.stage==='before').length:s.id==='all'?pool.length:pool.filter(l=>l.stage===s.id).length}</small></button>)}</div>
+ <div id="journey-panel"><div className="journey-context"><strong>{currentUnit?.name||'Όλο το έργο'}</strong><span>{stage==='before'?(units.length?'Το αρχικό ακίνητο πριν τον διαχωρισμό':'Η αρχική κατάσταση του ακινήτου'):stage==='renders'?'3D μελέτη — σχεδιαστικές απεικονίσεις':stage==='construction'?'Οι εργασίες σε εξέλιξη':stage==='after'?'Πραγματικές φωτογραφίες ολοκληρωμένων χώρων':stages.filter(s=>pool.some(l=>l.stage===s.id)).map(s=>s.name).join(' · ')}</span></div>
+ <div className="journey-window concave-window" ref={windowRef} data-renderer={simple?'native':'concave-webgl'}>
+ {!simple?<Carousel key={`${unit}-${stage}`} ref={engine} items={items} aspect={1.5} size={.8} curvature={.65} distance={3.2} gap={48} radius={4} reflection={0} dim={0} autoplay="step" interval={5} paused={!playing} pauseOnHover={false} wheel={false} captions={false} controls={false} dpr={1.5} onIndexChange={setPhoto} onSelect={(_,i)=>enlarge(i)} ariaLabel="Φωτογραφίες έργου. Σύρε ή χρησιμοποίησε τα βελάκια. Enter για μεγέθυνση."/>:<div className="journey-clean" onTouchStart={e=>touch.current=e.touches[0].clientX} onTouchEnd={e=>{const dx=e.changedTouches[0].clientX-touch.current;if(Math.abs(dx)>45)step(dx<0?1:-1)}}><button className="concave-photo" onClick={()=>enlarge()} aria-label={`Μεγέθυνση: ${active.alt}`}><img src={active.src} srcSet={`${filtered[photo]?.src.replace('.webp','-640.webp')} 640w, ${filtered[photo]?.src} ${filtered[photo]?.width}w`} sizes="100vw" alt={active.alt} draggable={false}/></button></div>}
+ </div>
+ <div className="journey-tools"><div><span>{String(photo+1).padStart(2,'0')} / {items.length}</span><p>{active.alt}</p></div><div className="journey-buttons"><button onClick={()=>setPlaying(!playing)} aria-label={playing?'Παύση περιήγησης':'Αυτόματη περιήγηση'}>{playing?'Παύση ⏸':'Συνέχεια ▶'}</button><button onClick={()=>step(-1)} aria-label="Προηγούμενη φωτογραφία">←</button><button onClick={()=>step(1)} aria-label="Επόμενη φωτογραφία">→</button><button onClick={()=>enlarge()}>Μεγέθυνση ↗</button></div></div>
+ <div className="journey-thumbs" aria-label="Επιλογή φωτογραφίας">{items.map((item,i)=><button key={item.src} aria-label={item.alt} aria-pressed={photo===i} onClick={()=>select(i)}><img src={item.src.replace(/(?:-640|-1280)?\.webp$/,'-640.webp')} alt="" width="80" height="60" loading="lazy"/></button>)}</div></div>
+ <div className="journey-bottom"><button className="journey-all-button" aria-expanded={all} onClick={()=>setAll(!all)}>{all?'Κλείσιμο πλέγματος −':'Δες όλες τις φωτογραφίες σε πλέγμα +' }</button><span className="journey-hint">Σύρε για περιήγηση · επίλεξε για μεγέθυνση</span></div>
+ <dialog className="unit-lightbox" ref={dialog} onClose={()=>setModal(false)} onClick={e=>{if(e.target===e.currentTarget)setModal(false)}} onKeyDown={e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select((photo+(e.key==='ArrowRight'?1:items.length-1))%items.length)}}}><div className="unit-lightbox-head"><span>{currentUnit?.name||'Όλο το έργο'} · {photo+1} / {items.length}</span><button autoFocus onClick={()=>setModal(false)} aria-label="Κλείσιμο μεγέθυνσης">✕</button></div>{modal&&<img src={filtered[photo]?.src||active.src} alt={active.alt}/>}<div className="unit-lightbox-foot"><button onClick={()=>select((photo+items.length-1)%items.length)} aria-label="Προηγούμενη στη μεγέθυνση">←</button><p>{active.alt}</p><button onClick={()=>select((photo+1)%items.length)} aria-label="Επόμενη στη μεγέθυνση">→</button></div></dialog>
+ </>;
+}
+const mount=document.getElementById('project-journey');if(mount)createRoot(mount).render(<Journey/>);

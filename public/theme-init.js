@@ -1,0 +1,1 @@
+(()=>{let theme='dark';try{const saved=localStorage.getItem('arcus-theme');if(saved==='light'||saved==='dark')theme=saved}catch{}document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme})();
