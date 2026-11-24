@@ -20,6 +20,7 @@ const aliases: Record<string, string> = {
   "/el/erga/perraivou-9": "/el/erga",
   // Live WordPress pages (2026-11) that carry meaning; theme demo pages are left to 404.
   "/epikoinonia": "/el/epikoinonia",
+  "/contact": "/el/epikoinonia",
   "/contact-2": "/el/epikoinonia",
   "/contact-3": "/el/epikoinonia",
   "/about-us": "/el/etaireia",

@@ -200,14 +200,28 @@ def page(slug, title, description, body):
     route = '/el' if slug == 'home' else '/el/' + slug.replace('--', '/')
     schema = {'@context': 'https://schema.org', '@type': 'Organization', 'name': 'Arcus Development', 'url': 'https://arcusdevelopment.gr/el',
               'telephone': '+302310445935', 'address': {'@type': 'PostalAddress', 'streetAddress': 'Τσαλουχίδη 54, 2ος όροφος', 'addressLocality': 'Θεσσαλονίκη', 'addressCountry': 'GR'}}
+    schema['@id'] = 'https://arcusdevelopment.gr/#organization'
+    if slug in ('home', 'epikoinonia'):
+        schema.update({'@type': 'GeneralContractor', 'email': 'info@arcusdevelopment.gr',
+                       'areaServed': {'@type': 'City', 'name': 'Θεσσαλονίκη'},
+                       'image': 'https://arcusdevelopment.gr/assets/portfolio/soulioti-17/home-kitchen-light.webp'})
     crumbs = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': 1, 'name': 'Αρχική', 'item': 'https://arcusdevelopment.gr/el'},
         {'@type': 'ListItem', 'position': 2, 'name': title.split(' | ')[0], 'item': 'https://arcusdevelopment.gr' + route}]}
     if slug.startswith('erga--'):
         crumbs['itemListElement'].insert(1, {'@type': 'ListItem', 'position': 2, 'name': 'Τα έργα μας', 'item': 'https://arcusdevelopment.gr/el/erga'})
         crumbs['itemListElement'][-1]['position'] = 3
+    if slug.startswith('odigoi--'):
+        crumbs['itemListElement'].insert(1, {'@type': 'ListItem', 'position': 2, 'name': 'Οδηγοί ανακαίνισης', 'item': 'https://arcusdevelopment.gr/el/odigoi'})
+        crumbs['itemListElement'][-1]['position'] = 3
     m = re.search(r'<img[^>]+src="(/assets/portfolio/[^"]+)"', body)
     social = 'https://arcusdevelopment.gr' + (m.group(1) if m else '/assets/portfolio/soulioti-17/home-kitchen-light.webp')
+    metadata = design_pages.PAGES.get(slug, {})
+    if metadata.get('social_image'):
+        social = 'https://arcusdevelopment.gr' + metadata['social_image']
+    social_alt = metadata.get('social_alt', title)
+    social_dimensions = (f'<meta property="og:image:width" content="{metadata["social_width"]}">'
+                         f'<meta property="og:image:height" content="{metadata["social_height"]}">') if metadata.get('social_width') else ''
     ld = '<script type="application/ld+json">' + json.dumps(schema, ensure_ascii=False) + '</script>'
     if slug != 'home':
         ld += '<script type="application/ld+json">' + json.dumps(crumbs, ensure_ascii=False) + '</script>'
@@ -219,7 +233,8 @@ def page(slug, title, description, body):
         f'<title>{esc(title)}</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="https://arcusdevelopment.gr{route}">'
         f'<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website">'
         f'<meta property="og:locale" content="el_GR"><meta property="og:url" content="https://arcusdevelopment.gr{route}"><meta property="og:site_name" content="Arcus Development">'
-        f'<meta property="og:image" content="{social}"><meta property="og:image:alt" content="{esc(title)}"><meta name="twitter:card" content="summary_large_image">'
+        f'<meta property="og:image" content="{social}"><meta property="og:image:alt" content="{esc(social_alt)}"><meta name="twitter:card" content="summary_large_image">'
+        + social_dimensions + f'<meta name="twitter:image:alt" content="{esc(social_alt)}">' +
         f'<meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{social}">'
         '<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/favicon.svg">'
         '<link rel="preload" href="/assets/manrope-greek.woff2" as="font" type="font/woff2" crossorigin>'
@@ -455,7 +470,7 @@ page('one-stop-shop', 'One Stop Shop | Arcus Development', 'Το δίκτυο υ
 
 # Renovation guides use the same production shell and enter the existing sitemap.
 for slug, data in design_pages.PAGES.items():
-    if slug == 'odigoi' or slug.startswith('odigoi--'):
+    if slug in ('odigoi', 'anakainisi-stavroupoli') or slug.startswith('odigoi--'):
         page(slug, data['title'], data['description'], '')
 
 # Retired pages must not survive regeneration or enter the sitemap.

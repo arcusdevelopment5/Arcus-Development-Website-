@@ -47,7 +47,7 @@ test('page links, responsive images and local assets resolve without the deferre
 });
 
 test('new guides and all eight project galleries are served by the production page map', () => {
-  assert.equal(Object.keys(pages).filter(p => p.startsWith('/el/odigoi')).length, 4);
+  assert.equal(Object.keys(pages).filter(p => p.startsWith('/el/odigoi')).length, 5);
   const projects = Object.entries(pages).filter(([p]) => p.startsWith('/el/erga/'));
   assert.equal(projects.length, 8);
   for (const [route, html] of projects) {
