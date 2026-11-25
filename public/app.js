@@ -1,5 +1,5 @@
 // Arcus Development — site behaviour (ARCUSCRM-533). No dependencies.
-// The inquiry form logic is unchanged from the previous site.js; keep it in sync with lib/inquiry-validation.mjs.
+// Keep inquiry field validation in sync with lib/inquiry-validation.mjs.
 (() => {
   'use strict';
   const $ = (s, root = document) => root.querySelector(s);
@@ -8,7 +8,7 @@
   const requestId = () => Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join('');
 
   // ---- analytics hooks (no tracker is loaded; events only reach window listeners / an existing dataLayer)
-  const allowedEvents = new Set(['select_service_home', 'select_service_investment', 'view_project', 'interact_before_after', 'click_primary_cta', 'submit_project_inquiry', 'click_phone', 'click_email']);
+  const allowedEvents = new Set(['select_service_home', 'select_service_investment', 'view_project', 'interact_before_after', 'click_primary_cta', 'submit_project_inquiry', 'generate_lead', 'click_phone', 'click_email']);
   function event(name, params = {}) {
     if (!allowedEvents.has(name)) return;
     const safe = { event: name, page: location.pathname, ...params };
@@ -219,7 +219,7 @@
     ends.forEach(el => io.observe(el));
   }
 
-  // ---- inquiry form (unchanged behaviour)
+  // ---- inquiry form: confirm receipt before emitting a lead
   const form = $('#project-form');
   if (form) {
     const params = new URLSearchParams(location.search), kind = params.get('kind') === 'support' ? 'support' : 'project';
@@ -244,8 +244,11 @@
       }
       const first = $('[aria-invalid="true"]', form); if (first) first.focus();
     }
+    let sending = false;
+    const confirmedRequests = new Set();
     form.addEventListener('submit', async e => {
       e.preventDefault();
+      if (sending) return;
       const status = $('#form-status'), submit = $('button[type="submit"]', form), data = new FormData(form), issues = {};
       if (!data.get('intent')) issues.intent = 'Επίλεξε κατοικία ή επένδυση.';
       if (String(data.get('name') || '').trim().length < 2) issues.name = 'Συμπλήρωσε το ονοματεπώνυμό σου.';
@@ -261,29 +264,33 @@
       if (files.length > 3 || files.some(f => f.size > 8 * 1024 * 1024 || !['image/jpeg', 'image/png', 'image/webp', 'application/pdf'].includes(f.type))) issues.files = 'Έως 3 αρχεία JPG, PNG, WebP ή PDF, 8 MB το καθένα.';
       errors(issues);
       if (Object.keys(issues).length) { status.textContent = 'Έλεγξε τα πεδία που σημειώνονται.'; return; }
-      submit.disabled = true; status.textContent = 'Καταχωρίζουμε το αίτημά σου…';
+      sending = true; submit.disabled = true; status.textContent = 'Καταχωρίζουμε το αίτημά σου…';
       try {
         const payload = Object.fromEntries([...data.entries()].filter(([, v]) => typeof v === 'string'));
         payload.turnstile = String(data.get('cf-turnstile-response') || '');
         if (files.length) {
           status.textContent = 'Ανεβάζουμε τα αρχεία σου…';
           try { const { uploadFiles } = await import('/blob-upload.js'); payload.files = await uploadFiles(files, payload.idempotency); }
-          catch { errors({ files: 'Δεν ανέβηκαν τα αρχεία. Δοκίμασε ξανά ή στείλε το αίτημα χωρίς συνημμένο.' }); throw new Error('Δεν ανέβηκαν τα αρχεία. Δοκίμασε ξανά ή στείλε το αίτημα χωρίς συνημμένο.'); }
+          catch { errors({ files: 'Δεν ανέβηκαν τα αρχεία. Επιτρέπονται έως 3 αρχεία JPG, PNG, WebP ή PDF, έως 8 MB το καθένα. Δοκίμασε ξανά ή στείλε χωρίς συνημμένο.' }); throw new Error('Δεν ανέβηκαν τα αρχεία. Επιτρέπονται έως 3 αρχεία JPG, PNG, WebP ή PDF, έως 8 MB το καθένα. Δοκίμασε ξανά ή στείλε χωρίς συνημμένο.'); }
           status.textContent = 'Καταχωρίζουμε το αίτημά σου…';
         }
         const r = await fetch('/api/inquiries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'same-origin' });
         const result = await r.json().catch(() => ({ error: 'Δεν επιβεβαιώθηκε η καταχώριση. Τα στοιχεία παραμένουν στη φόρμα. Δοκίμασε ξανά ή κάλεσε στο 2310 445 935.' }));
-        if (!r.ok || !result.ok) { if (result.errors) errors(result.errors); throw new Error(result.error || 'Δεν ολοκληρώθηκε η καταχώριση. Έλεγξε τα στοιχεία και προσπάθησε ξανά.'); }
-        status.textContent = `Το αίτημά σου καταχωρίστηκε. Κωδικός: ${result.id}. Κράτησε τον κωδικό για την επικοινωνία μας.`;
+        if (!r.ok || !result.ok || !result.id) { if (result.errors) errors(result.errors); throw new Error(result.error || 'Δεν ολοκληρώθηκε η καταχώριση. Έλεγξε τα στοιχεία και προσπάθησε ξανά.'); }
+        status.textContent = `Λάβαμε το αίτημα για το έργο σου. Η ομάδα μας θα επικοινωνήσει μαζί σου. Κωδικός: ${result.id}.`;
         status.focus();
-        event('submit_project_inquiry', { intent: kind === 'support' ? 'support' : String(data.get('intent')) });
+        if (!confirmedRequests.has(payload.idempotency)) {
+          confirmedRequests.add(payload.idempotency);
+          event(kind === 'support' ? 'submit_project_inquiry' : 'generate_lead', { project_type: kind === 'support' ? 'support' : String(data.get('intent')) });
+        }
         form.reset(); form.elements.kind.value = kind; form.elements.source.value = location.pathname; form.elements.idempotency.value = requestId();
         if (kind === 'support') $('input[type="hidden"][name="intent"]', form).value = 'support';
       } catch (error) {
-        status.textContent = error.message || 'Δεν επιβεβαιώθηκε η καταχώριση. Τα στοιχεία παραμένουν στη φόρμα. Μπορείς να καλέσεις στο 2310 445 935.';
+        status.textContent = 'Το αίτημα δεν στάλθηκε. Δοκίμασε ξανά ή επικοινώνησε τηλεφωνικά.';
+        if (error.message && error.message.startsWith('Δεν ανέβηκαν τα αρχεία.')) status.textContent += ' ' + error.message;
         status.focus();
       } finally {
-        submit.disabled = false;
+        sending = false; submit.disabled = false;
         if (window.turnstile && $('.cf-turnstile', form)) window.turnstile.reset($('.cf-turnstile', form));
       }
     });

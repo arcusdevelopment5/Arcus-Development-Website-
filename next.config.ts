@@ -38,9 +38,16 @@ const aliases: Record<string, string> = {
 
 const nextConfig: NextConfig = {
   trailingSlash: false,
+  // Apply legacy destinations before normalizing trailing slashes (one hop).
+  skipTrailingSlashRedirect: true,
   poweredByHeader: false,
   async redirects() {
-    return Object.entries(aliases).map(([source, destination]) => ({ source, destination, permanent: true }));
+    return [
+      ...Object.entries(aliases).flatMap(([source, destination]) =>
+        (source === "/" ? [source] : [source, source + "/"]).map(path => ({ source: path, destination, permanent: true }))
+      ),
+      { source: "/:path+/", destination: "/:path+", permanent: true },
+    ];
   },
 };
 
