@@ -5,14 +5,26 @@ from pathlib import Path
 CAD = json.loads((Path(__file__).resolve().parents[1] / 'site/data/diakou-cad-paths.json').read_text())
 
 
-def plan_transition(auto=False):
+def plan_svg():
+    # Reuse identical CAD geometry across pages and keep the DOM small.
+    # Joining the original subpaths preserves every coordinate and segment.
+    geometry = '<svg xmlns="http://www.w3.org/2000/svg">'
+    geometry += ''.join(f'<path id="{group}" d="{" ".join(items)}" pathLength="1"/>' for group, items in CAD.items())
+    geometry += '</svg>\n'
+    asset = Path(__file__).resolve().parents[1] / 'public/assets/plans/diakou-geometry.svg'
+    asset.write_text(geometry)
     svg = '<svg viewBox="0 0 1000 630" role="img" aria-label="Αθανασίου Διάκου 16 — πραγματική κάτοψη πριν και μετά τον διαχωρισμό, από το αρχείο CAD">'
-    for group, items in CAD.items():
+    for group in CAD:
         phase, kind = group.split('-')
         cls = {'fixed': 'plan-fixed', 'before': 'plan-old', 'after': 'plan-new'}[phase]
         weight = {'walls': 'plan-wall', 'openings': 'plan-opening', 'furniture': 'plan-furnishing'}[kind]
-        svg += f'<g class="{cls} {weight}">' + ''.join(f'<path d="{d}" pathLength="1"/>' for d in items) + '</g>'
+        svg += f'<g class="{cls} {weight}"><use href="/assets/plans/diakou-geometry.svg#{group}"/></g>'
     svg += '</svg>'
+    return svg
+
+
+def plan_transition(auto=False):
+    svg = plan_svg()
     return (
         '<figure class="plan" data-plan-transition data-state="before"' + (' data-plan-auto' if auto else '') + '>'
         '<div class="plan-bar"><span>Αθανασίου Διάκου 16 · Κάτοψη</span>'

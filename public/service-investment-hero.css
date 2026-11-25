@@ -1,0 +1,7 @@
+/* Investment service uses the same image-led layout as the home service. */
+.service-investment-hero .service-home-photo{object-position:58% 58%}
+.service-investment-hero .service-home-content h1{max-width:18ch}
+.service-investment-hero .service-home-content .eyebrow{max-width:48ch;line-height:1.6}
+.service-investment-hero .service-home-content .lede{font-size:18px}
+@media(max-width:800px){.service-investment-hero .service-home-photo{object-position:62% center}.service-investment-hero .service-home-content .lede{font-size:16px}}
+@media(max-width:480px){.service-investment-hero .service-home-content h1{font-size:clamp(32px,9vw,43px);max-width:18ch}.service-investment-hero .service-home-content .eyebrow{font-size:12px;letter-spacing:0}.service-investment-hero .service-home-actions .btn{font-size:14px}}

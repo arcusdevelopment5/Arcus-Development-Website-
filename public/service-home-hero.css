@@ -1,0 +1,15 @@
+/* Home renovation: one image-led introduction, in both site themes. */
+.service-home-hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:clamp(680px,calc(100svh - var(--header)),900px);overflow:hidden;background:#20342a;color:#fff}
+.service-home-photo{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:60% 55%}
+.service-home-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(13,29,22,.9) 0%,rgba(13,29,22,.77) 34%,rgba(13,29,22,.32) 66%,rgba(13,29,22,.08) 100%),linear-gradient(0deg,rgba(13,29,22,.5),transparent 30%)}
+.service-home-content{width:var(--wrap);padding-block:72px 112px}
+.service-home-content .eyebrow{color:#e0e8db;margin-bottom:24px}
+.service-home-content h1{color:#fff;font-size:clamp(40px,4.4vw,68px);line-height:1.1;letter-spacing:-.045em;max-width:16ch;margin:0;text-wrap:balance}
+.service-home-content .lede{color:#f0f2ec;font-size:18px;line-height:1.75;max-width:49ch;margin:26px 0 0}
+.service-home-actions{margin-top:30px}
+.service-home-actions .btn{background:#d7e4c9;color:#183326;border:1px solid #d7e4c9;max-width:100%;white-space:normal;text-align:center;line-height:1.4}
+.service-home-actions .btn:hover{background:#edf3e6;color:#183326;border-color:#edf3e6}
+.service-home-actions .btn:focus-visible{outline:3px solid #fff;outline-offset:5px}
+.service-home-caption{position:absolute;bottom:26px;right:var(--gutter);left:var(--gutter);text-align:right;color:#f0f2ec;font-size:12px;line-height:1.5;margin:0}
+@media(max-width:800px){.service-home-hero{min-height:calc(100svh - var(--header))}.service-home-photo{object-position:56% center}.service-home-hero::before{background:linear-gradient(90deg,rgba(13,29,22,.83),rgba(13,29,22,.42)),linear-gradient(0deg,rgba(13,29,22,.75),transparent 80%)}.service-home-content{padding-block:64px 96px}.service-home-content h1{font-size:clamp(36px,7vw,54px);max-width:18ch}.service-home-content .lede{font-size:16px;line-height:1.7;max-width:47ch}.service-home-caption{text-align:left;font-size:11px}}
+@media(max-width:480px){.service-home-content{padding-block:48px 88px}.service-home-content h1{font-size:clamp(32px,9.4vw,43px);max-width:16ch}.service-home-content .eyebrow{font-size:10px;margin-bottom:20px;letter-spacing:.06em}.service-home-content .lede{margin-top:22px;font-size:15px;line-height:1.7}.service-home-actions{margin-top:25px}.service-home-caption{bottom:24px;max-width:28ch}}

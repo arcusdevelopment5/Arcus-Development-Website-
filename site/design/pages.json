@@ -21,7 +21,8 @@
     "styles": [
       "/design.css",
       "/theme.css",
-      "/polish.css"
+      "/polish.css",
+      "/it-seo.css"
     ],
     "scripts": [
       {
@@ -62,7 +63,10 @@
       "/project-cards.css",
       "/theme.css",
       "/polish.css",
-      "/seo-content.css"
+      "/seo-content.css",
+      "/it-seo.css",
+      "/service-home-hero.css",
+      "/service-investment-hero.css"
     ],
     "scripts": [
       {
@@ -75,8 +79,8 @@
       }
     ],
     "body_class": "",
-    "title": "Επενδυτική Ανακαίνιση & Διαχωρισμός Διαμερισμάτων | Arcus Development",
-    "description": "Επενδυτική αξιοποίηση διαμερισμάτων στη Θεσσαλονίκη. Έλεγχος εφικτότητας, εναλλακτικές κατόψεις, 3D και οργανωμένη κατασκευή.",
+    "title": "Επενδυτική ανακαίνιση και διαχωρισμός διαμερίσματος – Arcus Development",
+    "description": "Εξέτασε τις δυνατότητες αξιοποίησης του διαμερίσματός σου. Η ομάδα μελετά τη διαρρύθμιση, τις υποδομές και τις προϋποθέσεις για πιθανό διαχωρισμό.",
     "schema": [
       {
         "@context": "https://schema.org",
@@ -99,7 +103,8 @@
     "styles": [
       "/design.css",
       "/theme.css",
-      "/polish.css"
+      "/polish.css",
+      "/it-seo.css"
     ],
     "scripts": [
       {
@@ -116,8 +121,8 @@
       }
     ],
     "body_class": "",
-    "title": "Συζήτησε το Έργο σου | Arcus Development",
-    "description": "Αίτημα ολικής ανακαίνισης, επενδυτικής αξιοποίησης ή after-sales υποστήριξης. Arcus Development, Θεσσαλονίκη, 2310 445 935.",
+    "title": "Αίτημα για ανακαίνιση κατοικίας – Arcus Development",
+    "description": "Περιέγραψε το ακίνητο, την περιοχή και τις αλλαγές που σκέφτεσαι. Επικοινώνησε με την Arcus Development για να συζητήσουμε τα επόμενα βήματα.",
     "schema": []
   },
   "erga--agiou-dimitriou-113": {
@@ -185,7 +190,8 @@
       "/design.css",
       "/passage.css",
       "/theme.css",
-      "/polish.css"
+      "/polish.css",
+      "/it-seo.css"
     ],
     "scripts": [
       {
@@ -215,7 +221,8 @@
       "/design.css",
       "/theme.css",
       "/passage.css",
-      "/polish.css"
+      "/polish.css",
+      "/it-seo.css"
     ],
     "scripts": [
       {
@@ -246,7 +253,8 @@
       "/project-cards.css",
       "/theme.css",
       "/polish.css",
-      "/seo-content.css"
+      "/seo-content.css",
+      "/it-seo.css"
     ],
     "scripts": [
       {
@@ -260,7 +268,7 @@
     ],
     "body_class": "review-portfolio",
     "title": "Έργα Ανακαίνισης στη Θεσσαλονίκη | Arcus Development",
-    "description": "Πραγματικά έργα ανακαίνισης και διαμόρφωσης κατοικιών της Arcus Development. Φωτογραφίες, κατόψεις, renders και η ιστορία κάθε χώρου.",
+    "description": "Εξερευνήστε έργα ανακαίνισης της Arcus Development στη Θεσσαλονίκη. Δείτε κατόψεις, φωτογραφίες πριν και μετά και την ιστορία κάθε έργου.",
     "schema": []
   },
   "erga--kanari-16": {
@@ -387,7 +395,8 @@
     "styles": [
       "/design.css",
       "/theme.css",
-      "/polish.css"
+      "/polish.css",
+      "/it-seo.css"
     ],
     "scripts": [
       {
@@ -433,7 +442,9 @@
       "/polish.css",
       "/editorial.css",
       "/oss-teaser.css",
-      "/seo-content.css"
+      "/seo-content.css",
+      "/it-seo.css",
+      "/home-refined.css"
     ],
     "scripts": [
       {
@@ -449,9 +460,9 @@
         "module": false
       }
     ],
-    "body_class": "home-grid",
+    "body_class": "home-grid home-refined",
     "title": "Ανακαίνιση Σπιτιού στη Θεσσαλονίκη | Arcus Development",
-    "description": "Ολική ανακαίνιση σπιτιού και διαμερίσματος στη Θεσσαλονίκη. Μελέτη, 3D σχεδιασμός, κατασκευή και γραπτή εγγύηση από την Arcus Development.",
+    "description": "Ολική ανακαίνιση κατοικίας στη Θεσσαλονίκη, από τη μελέτη μέχρι την παράδοση. Δείτε έργα της Arcus Development με κατόψεις και φωτογραφίες πριν και μετά.",
     "schema": []
   },
   "odigoi--diadikasia-anakainisis": {
@@ -619,7 +630,9 @@
       "/theme.css",
       "/comparison.css",
       "/polish.css",
-      "/seo-content.css"
+      "/seo-content.css",
+      "/it-seo.css",
+      "/service-home-hero.css"
     ],
     "scripts": [
       {
@@ -636,8 +649,8 @@
       }
     ],
     "body_class": "",
-    "title": "Ολική Ανακαίνιση Σπιτιού & Διαμερίσματος | Arcus Development",
-    "description": "Οργάνωσε την ολική ανακαίνιση του σπιτιού σου στη Θεσσαλονίκη: αποτύπωση, μελέτη, επιλογές υλικών και κατασκευή με σαφές αντικείμενο.",
+    "title": "Ολική ανακαίνιση διαμερίσματος στη Θεσσαλονίκη – Arcus Development",
+    "description": "Δες πώς σχεδιάζουμε την ολική ανακαίνιση μιας κατοικίας, από την αποτύπωση και τις επιλογές υλικών μέχρι την οργάνωση εργασιών και την παράδοση.",
     "schema": [
       {
         "@context": "https://schema.org",
@@ -661,7 +674,8 @@
       "/design.css",
       "/theme.css",
       "/polish.css",
-      "/center-flow.css"
+      "/center-flow.css",
+      "/one-stop-reference.css"
     ],
     "scripts": [
       {
@@ -680,7 +694,11 @@
     "body_class": "review-oss",
     "title": "One Stop Shop | Arcus Development",
     "description": "Το δίκτυο υπηρεσιών της Arcus για το ακίνητό σου: αγορά, ανακαίνιση, διαχείριση, εκτίμηση και εξειδικευμένη υποστήριξη.",
-    "schema": []
+    "schema": [],
+    "social_image": "/assets/one-stop-shop-hero.webp",
+    "social_alt": "One Stop Shop — όλες οι υπηρεσίες της Arcus γύρω από τον στόχο σου",
+    "social_width": 1536,
+    "social_height": 1024
   },
   "sychnes-erotiseis": {
     "styles": [

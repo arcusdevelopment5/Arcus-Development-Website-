@@ -438,7 +438,7 @@ form = (
     '<p id="files-help">Έως 3 αρχεία · JPG, PNG, WebP ή PDF · 8 MB το καθένα. Αφαίρεσε στοιχεία ταυτότητας, τρίτων και ακριβείς διευθύνσεις.</p><span class="field-error" id="files-error"></span></div>'
     '<label class="privacy-check"><input type="checkbox" name="privacy" value="yes" required><span>Έχω διαβάσει την <a href="/el/aporrito" target="_blank" rel="noopener">ενημέρωση απορρήτου</a> για τη διαχείριση του αιτήματός μου. *</span></label><span class="field-error" id="privacy-error"></span>'
     '<div id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></div>'
-    f'<button class="btn btn-submit" type="submit">Στείλε το αίτημά σου {ARROW}</button>'
+    f'<button class="btn btn-submit" type="submit">Στείλε το αίτημα έργου</button>'
     '<noscript><p>Για την ηλεκτρονική υποβολή χρειάζεται JavaScript. Μπορείς να μας καλέσεις στο <a href="tel:+302310445935">2310 445 935</a>.</p></noscript></form>')
 contactbody = ('<main id="main">' + intro('Ας σχεδιάσουμε μαζί', 'Κάθε ιδέα ξεκινά<br>με μια <em>συζήτηση.</em>', 'Πες μας την περιοχή, το μέγεθος και τι θέλεις να αλλάξει. Θα επικοινωνήσουμε για να συζητήσουμε τις ανάγκες σου.')
                + '<section class="sec-tight wrap contact-grid"><aside class="contact-aside"><h2>Ο δικός σου χώρος.<br><em>Η επόμενη αρχή.</em></h2>'

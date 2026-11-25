@@ -1,0 +1,47 @@
+/* A shorter home journey, with all portfolio and editorial links retained. */
+.home-refined main>.sec{padding-block:76px}
+.home-refined .sec-head{margin-bottom:36px;gap:24px 48px}
+.home-refined .hero-grid{min-height:580px}
+.home-refined .hero-copy{gap:22px}
+.home-refined .hero .proof{margin-top:30px}
+.home-refined .hero .eyebrow,.home-refined .hero .plan-note{color:#c9c5bb}
+.home-refined .hero .plan-note{font-size:14px}
+.home-refined .warranty{padding-block:68px}
+.home-refined .oss-teaser{padding-block:52px}
+.home-refined .oss-teaser-inner{grid-template-columns:1fr}
+.home-refined .oss-teaser h2{font-size:clamp(30px,3.5vw,46px)}
+.home-refined .oss-teaser h2 br{display:none}
+.home-refined .oss-teaser-copy{max-width:65ch}
+.home-refined .closing{padding-block:64px}
+.home-refined .next-step-copy{font-size:17px;line-height:1.7;max-width:60ch;margin:24px auto 0;color:inherit}
+.home-refined .editorial-section{padding-block:52px}
+.home-refined .editorial-heading{margin-bottom:28px}
+.home-refined .editorial-heading h2{font-size:clamp(30px,3.4vw,46px);margin:10px 0 14px}
+.home-refined .issue-cover{padding:12px}
+.home-refined .editorial-library{gap:24px}
+.home-refined .editorial-episode h3{font-size:22px;min-height:3.9em}
+.home-refined .episode-date,.home-refined .editorial-link,.home-refined .issue-meta>span{font-size:14px}
+@media(max-width:800px){
+ .home-refined main>.sec,.home-refined .editorial-section{padding-block:48px}
+ .home-refined .hero-grid{min-height:0;gap:32px}
+ .home-refined .hero-copy{gap:20px}
+ .home-refined .hero-copy .lede{font-size:17px;line-height:1.65}
+ .home-refined .hero .proof{margin-top:24px}
+ .home-refined .sec-head{margin-bottom:28px;gap:18px}
+ .home-refined .warranty{padding-block:48px}
+ .home-refined .oss-teaser{padding-block:40px}
+ .home-refined .closing{padding-block:48px}
+ .home-refined .next-step-copy{font-size:16px}
+ .home-refined .editorial-library{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:160px;overflow-x:auto;gap:18px;padding:8px 5px 18px;scroll-snap-type:x proximity;scroll-padding:5px}
+ .home-refined .editorial-issue{scroll-snap-align:start}
+ .home-refined .issue-meta{margin:12px 0 8px}
+ .home-refined .editorial-episodes{gap:24px}
+ .home-refined .editorial-episode{display:grid;grid-template-columns:120px minmax(0,1fr);column-gap:18px;align-content:start}
+ .home-refined .episode-image{grid-column:1;grid-row:1/5;align-self:start}
+ .home-refined .episode-play{width:28px;height:28px;left:8px;bottom:8px;font-size:11px}
+ .home-refined .episode-duration{display:none}
+ .home-refined .episode-date{grid-column:2;margin:0 0 6px;font-size:12px}
+ .home-refined .editorial-episode h3{grid-column:2;font-size:17px;line-height:1.4;min-height:0;margin:0 0 10px}
+ .home-refined .editorial-episode .editorial-link{grid-column:2;font-size:13px;padding-top:8px}
+}
+@media(max-width:380px){.home-refined .editorial-episode{grid-template-columns:100px minmax(0,1fr);column-gap:14px}}
